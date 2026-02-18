@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FitTrack Pro - Your Personal Workout Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .mono { font-family: 'Space Mono', monospace; }
+        
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1e1e1e;
+            --accent-primary: #00ff88;
+            --accent-secondary: #00d4ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #2a2a2a;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --error: #ff4444;
+        }
+        
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        .glass {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover:before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent-primary);
+        }
+        
+        input, textarea {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px 18px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            outline: none;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+        
+        input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .day-tab {
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .day-tab:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .day-tab.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+        
+        .exercise-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .exercise-card:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        .exercise-card:hover {
+            transform: translateX(8px);
+            border-color: var(--accent-primary);
+        }
+        
+        .exercise-card:hover:before {
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+            width: 6px;
+        }
+        
+        .exercise-card.completed {
+            background: rgba(0, 255, 136, 0.05);
+            border-color: var(--accent-primary);
+        }
+        
+        .exercise-card.completed:before {
+            background: var(--accent-primary);
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .checkbox:hover {
+            border-color: var(--accent-primary);
+        }
+        
+        .checkbox.checked {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .tab-indicator {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-primary);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .card {
+                border-radius: 16px;
+            }
+            
+            .exercise-card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { createClient } = supabase;
+
+        // ⚠️ REPLACE WITH YOUR ACTUAL SUPABASE VALUES
+        const SUPABASE_URL = 'https://oxpeybhsucryghtrnhmm.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
+        
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Icons Component
+        const Icons = {
+            Check: () => (
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            ),
+            Play: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M6.5 4L14.5 10L6.5 16V4Z" fill="currentColor"/>
+                </svg>
+            ),
+            Plus: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+            ),
+            Trash: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M6 8V16M10 8V16M14 8V16M4 6H16M14 6V4H6V6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+            ),
+            Fire: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 18C13.866 18 17 14.866 17 11C17 7.134 13.866 4 10 4C6.134 4 3 7.134 3 11C3 14.866 6.134 18 10 18Z" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M10 2V4M10 16V18M18 10H16M4 10H2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+            ),
+            Chart: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M3 17V9M10 17V3M17 17V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+            ),
+            User: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M4 17C4 14.2386 6.23858 12 9 12H11C13.7614 12 16 14.2386 16 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+            ),
+            Logout: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M13 3H16C16.5523 3 17 3.44772 17 4V16C17 16.5523 16.5523 17 16 17H13M9 14L13 10M13 10L9 6M13 10H3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+            ),
+            Camera: () => (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <rect x="3" y="5" width="14" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M7 3L8 5M13 3L12 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <circle cx="10" cy="11" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
+                </svg>
+            )
+        };
+
+        function App() {
+            const [user, setUser] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [activeTab, setActiveTab] = useState('workout');
+            
+            useEffect(() => {
+                checkUser();
+                
+                const { data: { subscription } } = supabaseClient.auth.onAuthStateChange((event, session) => {
+                    setUser(session?.user || null);
+                });
+
+                return () => subscription.unsubscribe();
+            }, []);
+
+            const checkUser = async () => {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                setUser(session?.user || null);
+                setLoading(false);
+            };
+
+            if (loading) {
+                return <LoadingScreen />;
+            }
+
+            if (!user) {
+                return <AuthScreen onAuth={checkUser} />;
+            }
+
+            return (
+                <div className="min-h-screen pb-24">
+                    <Header user={user} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {activeTab === 'workout' && <WorkoutTab user={user} />}
+                        {activeTab === 'progress' && <ProgressTab user={user} />}
+                        {activeTab === 'profile' && <ProfileTab user={user} />}
+                    </div>
+                </div>
+            );
+        }
+
+        function LoadingScreen() {
+            return (
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="w-16 h-16 border-4 border-t-transparent border-accent-primary rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-text-secondary">Loading your workout data...</p>
+                    </div>
+                </div>
+            );
+        }
+
+        function AuthScreen({ onAuth }) {
+            const [isSignUp, setIsSignUp] = useState(false);
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [fullName, setFullName] = useState('');
+            const [error, setError] = useState('');
+            const [loading, setLoading] = useState(false);
+
+            const validateEmail = (email) => {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            };
+
+            const validatePassword = (password) => {
+                return password.length >= 8;
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setError('');
+                
+                if (!validateEmail(email)) {
+                    setError('Please enter a valid email address');
+                    return;
+                }
+                
+                if (!validatePassword(password)) {
+                    setError('Password must be at least 8 characters');
+                    return;
+                }
+                
+                setLoading(true);
+
+                try {
+                    if (isSignUp) {
+                        const { data, error } = await supabaseClient.auth.signUp({
+                            email,
+                            password,
+                            options: {
+                                data: { full_name: fullName },
+                                emailRedirectTo: window.location.origin
+                            }
+                        });
+                        
+                        if (error) throw error;
+                        
+                        alert('✅ Account created! Please check your email to verify your account.');
+                    } else {
+                        const { error } = await supabaseClient.auth.signInWithPassword({
+                            email,
+                            password
+                        });
+                        
+                        if (error) throw error;
+                        onAuth();
+                    }
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+                    {/* Background decoration */}
+                    <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-primary rounded-full filter blur-3xl"></div>
+                        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-secondary rounded-full filter blur-3xl"></div>
+                    </div>
+
+                    <div className="glass p-8 sm:p-12 rounded-3xl w-full max-w-md relative z-10 fade-in">
+                        <div className="text-center mb-8">
+                            <h1 className="text-5xl font-bold mb-3 gradient-text">FitTrack Pro</h1>
+                            <p className="text-text-secondary">Your personal workout companion</p>
+                        </div>
+
+                        <div className="flex gap-2 mb-8 p-1 bg-bg-primary rounded-xl">
+                            <button
+                                onClick={() => setIsSignUp(false)}
+                                className={`flex-1 py-3 rounded-lg font-medium transition-all ${!isSignUp ? 'bg-accent-primary text-bg-primary' : 'text-text-secondary'}`}
+                            >
+                                Login
+                            </button>
+                            <button
+                                onClick={() => setIsSignUp(true)}
+                                className={`flex-1 py-3 rounded-lg font-medium transition-all ${isSignUp ? 'bg-accent-primary text-bg-primary' : 'text-text-secondary'}`}
+                            >
+                                Sign Up
+                            </button>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            {isSignUp && (
+                                <div>
+                                    <label className="block text-sm font-medium mb-2 text-text-secondary">Full Name</label>
+                                    <input
+                                        type="text"
+                                        value={fullName}
+                                        onChange={(e) => setFullName(e.target.value)}
+                                        className="w-full"
+                                        placeholder="John Doe"
+                                        required={isSignUp}
+                                    />
+                                </div>
+                            )}
+                            
+                            <div>
+                                <label className="block text-sm font-medium mb-2 text-text-secondary">Email</label>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full"
+                                    placeholder="you@example.com"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium mb-2 text-text-secondary">Password</label>
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full"
+                                    placeholder="••••••••"
+                                    required
+                                    minLength={8}
+                                />
+                                {isSignUp && (
+                                    <p className="text-xs text-text-secondary mt-1">Minimum 8 characters required</p>
+                                )}
+                            </div>
+
+                            {error && (
+                                <div className="p-4 bg-error bg-opacity-10 border border-error rounded-xl text-error text-sm">
+                                    {error}
+                                </div>
+                            )}
+
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="btn-primary w-full relative"
+                            >
+                                {loading ? (
+                                    <span className="flex items-center justify-center gap-2">
+                                        <div className="w-5 h-5 border-2 border-t-transparent border-current rounded-full animate-spin"></div>
+                                        {isSignUp ? 'Creating Account...' : 'Signing In...'}
+                                    </span>
+                                ) : (
+                                    <span>{isSignUp ? 'Create Account' : 'Sign In'}</span>
+                                )}
+                            </button>
+                        </form>
+
+                        {isSignUp && (
+                            <p className="text-xs text-text-secondary text-center mt-6">
+                                By signing up, you'll receive an email confirmation. Make sure to verify your email!
+                            </p>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        function Header({ user, activeTab, setActiveTab }) {
+            const handleLogout = async () => {
+                if (confirm('Are you sure you want to logout?')) {
+                    await supabaseClient.auth.signOut();
+                }
+            };
+
+            const tabs = [
+                { id: 'workout', label: 'Workout', icon: Icons.Fire },
+                { id: 'progress', label: 'Progress', icon: Icons.Chart },
+                { id: 'profile', label: 'Profile', icon: Icons.User }
+            ];
+
+            return (
+                <header className="glass border-b border-border-color sticky top-0 z-50">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-20">
+                            <h1 className="text-2xl font-bold gradient-text">FitTrack Pro</h1>
+                            
+                            <nav className="flex items-center gap-2">
+                                {tabs.map((tab) => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all ${
+                                            activeTab === tab.id 
+                                                ? 'bg-accent-primary text-bg-primary font-semibold' 
+                                                : 'text-text-secondary hover:bg-bg-tertiary'
+                                        }`}
+                                    >
+                                        <tab.icon />
+                                        <span className="hidden sm:inline">{tab.label}</span>
+                                    </button>
+                                ))}
+                                
+                                <button
+                                    onClick={handleLogout}
+                                    className="ml-4 p-3 rounded-lg text-text-secondary hover:bg-bg-tertiary hover:text-error transition-all"
+                                    title="Logout"
+                                >
+                                    <Icons.Logout />
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+            );
+        }
+
+        function WorkoutTab({ user }) {
+            const [selectedDay, setSelectedDay] = useState(new Date().getDay());
+            const [workouts, setWorkouts] = useState({});
+            const [loading, setLoading] = useState(true);
+            
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const workoutNames = {
+                1: 'Legs & Side Delts',
+                2: 'Chest & Biceps',
+                3: 'Back & Triceps',
+                4: 'Legs',
+                5: 'Shoulders & Chest'
+            };
+            
+            const warmups = {
+                1: 'Leg swings, Hip rotations, 90-90, Deep squat',
+                2: 'Shoulder CARs, Shoulder rotations, Cat and cow, Scapula retraction/protraction',
+                3: 'General warmup',
+                4: 'Leg swings, Hip rotations, 90-90, Deep squat',
+                5: 'Shoulder CARs, Shoulder rotations, Cat and cow, Scapula retraction/protraction, Rotator cuff'
+            };
+
+            useEffect(() => {
+                loadWorkouts();
+            }, [user]);
+
+            const loadWorkouts = async () => {
+                // For now, we'll use a simple implementation
+                // In production, this would load from the database
+                setLoading(false);
+            };
+
+            const todayWorkout = workouts[selectedDay] || [];
+            const progress = todayWorkout.length > 0 
+                ? Math.round((todayWorkout.filter(ex => ex.completed).length / todayWorkout.length) * 100)
+                : 0;
+
+            return (
+                <div className="space-y-6 fade-in">
+                    {/* Progress Overview */}
+                    <div className="stat-card">
+                        <div className="flex items-center justify-between mb-4">
+                            <div>
+                                <h2 className="text-3xl font-bold gradient-text mb-1">{progress}%</h2>
+                                <p className="text-text-secondary">Today's Progress</p>
+                            </div>
+                            <div className="text-5xl">💪</div>
+                        </div>
+                        <div className="progress-bar">
+                            <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+                        </div>
+                    </div>
+
+                    {/* Day Selector */}
+                    <div className="card p-4">
+                        <div className="flex gap-2 overflow-x-auto pb-2">
+                            {days.map((day, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setSelectedDay(index)}
+                                    className={`day-tab whitespace-nowrap ${selectedDay === index ? 'active' : ''}`}
+                                >
+                                    {day}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Workout Content */}
+                    {workoutNames[selectedDay] ? (
+                        <div className="space-y-6">
+                            <div className="card p-6">
+                                <h2 className="text-2xl font-bold mb-2">{workoutNames[selectedDay]}</h2>
+                                <div className="flex items-start gap-2 text-text-secondary">
+                                    <span className="text-warning">🔥</span>
+                                    <div>
+                                        <p className="text-sm font-medium mb-1">Warmup:</p>
+                                        <p className="text-sm">{warmups[selectedDay]}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {todayWorkout.length > 0 ? (
+                                <div className="space-y-3">
+                                    {todayWorkout.map((exercise, idx) => (
+                                        <ExerciseCard
+                                            key={exercise.id}
+                                            exercise={exercise}
+                                            index={idx}
+                                            onToggle={() => {}}
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="card p-12 text-center">
+                                    <div className="text-6xl mb-4">🎯</div>
+                                    <h3 className="text-xl font-bold mb-2">No exercises yet</h3>
+                                    <p className="text-text-secondary mb-6">Click below to load your workout plan</p>
+                                    <button className="btn-primary">
+                                        <Icons.Plus />
+                                        <span className="ml-2">Load Workout Plan</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="card p-16 text-center">
+                            <div className="text-7xl mb-4">😴</div>
+                            <h2 className="text-3xl font-bold mb-2">Rest Day</h2>
+                            <p className="text-text-secondary">Recovery is just as important as training</p>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function ExerciseCard({ exercise, index, onToggle }) {
+            const [showLog, setShowLog] = useState(false);
+
+            return (
+                <div className={`exercise-card ${exercise.completed ? 'completed' : ''}`}>
+                    <div className="flex items-start gap-4">
+                        <div
+                            onClick={onToggle}
+                            className={`checkbox ${exercise.completed ? 'checked' : ''}`}
+                        >
+                            {exercise.completed && <Icons.Check />}
+                        </div>
+
+                        <div className="flex-1">
+                            <div className="flex items-start justify-between mb-2">
+                                <div>
+                                    <h3 className={`font-semibold text-lg mb-1 ${exercise.completed ? 'line-through text-text-secondary' : ''}`}>
+                                        <span className="mono text-accent-primary mr-2">#{index + 1}</span>
+                                        {exercise.name}
+                                    </h3>
+                                    <p className="text-sm text-text-secondary">
+                                        {exercise.sets} sets × {exercise.reps} reps
+                                        {exercise.notes && <span className="ml-2">• {exercise.notes}</span>}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3 mt-3">
+                                {exercise.tutorial && (
+                                    <a
+                                        href={exercise.tutorial}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-sm font-medium text-accent-primary hover:text-accent-secondary transition-colors flex items-center gap-1"
+                                    >
+                                        <Icons.Play />
+                                        Tutorial
+                                    </a>
+                                )}
+                                <button
+                                    onClick={() => setShowLog(!showLog)}
+                                    className="text-sm font-medium text-accent-primary hover:text-accent-secondary transition-colors"
+                                >
+                                    📝 Log Set
+                                </button>
+                            </div>
+
+                            {showLog && (
+                                <div className="mt-4 p-4 bg-bg-tertiary rounded-xl">
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="block text-xs font-medium text-text-secondary mb-2">Weight (kg)</label>
+                                            <input type="number" step="0.5" className="w-full" placeholder="20" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-text-secondary mb-2">Reps</label>
+                                            <input type="number" className="w-full" placeholder="12" />
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2 mt-4">
+                                        <button className="btn-primary flex-1">Save</button>
+                                        <button onClick={() => setShowLog(false)} className="btn-secondary">Cancel</button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ProgressTab({ user }) {
+            return (
+                <div className="space-y-6 fade-in">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="stat-card">
+                            <p className="text-sm text-text-secondary mb-2">Current Streak</p>
+                            <p className="text-4xl font-bold gradient-text">7 days</p>
+                        </div>
+                        <div className="stat-card">
+                            <p className="text-sm text-text-secondary mb-2">Total Workouts</p>
+                            <p className="text-4xl font-bold gradient-text">24</p>
+                        </div>
+                        <div className="stat-card">
+                            <p className="text-sm text-text-secondary mb-2">This Week</p>
+                            <p className="text-4xl font-bold gradient-text">5/5</p>
+                        </div>
+                    </div>
+
+                    <div className="card p-6">
+                        <h2 className="text-xl font-bold mb-6">Body Weight Tracking</h2>
+                        <div className="text-center py-12 text-text-secondary">
+                            <p>No measurements yet. Start tracking your progress!</p>
+                        </div>
+                    </div>
+
+                    <div className="card p-6">
+                        <h2 className="text-xl font-bold mb-6">Exercise History</h2>
+                        <div className="text-center py-12 text-text-secondary">
+                            <p>Complete your first workout to see your history here</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ProfileTab({ user }) {
+            return (
+                <div className="space-y-6 fade-in max-w-2xl">
+                    <div className="card p-6">
+                        <h2 className="text-xl font-bold mb-6">Profile Settings</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-text-secondary mb-2">Email</label>
+                                <input type="email" value={user.email} disabled className="w-full opacity-50 cursor-not-allowed" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-text-secondary mb-2">Full Name</label>
+                                <input type="text" placeholder="Your name" className="w-full" />
+                            </div>
+                            <button className="btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // Render App
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>

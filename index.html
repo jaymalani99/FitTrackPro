@@ -17,7 +17,7 @@
   --border:#242424;--lime:#D4FF00;--lime2:#b8e000;
   --blue:#4488FF;--orange:#FF6B35;--purple:#9B6DFF;
   --green:#00E676;--red:#FF4444;--text:#f0f0f0;--text2:#888;--text3:#555;
-  --r:14px;--r2:20px;--sidebar:220px;--cart:340px;
+  --r:14px;--r2:20px;--sidebar:200px;--cart:320px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
@@ -91,7 +91,7 @@ select.inp{cursor:pointer}
 
 /* SIDEBAR */
 .sidebar{width:var(--sidebar);background:var(--bg2);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:6px;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform .3s;overflow-y:auto}
-.sidebar-brand{padding:4px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.sidebar-brand{padding:4px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:6px;overflow:hidden}
 .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);cursor:pointer;color:var(--text2);font-weight:500;font-size:.875rem;transition:all .2s;white-space:nowrap}
 .nav-item:hover{color:var(--text);background:var(--bg3)}
 .nav-item.active{color:var(--lime);background:rgba(212,255,0,.08)}
@@ -110,7 +110,7 @@ select.inp{cursor:pointer}
 .page-title{font-size:1.8rem;font-weight:800;line-height:1.1}
 
 /* MOBILE TOPBAR */
-.topbar{display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:50;flex-shrink:0}
+.topbar{display:none;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:50;flex-shrink:0;overflow:hidden}
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px}
 .ham-lines{display:flex;flex-direction:column;gap:4px}
 .ham-lines span{display:block;width:20px;height:2px;background:var(--text);border-radius:2px}
@@ -636,6 +636,11 @@ function showPage(pageId,clickedEl,isMobile){
     if(other[idx]){other.forEach(e=>e.classList.remove('active'));other[idx].classList.add('active');}
   }
   document.getElementById('sidebar').classList.remove('open');
+  // Cart only visible on Build Plan page AND when it has items
+  if(currentProfile?.role==='trainer'){
+    if(pageId==='trainer-build'&&cart.length>0)showCart();
+    else hideCart();
+  }
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
 
@@ -751,11 +756,18 @@ async function bootTrainer(){
   document.getElementById('t-stat-clients').textContent=myClients.length;
   document.getElementById('t-stat-plans').textContent=myPlans.length;
   renderTrainerClientsMini();renderTrainerExercises();renderTrainerClientsFull();renderTrainerPlans();
-  // Show cart panel
+  populateCartClients();
+  hideCart(); // cart hidden by default, shows only on Build Plan when items added
+}
+function showCart(){
   document.getElementById('cart-panel').classList.remove('hidden-panel');
   document.getElementById('main-content').classList.add('with-cart');
   document.getElementById('cart-mobile-btn').classList.remove('hidden');
-  populateCartClients();
+}
+function hideCart(){
+  document.getElementById('cart-panel').classList.add('hidden-panel');
+  document.getElementById('main-content').classList.remove('with-cart');
+  document.getElementById('cart-mobile-btn').classList.add('hidden');
 }
 function copyCode(){navigator.clipboard.writeText(currentProfile.trainer_code||'');toast('Trainer code copied! 📋');}
 function renderTrainerClientsMini(){
@@ -836,6 +848,10 @@ function updateCartUI(){
   const n=cart.length;
   const cl=document.getElementById('cart-count-label');if(cl)cl.textContent=n;
   const mb=document.getElementById('cart-mobile-count');if(mb)mb.textContent=n;
+  // Show cart panel only on Build Plan page when items exist
+  const onBuildPage=document.getElementById('page-trainer-build')?.classList.contains('active');
+  if(n>0&&onBuildPage)showCart();
+  else if(n===0)hideCart();
   const body=document.getElementById('cart-body');
   if(!n){body.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div style="font-weight:600;margin-bottom:4px">Cart is empty</div><div style="font-size:.8rem">Click any exercise to add it</div></div>';return;}
   body.innerHTML=cart.map((item,i)=>`
@@ -853,7 +869,7 @@ function updateCartUI(){
 }
 function updateCartItem(i,field,val){if(field==='sets')cart[i].sets=parseInt(val)||3;else cart[i][field]=val;}
 function removeFromCart(i){const id=cart[i].exercise_id;cart.splice(i,1);const c=document.getElementById('excard-'+id);if(c)c.classList.remove('in-cart');updateCartUI();}
-function clearCart(){cart.forEach(c=>{const el=document.getElementById('excard-'+c.exercise_id);if(el)el.classList.remove('in-cart');});cart=[];updateCartUI();}
+function clearCart(){cart.forEach(c=>{const el=document.getElementById('excard-'+c.exercise_id);if(el)el.classList.remove('in-cart');});cart=[];updateCartUI();hideCart();}
 function populateCartClients(){
   const sel=document.getElementById('cart-client-sel');
   sel.innerHTML='<option value="">— Select Client —</option>'+myClients.map(c=>`<option value="${c.id}">${c.full_name||c.email}</option>`).join('');

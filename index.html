@@ -1,905 +1,1678 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FitTrack Pro - Your Personal Workout Companion</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        .mono { font-family: 'Space Mono', monospace; }
-        
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #141414;
-            --bg-tertiary: #1e1e1e;
-            --accent-primary: #00ff88;
-            --accent-secondary: #00d4ff;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --border-color: #2a2a2a;
-            --success: #00ff88;
-            --warning: #ffaa00;
-            --error: #ff4444;
-        }
-        
-        body {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
-        
-        .glass {
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 40px rgba(0, 255, 136, 0.1);
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: var(--bg-primary);
-            font-weight: 600;
-            padding: 12px 24px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-primary:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .btn-primary:hover:before {
-            left: 100%;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-        }
-        
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--bg-secondary);
-            border-color: var(--accent-primary);
-        }
-        
-        input, textarea {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 14px 18px;
-            border-radius: 12px;
-            transition: all 0.3s;
-            outline: none;
-        }
-        
-        input:focus, textarea:focus {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
-        }
-        
-        input::placeholder {
-            color: var(--text-secondary);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .day-tab {
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-        
-        .day-tab:hover {
-            background: var(--bg-tertiary);
-        }
-        
-        .day-tab.active {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: var(--bg-primary);
-            font-weight: 600;
-        }
-        
-        .exercise-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .exercise-card:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background: var(--border-color);
-            transition: all 0.3s;
-        }
-        
-        .exercise-card:hover {
-            transform: translateX(8px);
-            border-color: var(--accent-primary);
-        }
-        
-        .exercise-card:hover:before {
-            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
-            width: 6px;
-        }
-        
-        .exercise-card.completed {
-            background: rgba(0, 255, 136, 0.05);
-            border-color: var(--accent-primary);
-        }
-        
-        .exercise-card.completed:before {
-            background: var(--accent-primary);
-        }
-        
-        .checkbox {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .checkbox:hover {
-            border-color: var(--accent-primary);
-        }
-        
-        .checkbox.checked {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 16px;
-            padding: 24px;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background: var(--bg-tertiary);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .progress-fill:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        .tab-indicator {
-            position: absolute;
-            bottom: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 3px 3px 0 0;
-        }
-        
-        .skeleton {
-            background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-        
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--bg-tertiary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-primary);
-        }
-        
-        /* Mobile optimizations */
-        @media (max-width: 768px) {
-            .card {
-                border-radius: 16px;
-            }
-            
-            .exercise-card {
-                padding: 16px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrackMyReps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #1a1a1a;
+  --card: #161616;
+  --border: #242424;
+  --lime: #D4FF00;
+  --lime2: #b8e000;
+  --blue: #4488FF;
+  --orange: #FF6B35;
+  --purple: #9B6DFF;
+  --green: #00E676;
+  --red: #FF4444;
+  --text: #f0f0f0;
+  --text2: #888;
+  --text3: #555;
+  --r: 16px;
+  --r2: 24px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; }
+body { overflow-x: hidden; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.fadeUp { animation: fadeUp .4s ease forwards; }
+
+/* ── UTILITY ── */
+.hidden { display: none !important; }
+.flex { display: flex; }
+.col { flex-direction: column; }
+.gap8 { gap: 8px; }
+.gap12 { gap: 12px; }
+.gap16 { gap: 16px; }
+.gap20 { gap: 20px; }
+.between { justify-content: space-between; }
+.center { align-items: center; }
+.wrap { flex-wrap: wrap; }
+.mt8 { margin-top: 8px; }
+.mt16 { margin-top: 16px; }
+.mt24 { margin-top: 24px; }
+.w100 { width: 100%; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* ── SCROLL ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── TYPOGRAPHY ── */
+h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+.brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
+.brand span { color: var(--lime); }
+.page-title { font-size: 2rem; font-weight: 800; line-height: 1.1; }
+.section-title { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); font-weight: 600; }
+.muted { color: var(--text2); font-size: 0.875rem; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  transition: border-color .2s;
+}
+.card:hover { border-color: #333; }
+.card-glow { box-shadow: 0 0 40px rgba(212,255,0,.05); }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem;
+  transition: all .2s; white-space: nowrap;
+}
+.btn-lime { background: var(--lime); color: #000; }
+.btn-lime:hover { background: var(--lime2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,255,0,.3); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
+.btn-danger { background: rgba(255,68,68,.15); color: var(--red); border: 1px solid rgba(255,68,68,.3); }
+.btn-danger:hover { background: rgba(255,68,68,.25); }
+.btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+.btn-icon { padding: 10px; border-radius: 12px; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── INPUTS ── */
+.inp {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px 16px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  transition: border-color .2s; outline: none;
+}
+.inp:focus { border-color: var(--lime); }
+.inp::placeholder { color: var(--text3); }
+select.inp { cursor: pointer; }
+.inp-group { display: flex; flex-direction: column; gap: 6px; }
+.inp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* ── BADGE ── */
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.badge-lime { background: rgba(212,255,0,.15); color: var(--lime); }
+.badge-blue { background: rgba(68,136,255,.15); color: var(--blue); }
+.badge-orange { background: rgba(255,107,53,.15); color: var(--orange); }
+.badge-purple { background: rgba(155,109,255,.15); color: var(--purple); }
+.badge-green { background: rgba(0,230,118,.15); color: var(--green); }
+.badge-red { background: rgba(255,68,68,.15); color: var(--red); }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 14px 20px; display: flex; align-items: center; gap: 12px;
+  transform: translateX(200%); transition: transform .3s ease;
+  min-width: 280px; box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+#toast.show { transform: translateX(0); }
+#toast .toast-icon { font-size: 1.2rem; }
+#toast.success { border-color: var(--green); }
+#toast.error { border-color: var(--red); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.8); backdrop-filter: blur(8px);
+  z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.modal {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r2);
+  padding: 28px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+  animation: fadeUp .3s ease;
+}
+.modal-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.3rem; margin-bottom: 20px; }
+
+/* ── LOADING ── */
+.spinner {
+  width: 40px; height: 40px; border: 3px solid var(--border);
+  border-top-color: var(--lime); border-radius: 50%; animation: spin .8s linear infinite;
+}
+.loading-screen {
+  position: fixed; inset: 0; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; z-index: 9998;
+}
+
+/* ── AUTH ── */
+#auth-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 20px; position: relative; overflow: hidden;
+}
+.auth-bg {
+  position: absolute; inset: 0; background:
+    radial-gradient(ellipse at 20% 50%, rgba(212,255,0,.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(68,136,255,.06) 0%, transparent 60%);
+}
+.auth-card {
+  width: 100%; max-width: 420px; position: relative; z-index: 1;
+  animation: fadeUp .5s ease;
+}
+.auth-logo { text-align: center; margin-bottom: 40px; }
+.auth-logo .brand { font-size: 2rem; }
+.auth-logo p { color: var(--text2); margin-top: 6px; font-size: 0.9rem; }
+.auth-tabs { display: flex; background: var(--bg3); border-radius: 100px; padding: 4px; margin-bottom: 28px; border: 1px solid var(--border); }
+.auth-tab {
+  flex: 1; text-align: center; padding: 10px; border-radius: 100px; cursor: pointer;
+  font-weight: 600; font-size: 0.875rem; transition: all .2s; color: var(--text2);
+}
+.auth-tab.active { background: var(--lime); color: #000; }
+.role-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.role-btn {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 16px 20px; cursor: pointer; text-align: left; transition: all .2s;
+  display: flex; align-items: center; gap: 14px;
+}
+.role-btn:hover { border-color: var(--lime); }
+.role-btn.selected { border-color: var(--lime); background: rgba(212,255,0,.05); }
+.role-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+
+/* ── APP LAYOUT ── */
+#app { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 240px; background: var(--bg2); border-right: 1px solid var(--border);
+  padding: 28px 16px; display: flex; flex-direction: column; gap: 8px;
+  position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; transition: transform .3s;
+}
+.sidebar-brand { padding: 0 8px 20px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--r);
+  cursor: pointer; color: var(--text2); font-weight: 500; font-size: 0.9rem; transition: all .2s;
+}
+.nav-item:hover { color: var(--text); background: var(--bg3); }
+.nav-item.active { color: var(--lime); background: rgba(212,255,0,.08); }
+.nav-item .ni-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+.sidebar-footer { margin-top: auto; }
+.user-chip {
+  display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--r);
+  background: var(--bg3); border: 1px solid var(--border); cursor: pointer;
+}
+.avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--lime), var(--blue));
+  display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; color: #000;
+  flex-shrink: 0;
+}
+.avatar-lg { width: 48px; height: 48px; font-size: 1rem; border-radius: 16px; }
+.main-content { margin-left: 240px; flex: 1; padding: 32px; max-width: 1200px; }
+.page { display: none; }
+.page.active { display: block; animation: fadeUp .3s ease; }
+.page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+
+/* ── MOBILE NAV ── */
+.mobile-nav {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 8px 16px 20px; z-index: 100; justify-content: space-around;
+}
+.mnav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 8px 12px; border-radius: 12px; color: var(--text2); font-size: 0.7rem; }
+.mnav-item.active { color: var(--lime); }
+.mnav-item span:first-child { font-size: 1.2rem; }
+
+/* ── STAT CARDS ── */
+.stat-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r2);
+  padding: 20px; position: relative; overflow: hidden;
+}
+.stat-card .stat-num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; margin: 4px 0; }
+.stat-card .stat-accent { position: absolute; top: 16px; right: 16px; font-size: 2rem; opacity: 0.2; }
+
+/* ── EXERCISE CARDS ── */
+.ex-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r2);
+  padding: 18px; display: flex; align-items: center; gap: 14px; transition: all .2s; cursor: pointer;
+}
+.ex-card:hover { border-color: #333; transform: translateY(-2px); }
+.ex-card.selected { border-color: var(--lime); background: rgba(212,255,0,.04); }
+.ex-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.ex-info { flex: 1; min-width: 0; }
+.ex-name { font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ex-meta { color: var(--text2); font-size: 0.8rem; margin-top: 2px; }
+.ex-actions { display: flex; gap: 6px; opacity: 0; transition: opacity .2s; }
+.ex-card:hover .ex-actions { opacity: 1; }
+
+/* ── PROGRESS BARS ── */
+.prog-bar { height: 6px; background: var(--bg3); border-radius: 100px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 100px; transition: width .5s ease; }
+
+/* ── DAY TABS ── */
+.day-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 20px; }
+.day-tab {
+  padding: 8px 16px; border-radius: 100px; border: 1px solid var(--border); background: transparent;
+  color: var(--text2); cursor: pointer; font-size: 0.85rem; font-weight: 600; white-space: nowrap; transition: all .2s;
+}
+.day-tab.active { background: var(--lime); color: #000; border-color: transparent; }
+.day-tab:hover:not(.active) { border-color: var(--lime); color: var(--lime); }
+
+/* ── CLIENT EXERCISE ROW ── */
+.workout-ex {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r2);
+  padding: 16px; margin-bottom: 12px; transition: border-color .2s;
+}
+.workout-ex.done { border-color: var(--green); opacity: .7; }
+.set-row { display: grid; grid-template-columns: 40px 1fr 1fr 48px; gap: 8px; align-items: center; margin-top: 10px; }
+.set-num { background: var(--bg3); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--text2); }
+.set-inp { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; color: var(--text); font-size: 0.85rem; text-align: center; outline: none; width: 100%; }
+.set-inp:focus { border-color: var(--lime); }
+.check-btn { width: 32px; height: 32px; border-radius: 10px; border: 2px solid var(--border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+.check-btn.checked { background: var(--green); border-color: var(--green); }
+
+/* ── CHART CONTAINER ── */
+.chart-wrap { position: relative; height: 200px; }
+
+/* ── CATEGORY FILTER ── */
+.cat-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.cat-chip {
+  padding: 6px 14px; border-radius: 100px; background: var(--bg3); border: 1px solid var(--border);
+  cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--text2); transition: all .2s;
+}
+.cat-chip.active { background: var(--lime); color: #000; border-color: transparent; }
+
+/* ── CLIENT LIST ── */
+.client-row {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  margin-bottom: 8px; transition: border-color .2s; cursor: pointer;
+}
+.client-row:hover { border-color: #333; }
+.client-info { flex: 1; }
+.client-name { font-weight: 600; }
+.client-email { font-size: 0.8rem; color: var(--text2); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-left: 0; padding: 20px 16px 100px; }
+  .mobile-nav { display: flex; }
+  .grid2 { grid-template-columns: 1fr; }
+  .grid3 { grid-template-columns: 1fr 1fr; }
+  .page-title { font-size: 1.5rem; }
+  .inp-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .grid3 { grid-template-columns: 1fr; }
+}
+
+/* ── EMPTY STATE ── */
+.empty { text-align: center; padding: 60px 20px; color: var(--text2); }
+.empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: .5; }
+.empty h3 { font-family: 'Syne', sans-serif; margin-bottom: 8px; color: var(--text); }
+
+/* ── HAMBURGER ── */
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+@media (max-width: 768px) { .hamburger { display: flex; } }
+.ham-lines { display: flex; flex-direction: column; gap: 5px; }
+.ham-lines span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+
+/* TOP BAR MOBILE */
+.topbar { display: none; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 50; }
+@media (max-width: 768px) { .topbar { display: flex; } }
+</style>
 </head>
 <body>
-    <div id="root"></div>
-    
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
-        const { createClient } = supabase;
 
-        // ⚠️ REPLACE WITH YOUR ACTUAL SUPABASE VALUES
-        const SUPABASE_URL = 'https://oxpeybhsucryghtrnhmm.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
-        
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+<!-- LOADING -->
+<div class="loading-screen" id="loading">
+  <div class="brand">Track<span>MyReps</span></div>
+  <div class="spinner"></div>
+</div>
 
-        // Icons Component
-        const Icons = {
-            Check: () => (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M13.5 4L6 11.5L2.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-            ),
-            Play: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M6.5 4L14.5 10L6.5 16V4Z" fill="currentColor"/>
-                </svg>
-            ),
-            Plus: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-            ),
-            Trash: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M6 8V16M10 8V16M14 8V16M4 6H16M14 6V4H6V6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-            ),
-            Fire: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M10 18C13.866 18 17 14.866 17 11C17 7.134 13.866 4 10 4C6.134 4 3 7.134 3 11C3 14.866 6.134 18 10 18Z" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M10 2V4M10 16V18M18 10H16M4 10H2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-            ),
-            Chart: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M3 17V9M10 17V3M17 17V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-            ),
-            User: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <circle cx="10" cy="7" r="4" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M4 17C4 14.2386 6.23858 12 9 12H11C13.7614 12 16 14.2386 16 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-            ),
-            Logout: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M13 3H16C16.5523 3 17 3.44772 17 4V16C17 16.5523 16.5523 17 16 17H13M9 14L13 10M13 10L9 6M13 10H3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-            ),
-            Camera: () => (
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <rect x="3" y="5" width="14" height="11" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M7 3L8 5M13 3L12 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <circle cx="10" cy="11" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
-                </svg>
-            )
-        };
+<!-- TOAST -->
+<div id="toast">
+  <span class="toast-icon" id="toast-icon"></span>
+  <span id="toast-msg"></span>
+</div>
 
-        function App() {
-            const [user, setUser] = useState(null);
-            const [loading, setLoading] = useState(true);
-            const [activeTab, setActiveTab] = useState('workout');
-            
-            useEffect(() => {
-                checkUser();
-                
-                const { data: { subscription } } = supabaseClient.auth.onAuthStateChange((event, session) => {
-                    setUser(session?.user || null);
-                });
+<!-- AUTH -->
+<div id="auth-screen" class="hidden">
+  <div class="auth-bg"></div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="brand" style="font-size:2.2rem">Track<span>MyReps</span></div>
+      <p>Your intelligent fitness companion</p>
+    </div>
 
-                return () => subscription.unsubscribe();
-            }, []);
+    <div class="auth-tabs">
+      <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
+      <div class="auth-tab" onclick="switchTab('signup')">Sign Up</div>
+    </div>
 
-            const checkUser = async () => {
-                const { data: { session } } = await supabaseClient.auth.getSession();
-                setUser(session?.user || null);
-                setLoading(false);
-            };
+    <!-- LOGIN -->
+    <div id="login-form">
+      <div class="flex col gap12">
+        <div class="inp-group">
+          <label class="label">Email</label>
+          <input class="inp" id="l-email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="inp-group">
+          <label class="label">Password</label>
+          <input class="inp" id="l-pass" type="password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-lime w100 mt8" onclick="login()" id="login-btn">Sign In</button>
+        <div style="text-align:center; color:var(--text2); font-size:.8rem">— or quick access —</div>
+        <div class="role-btns">
+          <div class="role-btn" onclick="quickLogin('admin@test.com','Test1234!')">
+            <div class="role-icon" style="background:rgba(212,255,0,.15)">👑</div>
+            <div><div style="font-weight:700">Admin Demo</div><div class="muted">Full system control</div></div>
+          </div>
+          <div class="role-btn" onclick="quickLogin('trainer@test.com','Test1234!')">
+            <div class="role-icon" style="background:rgba(68,136,255,.15)">🏋️</div>
+            <div><div style="font-weight:700">Trainer Demo</div><div class="muted">Manage clients & plans</div></div>
+          </div>
+          <div class="role-btn" onclick="quickLogin('client@test.com','Test1234!')">
+            <div class="role-icon" style="background:rgba(0,230,118,.15)">💪</div>
+            <div><div style="font-weight:700">Client Demo</div><div class="muted">Track your workouts</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            if (loading) {
-                return <LoadingScreen />;
-            }
+    <!-- SIGNUP -->
+    <div id="signup-form" class="hidden">
+      <div class="flex col gap12">
+        <div class="inp-group">
+          <label class="label">Full Name</label>
+          <input class="inp" id="s-name" type="text" placeholder="Malani Sharma">
+        </div>
+        <div class="inp-group">
+          <label class="label">Email</label>
+          <input class="inp" id="s-email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="inp-group">
+          <label class="label">Password</label>
+          <input class="inp" id="s-pass" type="password" placeholder="Min 6 characters">
+        </div>
+        <div class="inp-group">
+          <label class="label">Sign up as</label>
+          <select class="inp" id="s-role">
+            <option value="client">Client (Default)</option>
+            <option value="trainer">Trainer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <button class="btn btn-lime w100 mt8" onclick="signup()">Create Account</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-            if (!user) {
-                return <AuthScreen onAuth={checkUser} />;
-            }
+<!-- APP -->
+<div id="app" class="hidden">
+  <!-- MOBILE TOPBAR -->
+  <div class="topbar">
+    <button class="hamburger" onclick="toggleSidebar()">
+      <div class="ham-lines"><span></span><span></span><span></span></div>
+    </button>
+    <div class="brand" style="font-size:1.1rem">Track<span>MyReps</span></div>
+    <div id="top-avatar" class="avatar" style="cursor:pointer" onclick="logout()">?</div>
+  </div>
 
-            return (
-                <div className="min-h-screen pb-24">
-                    <Header user={user} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                        {activeTab === 'workout' && <WorkoutTab user={user} />}
-                        {activeTab === 'progress' && <ProgressTab user={user} />}
-                        {activeTab === 'profile' && <ProfileTab user={user} />}
-                    </div>
-                </div>
-            );
-        }
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand">Track<span>MyReps</span></div>
+    </div>
+    <div id="nav-items"></div>
+    <div class="sidebar-footer">
+      <div class="user-chip" onclick="logout()">
+        <div class="avatar" id="sidebar-avatar">?</div>
+        <div style="flex:1; min-width:0">
+          <div style="font-weight:600; font-size:.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap" id="sidebar-name">User</div>
+          <div class="muted" style="font-size:.75rem" id="sidebar-role">Role</div>
+        </div>
+        <span style="color:var(--text2); font-size:.8rem">⏻</span>
+      </div>
+    </div>
+  </div>
 
-        function LoadingScreen() {
-            return (
-                <div className="min-h-screen flex items-center justify-center">
-                    <div className="text-center">
-                        <div className="w-16 h-16 border-4 border-t-transparent border-accent-primary rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-text-secondary">Loading your workout data...</p>
-                    </div>
-                </div>
-            );
-        }
+  <!-- MOBILE BOTTOM NAV -->
+  <div class="mobile-nav" id="mobile-nav"></div>
 
-        function AuthScreen({ onAuth }) {
-            const [isSignUp, setIsSignUp] = useState(false);
-            const [email, setEmail] = useState('');
-            const [password, setPassword] = useState('');
-            const [fullName, setFullName] = useState('');
-            const [error, setError] = useState('');
-            const [loading, setLoading] = useState(false);
+  <!-- MAIN -->
+  <div class="main-content" id="main-content">
 
-            const validateEmail = (email) => {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            };
+    <!-- ═══════════════════ ADMIN PAGES ═══════════════════ -->
+    <!-- Admin: Overview -->
+    <div class="page" id="page-admin-overview">
+      <div class="page-header">
+        <div>
+          <div class="label">Admin Panel</div>
+          <h1 class="page-title">Overview</h1>
+        </div>
+      </div>
+      <div class="grid3" style="margin-bottom:24px">
+        <div class="stat-card"><div class="label">Exercises</div><div class="stat-num" id="stat-ex">—</div><div class="muted">In repository</div><div class="stat-accent">🏋️</div></div>
+        <div class="stat-card"><div class="label">Trainers</div><div class="stat-num" id="stat-tr">—</div><div class="muted">Active trainers</div><div class="stat-accent">👤</div></div>
+        <div class="stat-card"><div class="label">Clients</div><div class="stat-num" id="stat-cl">—</div><div class="muted">Registered clients</div><div class="stat-accent">💪</div></div>
+      </div>
+      <div class="card">
+        <div class="section-title">Recent Users</div>
+        <div id="admin-users-list" class="mt16"></div>
+      </div>
+    </div>
 
-            const validatePassword = (password) => {
-                return password.length >= 8;
-            };
+    <!-- Admin: Exercises -->
+    <div class="page" id="page-admin-exercises">
+      <div class="page-header">
+        <div>
+          <div class="label">Repository</div>
+          <h1 class="page-title">Exercises</h1>
+        </div>
+        <button class="btn btn-lime" onclick="openExModal()">+ Add Exercise</button>
+      </div>
+      <div class="cat-filters" id="admin-cat-filters">
+        <div class="cat-chip active" data-cat="All" onclick="filterExercises('All',this)">All</div>
+        <div class="cat-chip" data-cat="Legs" onclick="filterExercises('Legs',this)">🦵 Legs</div>
+        <div class="cat-chip" data-cat="Chest" onclick="filterExercises('Chest',this)">💪 Chest</div>
+        <div class="cat-chip" data-cat="Back" onclick="filterExercises('Back',this)">🏋️ Back</div>
+        <div class="cat-chip" data-cat="Shoulders" onclick="filterExercises('Shoulders',this)">⬆️ Shoulders</div>
+        <div class="cat-chip" data-cat="Arms" onclick="filterExercises('Arms',this)">💪 Arms</div>
+        <div class="cat-chip" data-cat="Core" onclick="filterExercises('Core',this)">🎯 Core</div>
+        <div class="cat-chip" data-cat="Cardio" onclick="filterExercises('Cardio',this)">🏃 Cardio</div>
+      </div>
+      <div id="admin-ex-list" class="flex col gap8"></div>
+    </div>
 
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setError('');
-                
-                if (!validateEmail(email)) {
-                    setError('Please enter a valid email address');
-                    return;
-                }
-                
-                if (!validatePassword(password)) {
-                    setError('Password must be at least 8 characters');
-                    return;
-                }
-                
-                setLoading(true);
+    <!-- Admin: Users -->
+    <div class="page" id="page-admin-users">
+      <div class="page-header">
+        <div><div class="label">Manage</div><h1 class="page-title">All Users</h1></div>
+        <button class="btn btn-ghost" onclick="loadAdminUsers()">↻ Refresh</button>
+      </div>
+      <div id="admin-users-full"></div>
+    </div>
 
-                try {
-                    if (isSignUp) {
-                        const { data, error } = await supabaseClient.auth.signUp({
-                            email,
-                            password,
-                            options: {
-                                data: { full_name: fullName },
-                                emailRedirectTo: window.location.origin
-                            }
-                        });
-                        
-                        if (error) throw error;
-                        
-                        alert('✅ Account created! Please check your email to verify your account.');
-                    } else {
-                        const { error } = await supabaseClient.auth.signInWithPassword({
-                            email,
-                            password
-                        });
-                        
-                        if (error) throw error;
-                        onAuth();
-                    }
-                } catch (err) {
-                    setError(err.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
+    <!-- ═══════════════════ TRAINER PAGES ═══════════════════ -->
+    <!-- Trainer: Overview -->
+    <div class="page" id="page-trainer-overview">
+      <div class="page-header">
+        <div><div class="label">Trainer Dashboard</div><h1 class="page-title">Welcome back 👋</h1></div>
+      </div>
+      <div class="grid2" style="margin-bottom:24px">
+        <div class="stat-card"><div class="label">My Clients</div><div class="stat-num" id="t-stat-clients">—</div><div class="muted">Assigned to you</div><div class="stat-accent">👥</div></div>
+        <div class="stat-card"><div class="label">Templates</div><div class="stat-num" id="t-stat-templates">—</div><div class="muted">Workout plans</div><div class="stat-accent">📋</div></div>
+      </div>
+      <div class="card">
+        <div class="section-title mb8">My Clients</div>
+        <div id="trainer-clients-mini" class="mt16"></div>
+      </div>
+    </div>
 
-            return (
-                <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-                    {/* Background decoration */}
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-primary rounded-full filter blur-3xl"></div>
-                        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-secondary rounded-full filter blur-3xl"></div>
-                    </div>
+    <!-- Trainer: Exercise Browser -->
+    <div class="page" id="page-trainer-exercises">
+      <div class="page-header">
+        <div><div class="label">Browse</div><h1 class="page-title">Exercise Library</h1></div>
+      </div>
+      <div class="cat-filters" id="trainer-cat-filters">
+        <div class="cat-chip active" onclick="filterTrainerEx('All',this)">All</div>
+        <div class="cat-chip" onclick="filterTrainerEx('Legs',this)">🦵 Legs</div>
+        <div class="cat-chip" onclick="filterTrainerEx('Chest',this)">💪 Chest</div>
+        <div class="cat-chip" onclick="filterTrainerEx('Back',this)">🏋️ Back</div>
+        <div class="cat-chip" onclick="filterTrainerEx('Shoulders',this)">⬆️ Shoulders</div>
+        <div class="cat-chip" onclick="filterTrainerEx('Arms',this)">💪 Arms</div>
+        <div class="cat-chip" onclick="filterTrainerEx('Core',this)">🎯 Core</div>
+        <div class="cat-chip" onclick="filterTrainerEx('Cardio',this)">🏃 Cardio</div>
+      </div>
+      <div id="trainer-ex-list" class="grid2"></div>
+    </div>
 
-                    <div className="glass p-8 sm:p-12 rounded-3xl w-full max-w-md relative z-10 fade-in">
-                        <div className="text-center mb-8">
-                            <h1 className="text-5xl font-bold mb-3 gradient-text">FitTrack Pro</h1>
-                            <p className="text-text-secondary">Your personal workout companion</p>
-                        </div>
+    <!-- Trainer: Templates -->
+    <div class="page" id="page-trainer-templates">
+      <div class="page-header">
+        <div><div class="label">Workout Plans</div><h1 class="page-title">Templates</h1></div>
+        <button class="btn btn-lime" onclick="openTemplateModal()">+ New Template</button>
+      </div>
+      <div id="trainer-templates-list" class="flex col gap12"></div>
+    </div>
 
-                        <div className="flex gap-2 mb-8 p-1 bg-bg-primary rounded-xl">
-                            <button
-                                onClick={() => setIsSignUp(false)}
-                                className={`flex-1 py-3 rounded-lg font-medium transition-all ${!isSignUp ? 'bg-accent-primary text-bg-primary' : 'text-text-secondary'}`}
-                            >
-                                Login
-                            </button>
-                            <button
-                                onClick={() => setIsSignUp(true)}
-                                className={`flex-1 py-3 rounded-lg font-medium transition-all ${isSignUp ? 'bg-accent-primary text-bg-primary' : 'text-text-secondary'}`}
-                            >
-                                Sign Up
-                            </button>
-                        </div>
+    <!-- Trainer: Clients -->
+    <div class="page" id="page-trainer-clients">
+      <div class="page-header">
+        <div><div class="label">Manage</div><h1 class="page-title">My Clients</h1></div>
+      </div>
+      <div id="trainer-clients-list"></div>
+    </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            {isSignUp && (
-                                <div>
-                                    <label className="block text-sm font-medium mb-2 text-text-secondary">Full Name</label>
-                                    <input
-                                        type="text"
-                                        value={fullName}
-                                        onChange={(e) => setFullName(e.target.value)}
-                                        className="w-full"
-                                        placeholder="John Doe"
-                                        required={isSignUp}
-                                    />
-                                </div>
-                            )}
-                            
-                            <div>
-                                <label className="block text-sm font-medium mb-2 text-text-secondary">Email</label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full"
-                                    placeholder="you@example.com"
-                                    required
-                                />
-                            </div>
+    <!-- Trainer: Assign -->
+    <div class="page" id="page-trainer-assign">
+      <div class="page-header">
+        <div><div class="label">Action</div><h1 class="page-title">Assign Plan</h1></div>
+      </div>
+      <div class="card" style="max-width:500px">
+        <div class="flex col gap16">
+          <div class="inp-group">
+            <label class="label">Select Client</label>
+            <select class="inp" id="assign-client-sel"></select>
+          </div>
+          <div class="inp-group">
+            <label class="label">Select Template</label>
+            <select class="inp" id="assign-template-sel"></select>
+          </div>
+          <button class="btn btn-lime" onclick="assignPlan()">Assign Plan</button>
+        </div>
+      </div>
+    </div>
 
-                            <div>
-                                <label className="block text-sm font-medium mb-2 text-text-secondary">Password</label>
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full"
-                                    placeholder="••••••••"
-                                    required
-                                    minLength={8}
-                                />
-                                {isSignUp && (
-                                    <p className="text-xs text-text-secondary mt-1">Minimum 8 characters required</p>
-                                )}
-                            </div>
+    <!-- ═══════════════════ CLIENT PAGES ═══════════════════ -->
+    <!-- Client: Today -->
+    <div class="page" id="page-client-today">
+      <div class="page-header">
+        <div><div class="label">Today's Workout</div><h1 class="page-title" id="client-day-label">Monday</h1></div>
+        <div id="client-progress-ring"></div>
+      </div>
+      <div class="day-tabs" id="client-day-tabs"></div>
+      <div id="client-workout-list"></div>
+    </div>
 
-                            {error && (
-                                <div className="p-4 bg-error bg-opacity-10 border border-error rounded-xl text-error text-sm">
-                                    {error}
-                                </div>
-                            )}
+    <!-- Client: Progress -->
+    <div class="page" id="page-client-progress">
+      <div class="page-header">
+        <div><div class="label">Analytics</div><h1 class="page-title">My Progress</h1></div>
+        <button class="btn btn-lime btn-sm" onclick="openMeasurementModal()">+ Log Weight</button>
+      </div>
+      <div class="grid2" style="margin-bottom:24px">
+        <div class="stat-card">
+          <div class="label">Current Weight</div>
+          <div class="stat-num" id="current-weight">—</div>
+          <div class="muted">kg</div>
+          <div class="stat-accent">⚖️</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Workouts Done</div>
+          <div class="stat-num" id="workouts-done">—</div>
+          <div class="muted">This week</div>
+          <div class="stat-accent">🔥</div>
+        </div>
+      </div>
+      <div class="card mb16" style="margin-bottom:16px">
+        <div class="section-title" style="margin-bottom:16px">Weight History</div>
+        <div class="chart-wrap"><canvas id="weight-chart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="section-title" style="margin-bottom:16px">Weekly Volume</div>
+        <div class="chart-wrap"><canvas id="volume-chart"></canvas></div>
+      </div>
+    </div>
 
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="btn-primary w-full relative"
-                            >
-                                {loading ? (
-                                    <span className="flex items-center justify-center gap-2">
-                                        <div className="w-5 h-5 border-2 border-t-transparent border-current rounded-full animate-spin"></div>
-                                        {isSignUp ? 'Creating Account...' : 'Signing In...'}
-                                    </span>
-                                ) : (
-                                    <span>{isSignUp ? 'Create Account' : 'Sign In'}</span>
-                                )}
-                            </button>
-                        </form>
+    <!-- Client: Plan -->
+    <div class="page" id="page-client-plan">
+      <div class="page-header">
+        <div><div class="label">Your Program</div><h1 class="page-title">Workout Plan</h1></div>
+      </div>
+      <div id="client-plan-view"></div>
+    </div>
 
-                        {isSignUp && (
-                            <p className="text-xs text-text-secondary text-center mt-6">
-                                By signing up, you'll receive an email confirmation. Make sure to verify your email!
-                            </p>
-                        )}
-                    </div>
-                </div>
-            );
-        }
+    <!-- Client: Profile -->
+    <div class="page" id="page-client-profile">
+      <div class="page-header">
+        <div><div class="label">Account</div><h1 class="page-title">Profile</h1></div>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Sign Out</button>
+      </div>
+      <div class="card" style="max-width:480px">
+        <div class="flex center gap16" style="margin-bottom:24px">
+          <div class="avatar avatar-lg" id="profile-avatar">?</div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700" id="profile-name">—</div>
+            <div class="muted" id="profile-email">—</div>
+            <div class="mt8" id="profile-badge"></div>
+          </div>
+        </div>
+        <div id="client-measurements-list" style="border-top:1px solid var(--border); padding-top:20px">
+          <div class="section-title mb8">Body Weight Log</div>
+          <div id="measurements-table"></div>
+        </div>
+      </div>
+    </div>
 
-        function Header({ user, activeTab, setActiveTab }) {
-            const handleLogout = async () => {
-                if (confirm('Are you sure you want to logout?')) {
-                    await supabaseClient.auth.signOut();
-                }
-            };
+  </div><!-- /main-content -->
+</div><!-- /app -->
 
-            const tabs = [
-                { id: 'workout', label: 'Workout', icon: Icons.Fire },
-                { id: 'progress', label: 'Progress', icon: Icons.Chart },
-                { id: 'profile', label: 'Profile', icon: Icons.User }
-            ];
+<!-- MODALS -->
+<!-- Exercise Modal (Admin) -->
+<div class="modal-overlay hidden" id="ex-modal">
+  <div class="modal">
+    <div class="modal-title" id="ex-modal-title">Add Exercise</div>
+    <div class="flex col gap12">
+      <div class="inp-group"><label class="label">Name</label><input class="inp" id="ex-name" placeholder="e.g. Hack Squat"></div>
+      <div class="inp-group">
+        <label class="label">Category</label>
+        <select class="inp" id="ex-cat">
+          <option>Legs</option><option>Chest</option><option>Back</option>
+          <option>Shoulders</option><option>Arms</option><option>Core</option><option>Cardio</option>
+        </select>
+      </div>
+      <div class="inp-row">
+        <div class="inp-group"><label class="label">Default Sets</label><input class="inp" id="ex-sets" type="number" placeholder="3"></div>
+        <div class="inp-group"><label class="label">Default Reps</label><input class="inp" id="ex-reps" placeholder="10-15"></div>
+      </div>
+      <div class="inp-group"><label class="label">Tutorial URL (optional)</label><input class="inp" id="ex-url" placeholder="https://youtube.com/..."></div>
+      <div class="inp-group"><label class="label">Notes</label><textarea class="inp" id="ex-notes" rows="2" placeholder="Coaching cues..."></textarea></div>
+      <div class="flex gap8 mt8">
+        <button class="btn btn-ghost flex-1" onclick="closeExModal()">Cancel</button>
+        <button class="btn btn-lime flex-1" onclick="saveExercise()">Save Exercise</button>
+      </div>
+    </div>
+    <input type="hidden" id="ex-editing-id">
+  </div>
+</div>
 
-            return (
-                <header className="glass border-b border-border-color sticky top-0 z-50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-center justify-between h-20">
-                            <h1 className="text-2xl font-bold gradient-text">FitTrack Pro</h1>
-                            
-                            <nav className="flex items-center gap-2">
-                                {tabs.map((tab) => (
-                                    <button
-                                        key={tab.id}
-                                        onClick={() => setActiveTab(tab.id)}
-                                        className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all ${
-                                            activeTab === tab.id 
-                                                ? 'bg-accent-primary text-bg-primary font-semibold' 
-                                                : 'text-text-secondary hover:bg-bg-tertiary'
-                                        }`}
-                                    >
-                                        <tab.icon />
-                                        <span className="hidden sm:inline">{tab.label}</span>
-                                    </button>
-                                ))}
-                                
-                                <button
-                                    onClick={handleLogout}
-                                    className="ml-4 p-3 rounded-lg text-text-secondary hover:bg-bg-tertiary hover:text-error transition-all"
-                                    title="Logout"
-                                >
-                                    <Icons.Logout />
-                                </button>
-                            </nav>
-                        </div>
-                    </div>
-                </header>
-            );
-        }
+<!-- Template Modal (Trainer) -->
+<div class="modal-overlay hidden" id="template-modal">
+  <div class="modal" style="max-width:720px">
+    <div class="modal-title">Create Workout Template</div>
+    <div class="flex col gap12">
+      <div class="inp-group"><label class="label">Template Name</label><input class="inp" id="tmpl-name" placeholder="e.g. Malani - 5 Day Split"></div>
+      <div class="inp-group"><label class="label">Description</label><input class="inp" id="tmpl-desc" placeholder="Brief description..."></div>
 
-        function WorkoutTab({ user }) {
-            const [selectedDay, setSelectedDay] = useState(new Date().getDay());
-            const [workouts, setWorkouts] = useState({});
-            const [loading, setLoading] = useState(true);
-            
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const workoutNames = {
-                1: 'Legs & Side Delts',
-                2: 'Chest & Biceps',
-                3: 'Back & Triceps',
-                4: 'Legs',
-                5: 'Shoulders & Chest'
-            };
-            
-            const warmups = {
-                1: 'Leg swings, Hip rotations, 90-90, Deep squat',
-                2: 'Shoulder CARs, Shoulder rotations, Cat and cow, Scapula retraction/protraction',
-                3: 'General warmup',
-                4: 'Leg swings, Hip rotations, 90-90, Deep squat',
-                5: 'Shoulder CARs, Shoulder rotations, Cat and cow, Scapula retraction/protraction, Rotator cuff'
-            };
+      <div style="border-top:1px solid var(--border); padding-top:16px; margin-top:4px">
+        <div class="section-title mb8">Add Exercises by Day</div>
+        <div class="day-tabs" id="tmpl-day-tabs">
+          <div class="day-tab active" onclick="setTmplDay('Monday',this)">Mon</div>
+          <div class="day-tab" onclick="setTmplDay('Tuesday',this)">Tue</div>
+          <div class="day-tab" onclick="setTmplDay('Wednesday',this)">Wed</div>
+          <div class="day-tab" onclick="setTmplDay('Thursday',this)">Thu</div>
+          <div class="day-tab" onclick="setTmplDay('Friday',this)">Fri</div>
+          <div class="day-tab" onclick="setTmplDay('Saturday',this)">Sat</div>
+          <div class="day-tab" onclick="setTmplDay('Sunday',this)">Sun</div>
+        </div>
+        <div id="tmpl-day-label" class="label mb8">Monday</div>
+        <select class="inp mb8" id="tmpl-ex-sel" style="margin-bottom:8px">
+          <option value="">— Pick exercise to add —</option>
+        </select>
+        <div class="inp-row" style="margin-bottom:8px">
+          <div class="inp-group"><label class="label">Sets</label><input class="inp" id="tmpl-ex-sets" type="number" value="3"></div>
+          <div class="inp-group"><label class="label">Reps</label><input class="inp" id="tmpl-ex-reps" value="10-15"></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="addExToTemplate()">+ Add to Day</button>
 
-            useEffect(() => {
-                loadWorkouts();
-            }, [user]);
+        <div id="tmpl-exercises-preview" style="margin-top:16px; max-height:200px; overflow-y:auto"></div>
+      </div>
 
-            const loadWorkouts = async () => {
-                // For now, we'll use a simple implementation
-                // In production, this would load from the database
-                setLoading(false);
-            };
+      <div class="flex gap8 mt8">
+        <button class="btn btn-ghost flex-1" onclick="closeTemplateModal()">Cancel</button>
+        <button class="btn btn-lime flex-1" onclick="saveTemplate()">Save Template</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-            const todayWorkout = workouts[selectedDay] || [];
-            const progress = todayWorkout.length > 0 
-                ? Math.round((todayWorkout.filter(ex => ex.completed).length / todayWorkout.length) * 100)
-                : 0;
+<!-- Measurement Modal -->
+<div class="modal-overlay hidden" id="meas-modal">
+  <div class="modal">
+    <div class="modal-title">Log Body Weight</div>
+    <div class="flex col gap12">
+      <div class="inp-group"><label class="label">Weight (kg)</label><input class="inp" id="meas-weight" type="number" step="0.1" placeholder="75.5"></div>
+      <div class="inp-group"><label class="label">Date</label><input class="inp" id="meas-date" type="date"></div>
+      <div class="inp-group"><label class="label">Notes (optional)</label><input class="inp" id="meas-notes" placeholder="Feeling..."></div>
+      <div class="flex gap8 mt8">
+        <button class="btn btn-ghost flex-1" onclick="closeMeasurementModal()">Cancel</button>
+        <button class="btn btn-lime flex-1" onclick="saveMeasurement()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-            return (
-                <div className="space-y-6 fade-in">
-                    {/* Progress Overview */}
-                    <div className="stat-card">
-                        <div className="flex items-center justify-between mb-4">
-                            <div>
-                                <h2 className="text-3xl font-bold gradient-text mb-1">{progress}%</h2>
-                                <p className="text-text-secondary">Today's Progress</p>
-                            </div>
-                            <div className="text-5xl">💪</div>
-                        </div>
-                        <div className="progress-bar">
-                            <div className="progress-fill" style={{ width: `${progress}%` }}></div>
-                        </div>
-                    </div>
+<script>
+// ═══════════════════════════════════════════
+// SUPABASE CONFIG — UPDATE THESE!
+// ═══════════════════════════════════════════
+const SUPABASE_URL = 'https://oxpeybhsucryghtrnhmm.supabase.c';
+const SUPABASE_KEY = 'sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
 
-                    {/* Day Selector */}
-                    <div className="card p-4">
-                        <div className="flex gap-2 overflow-x-auto pb-2">
-                            {days.map((day, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => setSelectedDay(index)}
-                                    className={`day-tab whitespace-nowrap ${selectedDay === index ? 'active' : ''}`}
-                                >
-                                    {day}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+let db, currentUser, currentProfile;
+let exercises = [], templates = [], clients = [];
+let weightChart, volumeChart;
 
-                    {/* Workout Content */}
-                    {workoutNames[selectedDay] ? (
-                        <div className="space-y-6">
-                            <div className="card p-6">
-                                <h2 className="text-2xl font-bold mb-2">{workoutNames[selectedDay]}</h2>
-                                <div className="flex items-start gap-2 text-text-secondary">
-                                    <span className="text-warning">🔥</span>
-                                    <div>
-                                        <p className="text-sm font-medium mb-1">Warmup:</p>
-                                        <p className="text-sm">{warmups[selectedDay]}</p>
-                                    </div>
-                                </div>
-                            </div>
+// Template builder state
+let tmplExercises = { Monday:[], Tuesday:[], Wednesday:[], Thursday:[], Friday:[], Saturday:[], Sunday:[] };
+let tmplCurrentDay = 'Monday';
+let editingExId = null;
 
-                            {todayWorkout.length > 0 ? (
-                                <div className="space-y-3">
-                                    {todayWorkout.map((exercise, idx) => (
-                                        <ExerciseCard
-                                            key={exercise.id}
-                                            exercise={exercise}
-                                            index={idx}
-                                            onToggle={() => {}}
-                                        />
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="card p-12 text-center">
-                                    <div className="text-6xl mb-4">🎯</div>
-                                    <h3 className="text-xl font-bold mb-2">No exercises yet</h3>
-                                    <p className="text-text-secondary mb-6">Click below to load your workout plan</p>
-                                    <button className="btn-primary">
-                                        <Icons.Plus />
-                                        <span className="ml-2">Load Workout Plan</span>
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="card p-16 text-center">
-                            <div className="text-7xl mb-4">😴</div>
-                            <h2 className="text-3xl font-bold mb-2">Rest Day</h2>
-                            <p className="text-text-secondary">Recovery is just as important as training</p>
-                        </div>
-                    )}
-                </div>
-            );
-        }
+const catColors = {
+  Legs:'#4488FF', Chest:'#FF6B35', Back:'#9B6DFF',
+  Shoulders:'#D4FF00', Arms:'#00E676', Core:'#FF4444', Cardio:'#FFB800'
+};
+const catIcons = {
+  Legs:'🦵', Chest:'💪', Back:'🏋️', Shoulders:'⬆️', Arms:'💪', Core:'🎯', Cardio:'🏃'
+};
+const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
-        function ExerciseCard({ exercise, index, onToggle }) {
-            const [showLog, setShowLog] = useState(false);
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function toast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.querySelector('#toast-msg').textContent = msg;
+  el.querySelector('#toast-icon').textContent = type === 'success' ? '✅' : '❌';
+  el.className = `show ${type}`;
+  setTimeout(() => { el.classList.remove('show'); }, 3000);
+}
 
-            return (
-                <div className={`exercise-card ${exercise.completed ? 'completed' : ''}`}>
-                    <div className="flex items-start gap-4">
-                        <div
-                            onClick={onToggle}
-                            className={`checkbox ${exercise.completed ? 'checked' : ''}`}
-                        >
-                            {exercise.completed && <Icons.Check />}
-                        </div>
+// ═══════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════
+function switchTab(t) {
+  document.getElementById('login-form').classList.toggle('hidden', t!=='login');
+  document.getElementById('signup-form').classList.toggle('hidden', t!=='signup');
+  document.querySelectorAll('.auth-tab').forEach((el,i) => {
+    el.classList.toggle('active', (i===0&&t==='login')||(i===1&&t==='signup'));
+  });
+}
 
-                        <div className="flex-1">
-                            <div className="flex items-start justify-between mb-2">
-                                <div>
-                                    <h3 className={`font-semibold text-lg mb-1 ${exercise.completed ? 'line-through text-text-secondary' : ''}`}>
-                                        <span className="mono text-accent-primary mr-2">#{index + 1}</span>
-                                        {exercise.name}
-                                    </h3>
-                                    <p className="text-sm text-text-secondary">
-                                        {exercise.sets} sets × {exercise.reps} reps
-                                        {exercise.notes && <span className="ml-2">• {exercise.notes}</span>}
-                                    </p>
-                                </div>
-                            </div>
+async function login() {
+  const email = document.getElementById('l-email').value.trim();
+  const pass = document.getElementById('l-pass').value;
+  if(!email||!pass) return toast('Fill in all fields','error');
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  const { error } = await db.auth.signInWithPassword({ email, password: pass });
+  if(error) { toast(error.message,'error'); btn.disabled=false; btn.textContent='Sign In'; }
+}
 
-                            <div className="flex gap-3 mt-3">
-                                {exercise.tutorial && (
-                                    <a
-                                        href={exercise.tutorial}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-sm font-medium text-accent-primary hover:text-accent-secondary transition-colors flex items-center gap-1"
-                                    >
-                                        <Icons.Play />
-                                        Tutorial
-                                    </a>
-                                )}
-                                <button
-                                    onClick={() => setShowLog(!showLog)}
-                                    className="text-sm font-medium text-accent-primary hover:text-accent-secondary transition-colors"
-                                >
-                                    📝 Log Set
-                                </button>
-                            </div>
+async function quickLogin(email, pass) {
+  document.getElementById('l-email').value = email;
+  document.getElementById('l-pass').value = pass;
+  login();
+}
 
-                            {showLog && (
-                                <div className="mt-4 p-4 bg-bg-tertiary rounded-xl">
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div>
-                                            <label className="block text-xs font-medium text-text-secondary mb-2">Weight (kg)</label>
-                                            <input type="number" step="0.5" className="w-full" placeholder="20" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-medium text-text-secondary mb-2">Reps</label>
-                                            <input type="number" className="w-full" placeholder="12" />
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-2 mt-4">
-                                        <button className="btn-primary flex-1">Save</button>
-                                        <button onClick={() => setShowLog(false)} className="btn-secondary">Cancel</button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+async function signup() {
+  const name = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  const pass = document.getElementById('s-pass').value;
+  const role = document.getElementById('s-role').value;
+  if(!name||!email||!pass) return toast('Fill in all fields','error');
+  const { error } = await db.auth.signUp({
+    email, password: pass,
+    options: { data: { full_name: name, role } }
+  });
+  if(error) toast(error.message,'error');
+  else toast('Account created! You can now sign in.');
+}
 
-        function ProgressTab({ user }) {
-            return (
-                <div className="space-y-6 fade-in">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="stat-card">
-                            <p className="text-sm text-text-secondary mb-2">Current Streak</p>
-                            <p className="text-4xl font-bold gradient-text">7 days</p>
-                        </div>
-                        <div className="stat-card">
-                            <p className="text-sm text-text-secondary mb-2">Total Workouts</p>
-                            <p className="text-4xl font-bold gradient-text">24</p>
-                        </div>
-                        <div className="stat-card">
-                            <p className="text-sm text-text-secondary mb-2">This Week</p>
-                            <p className="text-4xl font-bold gradient-text">5/5</p>
-                        </div>
-                    </div>
+async function logout() {
+  await db.auth.signOut();
+  location.reload();
+}
 
-                    <div className="card p-6">
-                        <h2 className="text-xl font-bold mb-6">Body Weight Tracking</h2>
-                        <div className="text-center py-12 text-text-secondary">
-                            <p>No measurements yet. Start tracking your progress!</p>
-                        </div>
-                    </div>
+// ═══════════════════════════════════════════
+// APP BOOT
+// ═══════════════════════════════════════════
+async function bootApp(user) {
+  currentUser = user;
+  const { data: profile } = await db.from('profiles').select('*').eq('id', user.id).single();
+  if(!profile) { toast('Profile not found','error'); return; }
+  currentProfile = profile;
 
-                    <div className="card p-6">
-                        <h2 className="text-xl font-bold mb-6">Exercise History</h2>
-                        <div className="text-center py-12 text-text-secondary">
-                            <p>Complete your first workout to see your history here</p>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+  renderNav(profile.role);
+  updateUserUI(profile);
 
-        function ProfileTab({ user }) {
-            return (
-                <div className="space-y-6 fade-in max-w-2xl">
-                    <div className="card p-6">
-                        <h2 className="text-xl font-bold mb-6">Profile Settings</h2>
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-text-secondary mb-2">Email</label>
-                                <input type="email" value={user.email} disabled className="w-full opacity-50 cursor-not-allowed" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-text-secondary mb-2">Full Name</label>
-                                <input type="text" placeholder="Your name" className="w-full" />
-                            </div>
-                            <button className="btn-primary">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+  if(profile.role === 'admin') await bootAdmin();
+  else if(profile.role === 'trainer') await bootTrainer();
+  else await bootClient();
 
-        // Render App
-        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-    </script>
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('auth-screen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+}
+
+function updateUserUI(p) {
+  const initials = (p.full_name||p.email).split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('top-avatar').textContent = initials;
+  document.getElementById('sidebar-name').textContent = p.full_name || p.email;
+  document.getElementById('sidebar-role').textContent = p.role.charAt(0).toUpperCase()+p.role.slice(1);
+}
+
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+const navConfig = {
+  admin: [
+    { icon:'📊', label:'Overview', page:'admin-overview' },
+    { icon:'🏋️', label:'Exercises', page:'admin-exercises' },
+    { icon:'👥', label:'All Users', page:'admin-users' },
+  ],
+  trainer: [
+    { icon:'📊', label:'Dashboard', page:'trainer-overview' },
+    { icon:'📚', label:'Exercise Library', page:'trainer-exercises' },
+    { icon:'📋', label:'Templates', page:'trainer-templates' },
+    { icon:'👥', label:'My Clients', page:'trainer-clients' },
+    { icon:'🎯', label:'Assign Plan', page:'trainer-assign' },
+  ],
+  client: [
+    { icon:'🏃', label:"Today's Workout", page:'client-today' },
+    { icon:'📈', label:'Progress', page:'client-progress' },
+    { icon:'📋', label:'My Plan', page:'client-plan' },
+    { icon:'👤', label:'Profile', page:'client-profile' },
+  ]
+};
+
+function renderNav(role) {
+  const nav = navConfig[role] || [];
+  const sidebar = document.getElementById('nav-items');
+  const mobileNav = document.getElementById('mobile-nav');
+  sidebar.innerHTML = '';
+  mobileNav.innerHTML = '';
+
+  nav.forEach((item, i) => {
+    const si = document.createElement('div');
+    si.className = 'nav-item' + (i===0?' active':'');
+    si.innerHTML = `<span class="ni-icon">${item.icon}</span><span>${item.label}</span>`;
+    si.onclick = () => showPage(item.page, si, role);
+    sidebar.appendChild(si);
+
+    const mi = document.createElement('div');
+    mi.className = 'mnav-item' + (i===0?' active':'');
+    mi.innerHTML = `<span>${item.icon}</span><span>${item.label.split(' ')[0]}</span>`;
+    mi.onclick = () => showPage(item.page, mi, role, true);
+    mobileNav.appendChild(mi);
+  });
+
+  // Show first page
+  showPage(nav[0].page, null, role);
+}
+
+function showPage(pageId, clickedEl, role, isMobile=false) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-'+pageId);
+  if(page) page.classList.add('active');
+
+  if(clickedEl) {
+    const selector = isMobile ? '.mnav-item' : '.nav-item';
+    document.querySelectorAll(selector).forEach(el => el.classList.remove('active'));
+    clickedEl.classList.add('active');
+    // Sync the other nav
+    const otherSelector = isMobile ? '.nav-item' : '.mnav-item';
+    const allOther = document.querySelectorAll(otherSelector);
+    const idx = Array.from(isMobile ? document.querySelectorAll('.mnav-item') : document.querySelectorAll('.nav-item')).indexOf(clickedEl);
+    if(allOther[idx]) { allOther.forEach(e=>e.classList.remove('active')); allOther[idx].classList.add('active'); }
+  }
+
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+// ═══ ADMIN ═══
+// ═══════════════════════════════════════════
+async function bootAdmin() {
+  await loadExercises();
+  await loadAdminStats();
+  await loadAdminUsers();
+  renderAdminExercises();
+}
+
+async function loadAdminStats() {
+  const [{ count: exCount }, { data: users }] = await Promise.all([
+    db.from('exercises').select('*', {count:'exact',head:true}),
+    db.from('profiles').select('role')
+  ]);
+  document.getElementById('stat-ex').textContent = exCount || 0;
+  const trainers = users?.filter(u=>u.role==='trainer').length || 0;
+  const cls = users?.filter(u=>u.role==='client').length || 0;
+  document.getElementById('stat-tr').textContent = trainers;
+  document.getElementById('stat-cl').textContent = cls;
+}
+
+async function loadAdminUsers() {
+  const { data } = await db.from('profiles').select('*').order('created_at',{ascending:false});
+  const renderList = (container, limit) => {
+    if(!data?.length) { container.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><h3>No users yet</h3></div>'; return; }
+    const rows = limit ? data.slice(0,limit) : data;
+    container.innerHTML = rows.map(u => `
+      <div class="client-row">
+        <div class="avatar">${(u.full_name||u.email).charAt(0).toUpperCase()}</div>
+        <div class="client-info">
+          <div class="client-name">${u.full_name||'—'}</div>
+          <div class="client-email">${u.email}</div>
+        </div>
+        <span class="badge badge-${u.role==='admin'?'lime':u.role==='trainer'?'blue':'green'}">${u.role}</span>
+        <div class="flex gap6" style="gap:6px">
+          <button class="btn btn-ghost btn-sm" onclick="changeRole('${u.id}','trainer')">→ Trainer</button>
+          <button class="btn btn-ghost btn-sm" onclick="changeRole('${u.id}','client')">→ Client</button>
+        </div>
+      </div>
+    `).join('');
+  };
+  const mini = document.getElementById('admin-users-list');
+  const full = document.getElementById('admin-users-full');
+  if(mini) renderList(mini, 5);
+  if(full) renderList(full, 999);
+}
+
+async function changeRole(uid, role) {
+  const { error } = await db.from('profiles').update({ role }).eq('id', uid);
+  if(error) toast(error.message,'error');
+  else { toast('Role updated!'); loadAdminUsers(); loadAdminStats(); }
+}
+
+// Exercises CRUD
+async function loadExercises() {
+  const { data } = await db.from('exercises').select('*').order('category').order('name');
+  exercises = data || [];
+}
+
+function renderAdminExercises(filter='All') {
+  const list = document.getElementById('admin-ex-list');
+  const shown = filter==='All' ? exercises : exercises.filter(e=>e.category===filter);
+  if(!shown.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">🏋️</div><h3>No exercises yet</h3><p>Add your first exercise above</p></div>';
+    return;
+  }
+  list.innerHTML = shown.map(ex => `
+    <div class="ex-card" onclick="openExModal('${ex.id}')">
+      <div class="ex-icon" style="background:${catColors[ex.category]}22; color:${catColors[ex.category]}">${catIcons[ex.category]||'🏋️'}</div>
+      <div class="ex-info">
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-meta">${ex.default_sets} sets × ${ex.default_reps} reps</div>
+        ${ex.notes ? `<div class="ex-meta" style="margin-top:4px; color:var(--text3); font-size:.75rem">${ex.notes.substring(0,60)}${ex.notes.length>60?'...':''}</div>` : ''}
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px">
+        <span class="badge" style="background:${catColors[ex.category]}22;color:${catColors[ex.category]}">${ex.category}</span>
+        <div class="ex-actions">
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="event.stopPropagation();openExModal('${ex.id}')">✏️</button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="event.stopPropagation();deleteExercise('${ex.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterExercises(cat, el) {
+  document.querySelectorAll('#admin-cat-filters .cat-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderAdminExercises(cat);
+}
+
+function openExModal(id='') {
+  editingExId = id;
+  const ex = id ? exercises.find(e=>e.id===id) : null;
+  document.getElementById('ex-modal-title').textContent = ex ? 'Edit Exercise' : 'Add Exercise';
+  document.getElementById('ex-name').value = ex?.name||'';
+  document.getElementById('ex-cat').value = ex?.category||'Legs';
+  document.getElementById('ex-sets').value = ex?.default_sets||3;
+  document.getElementById('ex-reps').value = ex?.default_reps||'10-15';
+  document.getElementById('ex-url').value = ex?.tutorial_url||'';
+  document.getElementById('ex-notes').value = ex?.notes||'';
+  document.getElementById('ex-modal').classList.remove('hidden');
+}
+
+function closeExModal() { document.getElementById('ex-modal').classList.add('hidden'); }
+
+async function saveExercise() {
+  const data = {
+    name: document.getElementById('ex-name').value.trim(),
+    category: document.getElementById('ex-cat').value,
+    default_sets: parseInt(document.getElementById('ex-sets').value)||3,
+    default_reps: document.getElementById('ex-reps').value.trim(),
+    tutorial_url: document.getElementById('ex-url').value.trim()||null,
+    notes: document.getElementById('ex-notes').value.trim()||null,
+    created_by: currentUser.id
+  };
+  if(!data.name) return toast('Exercise name required','error');
+
+  let error;
+  if(editingExId) {
+    ({ error } = await db.from('exercises').update(data).eq('id', editingExId));
+  } else {
+    ({ error } = await db.from('exercises').insert(data));
+  }
+  if(error) toast(error.message,'error');
+  else {
+    toast(editingExId ? 'Exercise updated!' : 'Exercise added!');
+    closeExModal();
+    await loadExercises();
+    renderAdminExercises();
+  }
+}
+
+async function deleteExercise(id) {
+  if(!confirm('Delete this exercise?')) return;
+  const { error } = await db.from('exercises').delete().eq('id', id);
+  if(error) toast(error.message,'error');
+  else { toast('Exercise deleted'); await loadExercises(); renderAdminExercises(); }
+}
+
+// ═══════════════════════════════════════════
+// ═══ TRAINER ═══
+// ═══════════════════════════════════════════
+async function bootTrainer() {
+  await loadExercises();
+  await loadMyClients();
+  await loadTemplates();
+  renderTrainerExercises();
+  renderTrainerOverview();
+  renderTemplates();
+  populateAssignSelects();
+}
+
+async function loadMyClients() {
+  const { data } = await db.from('profiles').select('*').eq('trainer_id', currentUser.id).order('full_name');
+  clients = data || [];
+}
+
+async function loadTemplates() {
+  const { data } = await db.from('workout_templates')
+    .select('*, workout_day_exercises(*, exercises(name, category))')
+    .eq('created_by', currentUser.id)
+    .order('created_at', {ascending:false});
+  templates = data || [];
+}
+
+function renderTrainerOverview() {
+  document.getElementById('t-stat-clients').textContent = clients.length;
+  document.getElementById('t-stat-templates').textContent = templates.length;
+
+  const mini = document.getElementById('trainer-clients-mini');
+  if(!clients.length) {
+    mini.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><h3>No clients yet</h3><p>Ask clients to sign up and link your ID</p></div>';
+    return;
+  }
+  mini.innerHTML = clients.slice(0,5).map(c => `
+    <div class="client-row">
+      <div class="avatar">${(c.full_name||c.email).charAt(0).toUpperCase()}</div>
+      <div class="client-info">
+        <div class="client-name">${c.full_name||'—'}</div>
+        <div class="client-email">${c.email}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTrainerExercises(filter='All') {
+  const list = document.getElementById('trainer-ex-list');
+  const shown = filter==='All' ? exercises : exercises.filter(e=>e.category===filter);
+  list.innerHTML = shown.map(ex => `
+    <div class="ex-card">
+      <div class="ex-icon" style="background:${catColors[ex.category]}22;color:${catColors[ex.category]}">${catIcons[ex.category]||'🏋️'}</div>
+      <div class="ex-info">
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-meta">${ex.default_sets}×${ex.default_reps}</div>
+        ${ex.notes ? `<div class="ex-meta" style="color:var(--text3);font-size:.75rem;margin-top:2px">${ex.notes.substring(0,50)}${ex.notes.length>50?'...':''}</div>` : ''}
+      </div>
+      <span class="badge" style="background:${catColors[ex.category]}22;color:${catColors[ex.category]};align-self:flex-start">${ex.category}</span>
+    </div>
+  `).join('') || '<div class="empty"><div class="empty-icon">🏋️</div><h3>No exercises</h3></div>';
+}
+
+function filterTrainerEx(cat, el) {
+  document.querySelectorAll('#trainer-cat-filters .cat-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderTrainerExercises(cat);
+}
+
+function renderTemplates() {
+  const list = document.getElementById('trainer-templates-list');
+  if(!templates.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><h3>No templates yet</h3><p>Create your first workout template above</p></div>';
+    return;
+  }
+  list.innerHTML = templates.map(t => {
+    const dayMap = {};
+    t.workout_day_exercises?.forEach(we => {
+      if(!dayMap[we.day_of_week]) dayMap[we.day_of_week] = [];
+      dayMap[we.day_of_week].push(we);
+    });
+    const dayBadges = Object.keys(dayMap).map(d => `<span class="badge badge-blue">${d.substring(0,3)} (${dayMap[d].length})</span>`).join(' ');
+    return `
+      <div class="card">
+        <div class="flex between center mb8" style="margin-bottom:12px">
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700">${t.name}</div>
+            ${t.description ? `<div class="muted mt4" style="margin-top:4px">${t.description}</div>` : ''}
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="deleteTemplate('${t.id}')">Delete</button>
+        </div>
+        <div class="flex gap8 wrap">${dayBadges || '<span class="muted">No exercises added</span>'}</div>
+        <div style="margin-top:12px; border-top:1px solid var(--border); padding-top:12px">
+          ${Object.entries(dayMap).map(([day, exs]) => `
+            <div style="margin-bottom:8px">
+              <div class="label" style="margin-bottom:4px">${day}</div>
+              ${exs.map(e => `<span style="font-size:.8rem; color:var(--text2); margin-right:12px">• ${e.exercises?.name||'?'} (${e.sets}×${e.reps})</span>`).join('')}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openTemplateModal() {
+  tmplExercises = { Monday:[], Tuesday:[], Wednesday:[], Thursday:[], Friday:[], Saturday:[], Sunday:[] };
+  tmplCurrentDay = 'Monday';
+  document.getElementById('tmpl-name').value = '';
+  document.getElementById('tmpl-desc').value = '';
+
+  // Populate exercise select
+  const sel = document.getElementById('tmpl-ex-sel');
+  sel.innerHTML = '<option value="">— Pick exercise —</option>' +
+    exercises.map(e => `<option value="${e.id}" data-sets="${e.default_sets}" data-reps="${e.default_reps}">${e.name} (${e.category})</option>`).join('');
+
+  sel.onchange = () => {
+    const opt = sel.options[sel.selectedIndex];
+    if(opt.value) {
+      document.getElementById('tmpl-ex-sets').value = opt.dataset.sets||3;
+      document.getElementById('tmpl-ex-reps').value = opt.dataset.reps||'10-15';
+    }
+  };
+
+  updateTmplDayPreview();
+  document.getElementById('template-modal').classList.remove('hidden');
+}
+
+function closeTemplateModal() { document.getElementById('template-modal').classList.add('hidden'); }
+
+function setTmplDay(day, el) {
+  tmplCurrentDay = day;
+  document.querySelectorAll('#tmpl-day-tabs .day-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tmpl-day-label').textContent = day;
+  updateTmplDayPreview();
+}
+
+function addExToTemplate() {
+  const sel = document.getElementById('tmpl-ex-sel');
+  const exId = sel.value;
+  if(!exId) return toast('Select an exercise first','error');
+  const ex = exercises.find(e=>e.id===exId);
+  const sets = document.getElementById('tmpl-ex-sets').value || 3;
+  const reps = document.getElementById('tmpl-ex-reps').value || '10-15';
+
+  if(!tmplExercises[tmplCurrentDay]) tmplExercises[tmplCurrentDay] = [];
+  tmplExercises[tmplCurrentDay].push({ exercise_id: exId, name: ex.name, sets: parseInt(sets), reps, day_of_week: tmplCurrentDay, order_index: tmplExercises[tmplCurrentDay].length });
+  sel.value = '';
+  updateTmplDayPreview();
+  toast(`Added ${ex.name} to ${tmplCurrentDay}`);
+}
+
+function removeTmplEx(day, idx) {
+  tmplExercises[day].splice(idx, 1);
+  updateTmplDayPreview();
+}
+
+function updateTmplDayPreview() {
+  const preview = document.getElementById('tmpl-exercises-preview');
+  const dayExs = tmplExercises[tmplCurrentDay]||[];
+  if(!dayExs.length) {
+    preview.innerHTML = '<p class="muted" style="font-size:.85rem">No exercises for this day yet</p>';
+    return;
+  }
+  preview.innerHTML = `<div class="label mb8" style="margin-bottom:8px">${tmplCurrentDay} exercises:</div>` +
+    dayExs.map((e,i) => `
+      <div class="flex between center" style="padding:8px 0; border-bottom:1px solid var(--border)">
+        <span style="font-size:.9rem">${e.name} — ${e.sets}×${e.reps}</span>
+        <button class="btn btn-danger btn-sm btn-icon" onclick="removeTmplEx('${tmplCurrentDay}',${i})">✕</button>
+      </div>
+    `).join('');
+}
+
+async function saveTemplate() {
+  const name = document.getElementById('tmpl-name').value.trim();
+  const desc = document.getElementById('tmpl-desc').value.trim();
+  if(!name) return toast('Template name required','error');
+
+  const allExs = Object.values(tmplExercises).flat();
+  if(!allExs.length) return toast('Add at least one exercise','error');
+
+  const { data: tmpl, error } = await db.from('workout_templates')
+    .insert({ name, description: desc||null, created_by: currentUser.id })
+    .select().single();
+  if(error) return toast(error.message,'error');
+
+  const rows = allExs.map(e => ({
+    template_id: tmpl.id, exercise_id: e.exercise_id, day_of_week: e.day_of_week,
+    sets: e.sets, reps: e.reps, order_index: e.order_index
+  }));
+  const { error: e2 } = await db.from('workout_day_exercises').insert(rows);
+  if(e2) toast(e2.message,'error');
+  else {
+    toast('Template saved!');
+    closeTemplateModal();
+    await loadTemplates();
+    renderTemplates();
+    document.getElementById('t-stat-templates').textContent = templates.length;
+  }
+}
+
+async function deleteTemplate(id) {
+  if(!confirm('Delete this template? This will remove it from assigned clients.')) return;
+  const { error } = await db.from('workout_templates').delete().eq('id',id);
+  if(error) toast(error.message,'error');
+  else { toast('Template deleted'); await loadTemplates(); renderTemplates(); }
+}
+
+function renderTrainerClients() {
+  const list = document.getElementById('trainer-clients-list');
+  if(!clients.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><h3>No clients yet</h3><p>Your trainer ID: <strong style="color:var(--lime)">' + currentUser.id.substring(0,8) + '...</strong><br>Share it with clients to link to you</p></div>';
+    return;
+  }
+  list.innerHTML = clients.map(c => `
+    <div class="client-row">
+      <div class="avatar avatar-lg">${(c.full_name||c.email).charAt(0).toUpperCase()}</div>
+      <div class="client-info">
+        <div class="client-name" style="font-size:1rem">${c.full_name||'—'}</div>
+        <div class="client-email">${c.email}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function populateAssignSelects() {
+  const clientSel = document.getElementById('assign-client-sel');
+  const tmplSel = document.getElementById('assign-template-sel');
+
+  clientSel.innerHTML = '<option value="">— Select Client —</option>' +
+    clients.map(c => `<option value="${c.id}">${c.full_name||c.email}</option>`).join('');
+  tmplSel.innerHTML = '<option value="">— Select Template —</option>' +
+    templates.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+}
+
+async function assignPlan() {
+  const clientId = document.getElementById('assign-client-sel').value;
+  const templateId = document.getElementById('assign-template-sel').value;
+  if(!clientId||!templateId) return toast('Select client and template','error');
+
+  // Deactivate existing plans
+  await db.from('workout_plans').update({active:false}).eq('client_id',clientId);
+
+  const { error } = await db.from('workout_plans').insert({
+    client_id: clientId, template_id: templateId, assigned_by: currentUser.id, active: true
+  });
+  if(error) toast(error.message,'error');
+  else toast('Plan assigned successfully! 🎉');
+}
+
+// ═══════════════════════════════════════════
+// ═══ CLIENT ═══
+// ═══════════════════════════════════════════
+let clientPlan = null, clientPlanExercises = [];
+let logCache = {};
+const dayAbbr = { Monday:'Mon',Tuesday:'Tue',Wednesday:'Wed',Thursday:'Thu',Friday:'Fri',Saturday:'Sat',Sunday:'Sun' };
+
+async function bootClient() {
+  await loadClientPlan();
+  await loadClientMeasurements();
+  await loadClientLogs();
+  renderClientToday();
+  renderClientPlan();
+  renderClientProfile();
+  initCharts();
+}
+
+async function loadClientPlan() {
+  const { data } = await db.from('workout_plans')
+    .select(`*, workout_templates(*, workout_day_exercises(*, exercises(*)))`)
+    .eq('client_id', currentUser.id)
+    .eq('active', true)
+    .order('assigned_at', {ascending:false})
+    .limit(1)
+    .maybeSingle();
+  clientPlan = data;
+  if(data?.workout_templates?.workout_day_exercises) {
+    clientPlanExercises = data.workout_templates.workout_day_exercises;
+  }
+}
+
+async function loadClientLogs() {
+  const today = new Date().toISOString().split('T')[0];
+  const { data } = await db.from('exercise_logs').select('*').eq('client_id', currentUser.id).eq('workout_date', today);
+  logCache = {};
+  data?.forEach(l => {
+    const key = `${l.exercise_id}-${l.set_number}`;
+    logCache[key] = l;
+  });
+}
+
+function getTodayDayName() {
+  return days[new Date().getDay()===0?6:new Date().getDay()-1];
+}
+
+let selectedDay = null;
+function renderClientToday() {
+  const today = getTodayDayName();
+  selectedDay = today;
+  document.getElementById('client-day-label').textContent = today;
+
+  // Render day tabs
+  const tabs = document.getElementById('client-day-tabs');
+  tabs.innerHTML = days.map(d => `
+    <div class="day-tab ${d===today?'active':''}" onclick="selectDay('${d}', this)">${dayAbbr[d]}</div>
+  `).join('');
+
+  renderDayWorkout(today);
+}
+
+function selectDay(day, el) {
+  selectedDay = day;
+  document.querySelectorAll('#client-day-tabs .day-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('client-day-label').textContent = day;
+  renderDayWorkout(day);
+}
+
+function renderDayWorkout(day) {
+  const container = document.getElementById('client-workout-list');
+  const dayExs = clientPlanExercises.filter(e=>e.day_of_week===day).sort((a,b)=>a.order_index-b.order_index);
+
+  if(!clientPlan) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><h3>No workout plan assigned</h3><p>Your trainer hasn\'t assigned a plan yet</p></div>';
+    return;
+  }
+  if(!dayExs.length) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">🧘</div><h3>Rest Day</h3><p>No workout scheduled for ' + day + '</p></div>';
+    return;
+  }
+
+  container.innerHTML = dayExs.map((we, wi) => {
+    const ex = we.exercises;
+    const sets = we.sets || 3;
+    const setRows = Array.from({length:sets}, (_,si) => {
+      const key = `${ex.id}-${si+1}`;
+      const log = logCache[key];
+      return `
+        <div class="set-row">
+          <div class="set-num">S${si+1}</div>
+          <input class="set-inp" placeholder="kg" type="number" step="0.5"
+            id="w-${wi}-${si}-kg" value="${log?.weight_kg||''}" onchange="autoSaveLog('${ex.id}',${si+1},'${day}',${wi},${si})">
+          <input class="set-inp" placeholder="reps" type="number"
+            id="w-${wi}-${si}-reps" value="${log?.reps_completed||''}" onchange="autoSaveLog('${ex.id}',${si+1},'${day}',${wi},${si})">
+          <button class="check-btn ${log?.completed?'checked':''}" id="chk-${wi}-${si}"
+            onclick="toggleComplete('${ex.id}',${si+1},${wi},${si},'${day}')">
+            ${log?.completed?'✓':''}
+          </button>
+        </div>
+      `;
+    }).join('');
+    const allDone = Array.from({length:sets}, (_,si) => logCache[`${ex.id}-${si+1}`]?.completed).every(Boolean);
+    return `
+      <div class="workout-ex ${allDone?'done':''}" id="wex-${wi}">
+        <div class="flex between center">
+          <div class="flex center gap12">
+            <div class="ex-icon" style="background:${catColors[ex.category]||'#333'}22;color:${catColors[ex.category]||'#888'}">${catIcons[ex.category]||'🏋️'}</div>
+            <div>
+              <div style="font-weight:700">${ex.name}</div>
+              <div class="muted" style="font-size:.8rem">${sets} sets × ${we.reps||'10-15'} reps</div>
+            </div>
+          </div>
+          ${ex.tutorial_url ? `<a href="${ex.tutorial_url}" target="_blank" class="btn btn-ghost btn-sm" onclick="event.stopPropagation()">▶ Tutorial</a>` : ''}
+        </div>
+        <div style="margin-top:4px; padding: 0 0 0 4px">
+          <div class="flex" style="display:grid;grid-template-columns:40px 1fr 1fr 48px;gap:8px;margin-top:8px">
+            <div></div>
+            <div class="label" style="text-align:center">Weight</div>
+            <div class="label" style="text-align:center">Reps</div>
+            <div></div>
+          </div>
+          ${setRows}
+        </div>
+        ${ex.notes ? `<div style="margin-top:10px;padding:8px 10px;background:var(--bg3);border-radius:10px;font-size:.8rem;color:var(--text2)">💡 ${ex.notes}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+async function autoSaveLog(exId, setNum, day, wi, si) {
+  const kg = parseFloat(document.getElementById(`w-${wi}-${si}-kg`).value) || null;
+  const reps = parseInt(document.getElementById(`w-${wi}-${si}-reps`).value) || null;
+  const today = new Date().toISOString().split('T')[0];
+  const key = `${exId}-${setNum}`;
+  const existing = logCache[key];
+
+  const data = { client_id: currentUser.id, exercise_id: exId, workout_date: today, set_number: setNum, weight_kg: kg, reps_completed: reps };
+
+  if(existing) {
+    await db.from('exercise_logs').update(data).eq('id', existing.id);
+    logCache[key] = {...existing, ...data};
+  } else {
+    const { data: newLog } = await db.from('exercise_logs').insert({...data, completed:false}).select().single();
+    if(newLog) logCache[key] = newLog;
+  }
+}
+
+async function toggleComplete(exId, setNum, wi, si, day) {
+  const key = `${exId}-${setNum}`;
+  const today = new Date().toISOString().split('T')[0];
+  const existing = logCache[key];
+  const newComplete = !existing?.completed;
+
+  if(existing) {
+    await db.from('exercise_logs').update({completed:newComplete}).eq('id',existing.id);
+    logCache[key] = {...existing, completed:newComplete};
+  } else {
+    const { data: newLog } = await db.from('exercise_logs').insert({
+      client_id:currentUser.id, exercise_id:exId, workout_date:today, set_number:setNum, completed:true
+    }).select().single();
+    if(newLog) logCache[key] = newLog;
+  }
+
+  const btn = document.getElementById(`chk-${wi}-${si}`);
+  btn.classList.toggle('checked', newComplete);
+  btn.textContent = newComplete ? '✓' : '';
+}
+
+// Plan view
+function renderClientPlan() {
+  const container = document.getElementById('client-plan-view');
+  if(!clientPlan) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><h3>No plan assigned</h3><p>Your trainer will assign a workout plan to you</p></div>';
+    return;
+  }
+  const t = clientPlan.workout_templates;
+  const dayMap = {};
+  t.workout_day_exercises?.forEach(e => {
+    if(!dayMap[e.day_of_week]) dayMap[e.day_of_week] = [];
+    dayMap[e.day_of_week].push(e);
+  });
+
+  container.innerHTML = `
+    <div class="card" style="margin-bottom:16px">
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700">${t.name}</div>
+      ${t.description?`<div class="muted mt8" style="margin-top:6px">${t.description}</div>`:''}
+    </div>
+    ${days.map(day => {
+      const exs = dayMap[day]||[];
+      return `
+        <div class="card" style="margin-bottom:12px">
+          <div class="flex between center" style="margin-bottom:${exs.length?'12px':'0'}">
+            <div style="font-weight:700;font-family:'Syne',sans-serif">${day}</div>
+            ${!exs.length?'<span class="badge badge-purple">Rest</span>':'<span class="badge badge-lime">'+exs.length+' exercises</span>'}
+          </div>
+          ${exs.map(e=>`
+            <div class="flex center gap10" style="padding:8px 0;border-bottom:1px solid var(--border);gap:10px">
+              <div class="ex-icon" style="width:32px;height:32px;border-radius:10px;background:${catColors[e.exercises?.category]||'#333'}22;color:${catColors[e.exercises?.category]||'#888'};font-size:.9rem">${catIcons[e.exercises?.category]||'🏋️'}</div>
+              <div style="flex:1">
+                <div style="font-weight:600;font-size:.9rem">${e.exercises?.name||'?'}</div>
+                <div class="muted" style="font-size:.75rem">${e.sets} sets × ${e.reps}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
+// Measurements
+let measurements = [];
+async function loadClientMeasurements() {
+  const { data } = await db.from('body_measurements').select('*').eq('client_id',currentUser.id).order('measured_at',{ascending:false});
+  measurements = data || [];
+}
+
+function openMeasurementModal() {
+  document.getElementById('meas-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('meas-weight').value = '';
+  document.getElementById('meas-notes').value = '';
+  document.getElementById('meas-modal').classList.remove('hidden');
+}
+function closeMeasurementModal() { document.getElementById('meas-modal').classList.add('hidden'); }
+
+async function saveMeasurement() {
+  const weight = parseFloat(document.getElementById('meas-weight').value);
+  const date = document.getElementById('meas-date').value;
+  const notes = document.getElementById('meas-notes').value.trim();
+  if(!weight||!date) return toast('Weight and date required','error');
+  const { error } = await db.from('body_measurements').insert({ client_id:currentUser.id, weight_kg:weight, measured_at:date, notes:notes||null });
+  if(error) toast(error.message,'error');
+  else {
+    toast('Weight logged! 🎉');
+    closeMeasurementModal();
+    await loadClientMeasurements();
+    renderClientProfile();
+    updateCharts();
+  }
+}
+
+function renderClientProfile() {
+  const p = currentProfile;
+  const initials = (p.full_name||p.email).split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2);
+  const profileAvatar = document.getElementById('profile-avatar');
+  if(profileAvatar) profileAvatar.textContent = initials;
+
+  const pName = document.getElementById('profile-name');
+  const pEmail = document.getElementById('profile-email');
+  const pBadge = document.getElementById('profile-badge');
+  if(pName) pName.textContent = p.full_name||'—';
+  if(pEmail) pEmail.textContent = p.email;
+  if(pBadge) pBadge.innerHTML = `<span class="badge badge-green">Client</span>`;
+
+  const table = document.getElementById('measurements-table');
+  if(!measurements.length) {
+    table.innerHTML = '<div class="muted" style="text-align:center;padding:20px">No weight logs yet. Add your first one!</div>';
+    return;
+  }
+  const latest = measurements[0];
+  const weightEl = document.getElementById('current-weight');
+  if(weightEl) weightEl.textContent = latest.weight_kg;
+
+  table.innerHTML = measurements.slice(0,10).map(m => `
+    <div class="flex between center" style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="font-size:.9rem">${new Date(m.measured_at+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric',year:'numeric'})}</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700">${m.weight_kg} kg</div>
+    </div>
+  `).join('');
+}
+
+// Charts
+function initCharts() {
+  const chartOpts = {
+    responsive:true, maintainAspectRatio:false,
+    plugins: { legend:{display:false}, tooltip:{ backgroundColor:'#1a1a1a', borderColor:'#333', borderWidth:1, titleColor:'#fff', bodyColor:'#888' } },
+    scales: {
+      x: { grid:{color:'#1f1f1f'}, ticks:{color:'#555',font:{size:10}} },
+      y: { grid:{color:'#1f1f1f'}, ticks:{color:'#555',font:{size:10}} }
+    }
+  };
+
+  const wc = document.getElementById('weight-chart').getContext('2d');
+  weightChart = new Chart(wc, {
+    type:'line',
+    data:{ labels:[], datasets:[{ data:[], borderColor:'#D4FF00', backgroundColor:'rgba(212,255,0,.1)', tension:.4, pointBackgroundColor:'#D4FF00', pointRadius:4, fill:true }] },
+    options:chartOpts
+  });
+
+  const vc = document.getElementById('volume-chart').getContext('2d');
+  volumeChart = new Chart(vc, {
+    type:'bar',
+    data:{ labels:[], datasets:[{ data:[], backgroundColor:'rgba(68,136,255,.6)', borderRadius:8, borderSkipped:false }] },
+    options:chartOpts
+  });
+
+  updateCharts();
+}
+
+async function updateCharts() {
+  // Weight chart
+  const sorted = [...measurements].sort((a,b)=>new Date(a.measured_at)-new Date(b.measured_at)).slice(-15);
+  weightChart.data.labels = sorted.map(m=>new Date(m.measured_at+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric'}));
+  weightChart.data.datasets[0].data = sorted.map(m=>m.weight_kg);
+  weightChart.update();
+
+  // Volume chart (last 7 days)
+  const last7 = [];
+  for(let i=6;i>=0;i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    last7.push(d.toISOString().split('T')[0]);
+  }
+  const { data:logs } = await db.from('exercise_logs').select('workout_date,reps_completed').eq('client_id',currentUser.id).eq('completed',true).in('workout_date',last7);
+  const vol = {};
+  last7.forEach(d=>vol[d]=0);
+  logs?.forEach(l=>{ if(vol[l.workout_date]!==undefined) vol[l.workout_date]+=(l.reps_completed||0); });
+
+  volumeChart.data.labels = last7.map(d=>new Date(d+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric'}));
+  volumeChart.data.datasets[0].data = last7.map(d=>vol[d]);
+  volumeChart.update();
+
+  // Workouts done this week
+  const wDone = last7.filter(d=>vol[d]>0).length;
+  const wEl = document.getElementById('workouts-done');
+  if(wEl) wEl.textContent = wDone;
+}
+
+// ═══════════════════════════════════════════
+// MAIN INIT
+// ═══════════════════════════════════════════
+async function init() {
+  try {
+    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const { data: { session } } = await db.auth.getSession();
+    if(session?.user) {
+      await bootApp(session.user);
+    } else {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('auth-screen').classList.remove('hidden');
+    }
+
+    db.auth.onAuthStateChange(async (event, session) => {
+      if(event==='SIGNED_IN' && session?.user) {
+        document.getElementById('loading').classList.remove('hidden');
+        document.getElementById('loading').classList.add('visible');
+        await bootApp(session.user);
+      }
+    });
+  } catch(err) {
+    console.error(err);
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('auth-screen').classList.remove('hidden');
+    toast('Failed to connect to database','error');
+  }
+}
+
+init();
+</script>
 </body>
 </html>

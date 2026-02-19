@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TrackMyReps</title>
+<link rel="preconnect" href="https://oxpeybhsucryghtrnhmm.supabase.co">
+<link rel="dns-prefetch" href="https://oxpeybhsucryghtrnhmm.supabase.co">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -558,12 +561,30 @@ function toggleSidebar(){document.getElementById('sidebar').classList.toggle('op
 
 // ── ADMIN ──
 async function bootAdmin(){
-  await loadExercises();
-  const [{count:exC},{data:users}]=await Promise.all([db.from('exercises').select('*',{count:'exact',head:true}),db.from('profiles').select('role')]);
+  const [{data:exData},{count:exC},{data:users}]=await Promise.all([
+    db.from('exercises').select('*').order('category').order('name'),
+    db.from('exercises').select('*',{count:'exact',head:true}),
+    db.from('profiles').select('*').order('created_at',{ascending:false})
+  ]);
+  exercises=exData||[];
   document.getElementById('stat-ex').textContent=exC||0;
   document.getElementById('stat-tr').textContent=users?.filter(u=>u.role==='trainer').length||0;
   document.getElementById('stat-cl').textContent=users?.filter(u=>u.role==='client').length||0;
-  await loadAllUsers();
+  const html=users?.length?users.map(u=>`
+    <div class="client-row">
+      <div class="avatar">${(u.full_name||u.email).charAt(0).toUpperCase()}</div>
+      <div style="flex:1">
+        <div style="font-weight:600">${u.full_name||'—'}</div>
+        <div class="muted" style="font-size:.8rem">${u.email}</div>
+        ${u.trainer_code?`<div style="font-size:.75rem;color:var(--lime);margin-top:2px">Code: ${u.trainer_code}</div>`:''}
+      </div>
+      <span class="badge badge-${u.role==='admin'?'lime':u.role==='trainer'?'blue':'green'}">${u.role}</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="changeRole('${u.id}','trainer')">→ Trainer</button>
+        <button class="btn btn-ghost btn-sm" onclick="changeRole('${u.id}','client')">→ Client</button>
+      </div>
+    </div>`).join(''):'<div class="empty"><div class="empty-icon">👥</div><h3>No users yet</h3></div>';
+  ['admin-users-list','admin-users-full'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=html;});
   renderAdminExercises();
 }
 
@@ -648,10 +669,13 @@ async function deleteExercise(id){
 
 // ── TRAINER ──
 async function bootTrainer(){
-  await loadExercises();
-  const {data:cl}=await db.from('profiles').select('*').eq('trainer_id',currentUser.id).order('full_name');
+  const [{data:exData},{data:cl},{data:pl}]=await Promise.all([
+    db.from('exercises').select('*').order('category').order('name'),
+    db.from('profiles').select('*').eq('trainer_id',currentUser.id).order('full_name'),
+    db.from('workout_plans').select('*,profiles!workout_plans_client_id_fkey(full_name,email),plan_exercises(*,exercises(name,category))').eq('trainer_id',currentUser.id).order('assigned_at',{ascending:false})
+  ]);
+  exercises=exData||[];
   myClients=cl||[];
-  const {data:pl}=await db.from('workout_plans').select('*,profiles!workout_plans_client_id_fkey(full_name,email),plan_exercises(*,exercises(name,category))').eq('trainer_id',currentUser.id).order('assigned_at',{ascending:false});
   myPlans=pl||[];
   document.getElementById('trainer-code-display').textContent=currentProfile.trainer_code||'No code';
   document.getElementById('t-stat-clients').textContent=myClients.length;
@@ -778,9 +802,17 @@ async function deletePlan(id){
 // ── CLIENT ──
 let clientPlan=null,clientPlanExercises=[],selectedDay=null;
 async function bootClient(){
-  await loadClientPlan();
-  await loadMeasurements();
-  await loadTodayLogs();
+  const today=new Date().toISOString().split('T')[0];
+  const [{data:planData},{data:measData},{data:logsData}]=await Promise.all([
+    db.from('workout_plans').select('*,plan_exercises(*,exercises(*))').eq('client_id',currentUser.id).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
+    db.from('body_measurements').select('*').eq('client_id',currentUser.id).order('measured_at',{ascending:false}),
+    db.from('exercise_logs').select('*').eq('client_id',currentUser.id).eq('workout_date',today)
+  ]);
+  clientPlan=planData;
+  clientPlanExercises=planData?.plan_exercises||[];
+  measurements=measData||[];
+  logCache={};logsData?.forEach(l=>{logCache[`${l.exercise_id}-${l.set_number}`]=l;});
+  if(measurements.length)document.getElementById('current-weight').textContent=measurements[0].weight_kg;
   renderClientToday();renderClientPlan();renderClientProfile();initCharts();
 }
 async function loadClientPlan(){

@@ -160,18 +160,19 @@ select.inp{cursor:pointer}
 .sel-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:100px;font-size:.76rem;font-weight:600;cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s}
 
 /* CLIENT WORKOUT */
-.day-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;-ms-overflow-style:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.day-tabs{display:flex;gap:0;overflow-x:auto;margin-bottom:18px;-ms-overflow-style:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;background:var(--bg3);border-radius:var(--r);padding:4px;position:sticky;top:0;z-index:10}
 .day-tabs::-webkit-scrollbar{display:none}
-.day-tab{padding:8px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:.82rem;font-weight:600;white-space:nowrap;transition:all .15s;flex-shrink:0;-webkit-user-select:none;user-select:none}
-.day-tab.active{background:var(--lime);color:#000;border-color:transparent}
+.day-tab{padding:9px 14px;border-radius:10px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.8rem;font-weight:600;white-space:nowrap;transition:all .15s;flex:1;min-width:40px;text-align:center;-webkit-user-select:none;user-select:none}
+.day-tab.active{background:var(--lime);color:#000}
 .workout-ex{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:10px}
 .workout-ex.done{border-color:var(--green)}
 .set-row{display:grid;grid-template-columns:32px 1fr 1fr 36px;gap:6px;align-items:center;margin-top:8px}
 .set-num{background:var(--bg3);border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--text2)}
 .set-inp{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:8px 4px;color:var(--text);font-size:16px;text-align:center;outline:none;width:100%;-webkit-appearance:none}
 .set-inp:focus{border-color:var(--lime)}
-.check-btn{width:32px;height:32px;border-radius:9px;border:2px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:.85rem;flex-shrink:0}
-.check-btn.checked{background:var(--green);border-color:var(--green)}
+.check-btn{width:40px;height:40px;border-radius:12px;border:2px solid var(--text3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:1.1rem;flex-shrink:0;color:transparent}
+.check-btn:hover{border-color:var(--lime)}
+.check-btn.checked{background:var(--green);border-color:var(--green);color:#000}
 .chart-wrap{position:relative;height:180px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
 .client-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px}
@@ -423,17 +424,17 @@ select.inp{cursor:pointer}
     <div class="page" id="page-trainer-build">
       <div class="page-header"><div><div class="label">Build Plan</div><h1 class="page-title">Create Plan</h1></div></div>
 
-      <!-- DAY TABS — TOP -->
-      <div style="margin-bottom:18px">
-        <div class="label" style="margin-bottom:8px">Step 1 — Pick a day</div>
-        <div class="builder-days-inline" id="builder-days-inline"></div>
-      </div>
-
       <!-- TWO COLUMN: left = exercise browser, right = selected panel -->
       <div class="builder-layout">
         <div class="builder-left">
-          <div class="label" style="margin-bottom:10px">Step 2 — Tap exercises to add</div>
+          <div class="label" style="margin-bottom:8px">Tap exercises to add to the selected day →</div>
+          <!-- SEARCH FIRST -->
           <div class="search-bar"><span class="search-icon">🔍</span><input class="inp" id="trainer-search" placeholder="Search exercises..." oninput="renderTrainerExercises()"></div>
+          <!-- DAY TABS SECOND -->
+          <div style="margin-bottom:10px">
+            <div class="builder-days-inline" id="builder-days-inline"></div>
+          </div>
+          <!-- CATEGORY CHIPS THIRD -->
           <div class="cat-filters" id="trainer-cat-filters">
             <div class="cat-chip active" onclick="filterTrainerEx('All',this)">All</div>
             <div class="cat-chip" onclick="filterTrainerEx('Legs',this)">🦵 Legs</div>
@@ -475,12 +476,12 @@ select.inp{cursor:pointer}
 
     <!-- CLIENT PAGES -->
     <div class="page" id="page-client-today">
-      <div class="page-header"><div><div class="label">Today's Workout</div><h1 class="page-title" id="client-day-label">—</h1></div></div>
+      <div class="page-header"><div><div class="label">Today's Workout</div><h1 class="page-title">Workout</h1></div></div>
       <div id="new-plan-banner" class="hidden" style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:var(--r);padding:12px 14px;margin-bottom:14px;font-size:.85rem;color:var(--lime);font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:10px">
         <span id="new-plan-banner-text"></span>
         <button onclick="document.getElementById('new-plan-banner').classList.add('hidden')" style="background:none;border:none;color:var(--lime);cursor:pointer;font-size:1rem;flex-shrink:0">✕</button>
       </div>
-      <div class="day-tabs" id="client-day-tabs"></div>
+      <div id="client-day-tabs" class="day-tabs"></div>
       <div id="client-workout-list"></div>
       <div id="finish-workout-bar" class="hidden" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px">
         <div id="finish-workout-summary" style="font-size:.84rem;color:var(--text2)"></div>
@@ -589,6 +590,16 @@ select.inp{cursor:pointer}
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
           <div class="avatar avatar-lg" id="profile-avatar">?</div>
           <div><div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700" id="profile-name">—</div><div class="muted" id="profile-email">—</div><div style="margin-top:6px" id="profile-badge"></div></div>
+        </div>
+        <!-- PHONE NUMBER -->
+        <div style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
+          <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">WhatsApp Number</div>
+          <div class="muted" style="font-size:.8rem;margin-bottom:10px">So your trainer can reach you on WhatsApp</div>
+          <div style="display:flex;gap:8px">
+            <input class="inp" id="profile-phone" type="tel" inputmode="tel" placeholder="91XXXXXXXXXX (with country code)" style="flex:1">
+            <button class="btn btn-lime btn-sm" onclick="savePhone()">Save</button>
+          </div>
+          <div id="phone-saved-indicator" style="margin-top:6px;font-size:.78rem;color:var(--green)"></div>
         </div>
         <div id="trainer-link-section" style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
           <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">Link to Your Trainer</div>
@@ -1015,10 +1026,19 @@ function getYoutubeEmbed(url){
   return m?`https://www.youtube.com/embed/${m[1]}`:`https://www.youtube.com/embed/${url.split('/').pop()}`;
 }
 function openTutorial(exId){
-  const ex=exercises.find(e=>e.id===exId);if(!ex||!ex.tutorial_url)return toast('No tutorial available','error');
+  // Check global exercises array (trainer/admin) first, then client plan exercises
+  let ex=exercises.find(e=>e.id===exId);
+  if(!ex){
+    // Client context — find exercise nested in plan
+    const planEx=clientPlanExercises.find(e=>(e.exercises?.id===exId||e.exercise_id===exId));
+    if(planEx)ex=planEx.exercises;
+  }
+  if(!ex||!ex.tutorial_url)return toast('No tutorial available for this exercise','error');
   const embedUrl=getYoutubeEmbed(ex.tutorial_url);
   document.getElementById('tut-modal-title').textContent=ex.name;
-  document.getElementById('tut-video-container').innerHTML=embedUrl?`<iframe src="${embedUrl}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`:`<div class="empty"><div class="empty-icon">🎬</div><h3>Cannot embed this URL</h3><a href="${ex.tutorial_url}" target="_blank" class="btn btn-lime btn-sm" style="margin-top:10px">Open Video →</a></div>`;
+  document.getElementById('tut-video-container').innerHTML=embedUrl
+    ?`<iframe src="${embedUrl}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`
+    :`<div class="empty"><div class="empty-icon">🎬</div><h3>Cannot embed this URL</h3><a href="${ex.tutorial_url}" target="_blank" class="btn btn-lime btn-sm" style="margin-top:10px">Open Video →</a></div>`;
   document.getElementById('tut-notes').textContent=ex.notes||'';
   document.getElementById('tutorial-modal').classList.remove('hidden');
 }
@@ -1032,7 +1052,7 @@ async function bootTrainer(){
   const today=new Date().toISOString().split('T')[0];
   const [{data:exData},{data:cl},{data:pl},{data:reqs},{data:todayLogs}]=await Promise.all([
     db.from('exercises').select('*').order('category').order('name'),
-    db.from('profiles').select('*').eq('trainer_id',currentUser.id).order('full_name'),
+    db.from('profiles').select('id,full_name,email,phone').eq('trainer_id',currentUser.id).order('full_name'),
     db.from('workout_plans').select('*,profiles!workout_plans_client_id_fkey(full_name,email),plan_exercises(*,exercises(name,category))').eq('trainer_id',currentUser.id).order('assigned_at',{ascending:false}),
     db.from('client_requests').select('*,profiles!client_requests_client_id_fkey(id,full_name,email)').eq('trainer_id',currentUser.id).eq('status','pending'),
     db.from('exercise_logs').select('client_id,exercise_id,completed,exercises(name)').eq('workout_date',today)
@@ -1158,19 +1178,29 @@ function renderTrainerClientsMini(){
 }
 function renderTrainerClientsFull(){
   const el=document.getElementById('trainer-clients-full');
-  el.innerHTML=myClients.length?myClients.map(c=>`
-    <div class="client-row" style="cursor:pointer" onclick="openClientProgress('${c.id}','${(c.full_name||c.email).replace(/'/g,'')}')">
+  el.innerHTML=myClients.length?myClients.map(c=>{
+    const phone=c.phone?c.phone.replace(/\D/g,''):'';
+    const waHref=phone?`https://wa.me/${phone}`:'';
+    return `<div class="client-row" style="cursor:pointer" onclick="openClientProgress('${c.id}','${(c.full_name||c.email).replace(/'/g,'')}')">
       <div class="avatar avatar-lg">${(c.full_name||c.email).charAt(0).toUpperCase()}</div>
       <div style="flex:1;min-width:0">
         <div style="font-weight:700;font-size:.92rem">${c.full_name||'—'}</div>
         <div class="muted" style="font-size:.8rem">${c.email}</div>
+        ${phone?`<div style="font-size:.75rem;color:var(--green);margin-top:2px">📱 +${phone}</div>`:'<div style="font-size:.75rem;color:var(--text3);margin-top:2px">No phone — ask client to add it in Profile</div>'}
       </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openNoteModal('${c.id}','${(c.full_name||c.email).replace(/'/g,'')}')">📝 Note</button>
-        <span class="badge badge-green">Active</span>
+      <div style="display:flex;align-items:center;gap:7px;flex-shrink:0">
+        ${waHref
+          ? `<a href="${waHref}" target="_blank" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:5px;background:#25D366;color:#fff;border:none;border-radius:100px;padding:7px 12px;font-size:.75rem;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              WhatsApp
+            </a>`
+          : `<span class="badge badge-red" style="cursor:default" title="Client hasn't added phone yet">No phone</span>`
+        }
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openNoteModal('${c.id}','${(c.full_name||c.email).replace(/'/g,'')}')">📝</button>
         <span style="color:var(--text3);font-size:1rem">›</span>
       </div>
-    </div>`).join(''):'<div class="empty"><div class="empty-icon">👥</div><h3>No clients linked</h3><p>Trainer code: <strong style="color:var(--lime)">'+(currentProfile.trainer_code||'—')+'</strong></p></div>';
+    </div>`;
+  }).join(''):'<div class="empty"><div class="empty-icon">👥</div><h3>No clients linked</h3><p>Trainer code: <strong style="color:var(--lime)">'+(currentProfile.trainer_code||'—')+'</strong></p></div>';
 }
 function renderTrainerPlans(){
   const el=document.getElementById('trainer-plans-list');
@@ -1375,8 +1405,15 @@ function openWaModal(){
   const client=myClients.find(c=>c.id===lastSentClientId);
   const clientName=client?.full_name||'your client';
   const code=currentProfile.trainer_code||'';
-  const msg=`Hey ${clientName}! 💪 Your new workout plan "${lastSentPlanName}" is ready on TrackMyReps.\n\nDownload the app and sign in at: trackmyreps.in\n\nYour trainer code: ${code}\n\nLet's crush it! 🔥`;
+  const phone=client?.phone?client.phone.replace(/\D/g,''):'';
+  const msg=`Hey ${clientName}! 💪 Your new workout plan "${lastSentPlanName}" is ready on TrackMyReps.\n\nSign in at: trackmyreps.in\nTrainer code: ${code}\n\nLet's crush it! 🔥`;
   document.getElementById('wa-message-preview').textContent=msg;
+  // Update button based on whether phone is available
+  const btn=document.querySelector('#wa-modal .whatsapp-btn');
+  if(btn){
+    if(phone){btn.onclick=()=>openWhatsApp();btn.style.opacity='1';}
+    else{btn.onclick=()=>openWhatsApp();btn.style.opacity='1';}
+  }
   document.getElementById('wa-modal').classList.remove('hidden');
 }
 function closeWaModal(){document.getElementById('wa-modal').classList.add('hidden');}
@@ -1384,8 +1421,10 @@ function openWhatsApp(){
   const client=myClients.find(c=>c.id===lastSentClientId);
   const code=currentProfile.trainer_code||'';
   const clientName=client?.full_name||'your client';
+  const phone=client?.phone?client.phone.replace(/\D/g,''):'';
   const msg=encodeURIComponent(`Hey ${clientName}! 💪 Your new workout plan "${lastSentPlanName}" is ready on TrackMyReps.\n\nSign in at: trackmyreps.in\nTrainer code: ${code}\n\nLet's crush it! 🔥`);
-  window.open(`https://wa.me/?text=${msg}`,'_blank');
+  const url=phone?`https://wa.me/${phone}?text=${msg}`:`https://wa.me/?text=${msg}`;
+  window.open(url,'_blank');
   closeWaModal();
 }
 
@@ -1797,7 +1836,6 @@ async function linkTrainer(){
 function getTodayName(){const d=new Date().getDay();return days[d===0?6:d-1];}
 function renderClientToday(){
   const today=getTodayName();selectedDay=today;
-  const lbl=document.getElementById('client-day-label');if(lbl)lbl.textContent=today;
   const tabs=document.getElementById('client-day-tabs');
   if(tabs)tabs.innerHTML=days.map(d=>`<button class="day-tab${d===today?' active':''}" onclick="selectClientDay('${d}',this)">${dayAbbr[d]}</button>`).join('');
   renderDayWorkout(today);
@@ -1805,8 +1843,8 @@ function renderClientToday(){
 }
 function selectClientDay(day,el){
   selectedDay=day;
-  document.querySelectorAll('#client-day-tabs .day-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
-  const lbl=document.getElementById('client-day-label');if(lbl)lbl.textContent=day;
+  document.querySelectorAll('#client-day-tabs .day-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
   renderDayWorkout(day);
   updateFinishBar();
 }
@@ -1839,8 +1877,8 @@ function renderDayWorkout(day){
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-          ${ex.tutorial_url?`<button class="btn btn-ghost btn-sm" style="font-size:.74rem;padding:6px 10px" onclick="openTutorial('${ex.id}')">▶</button>`:''}
-          <button class="check-btn${exDone?' checked':''}" id="excheck-${wi}" style="width:40px;height:40px;border-radius:12px;font-size:1rem" onclick="toggleExerciseDone('${ex.id}',${sets},${wi},'${logDateStr}')">${exDone?'✓':''}</button>
+          ${ex.tutorial_url?`<button class="btn btn-ghost btn-sm" style="font-size:.75rem;padding:7px 12px;gap:4px" onclick="openTutorial('${ex.id}')">▶ Tutorial</button>`:''}
+          <button class="check-btn${exDone?' checked':''}" id="excheck-${wi}" onclick="toggleExerciseDone('${ex.id}',${sets},${wi},'${logDateStr}')" title="Mark complete">${exDone?'✓':''}</button>
         </div>
       </div>
       <div style="margin-top:12px">
@@ -1930,6 +1968,16 @@ async function saveMeasurement(){
   if(measurements.length){const el=document.getElementById('current-weight');if(el)el.textContent=measurements[0].weight_kg;}
   renderClientProfile();updateCharts();
 }
+async function savePhone(){
+  const raw=document.getElementById('profile-phone').value.trim();
+  const phone=raw.replace(/\D/g,'');
+  if(!phone||phone.length<7)return toast('Enter a valid phone number with country code (e.g. 919876543210)','error');
+  const {error}=await db.from('profiles').update({phone}).eq('id',currentUser.id);
+  if(error)return toast(error.message,'error');
+  currentProfile.phone=phone;
+  document.getElementById('phone-saved-indicator').textContent='✓ Saved — your trainer can now WhatsApp you directly';
+  toast('Phone saved ✅');
+}
 function renderClientProfile(){
   const p=currentProfile;
   const ini=(p.full_name||p.email).split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2);
@@ -1937,6 +1985,10 @@ function renderClientProfile(){
   const pn=document.getElementById('profile-name');if(pn)pn.textContent=p.full_name||'—';
   const pe=document.getElementById('profile-email');if(pe)pe.textContent=p.email;
   const pb=document.getElementById('profile-badge');if(pb)pb.innerHTML='<span class="badge badge-green">Client</span>';
+  // Phone
+  const phoneInp=document.getElementById('profile-phone');
+  const phoneInd=document.getElementById('phone-saved-indicator');
+  if(phoneInp&&p.phone){phoneInp.value=p.phone;if(phoneInd)phoneInd.textContent='✓ Saved — your trainer can WhatsApp you directly';}
   const tli=document.getElementById('trainer-linked-info');
   const inputRow=document.getElementById('trainer-link-input-row');
   if(tli){
@@ -2006,7 +2058,7 @@ async function flushOfflineQueue(){
 // INIT
 async function init(){
   // Key guard — show clear error instead of silent hang
-  if(!SUPABASE_KEY||SUPABASE_KEY==='sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W'){
+  if(!SUPABASE_KEY||SUPABASE_KEY==='sb_publishable_Okh198rl-cQTcPlMkLabkw_zo4THZkE'){
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');
     setTimeout(()=>toast('⚠️ Supabase key not set — open index.html and replace PASTE_YOUR_PUBLISHABLE_KEY_HERE','error'),300);

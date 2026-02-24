@@ -273,7 +273,7 @@ select.inp{cursor:pointer}
   /* Builder: hide right panel, use full width */
   .builder-layout{display:block}
   .builder-right{display:none}
-  .builder-mobile-bar{display:flex!important}
+  #page-trainer-build .builder-mobile-bar{display:flex!important}
 }
 @media(max-width:420px){
   .grid2,.grid3,.ex-grid{grid-template-columns:1fr}
@@ -834,7 +834,7 @@ select.inp{cursor:pointer}
 
 <script>
 const SUPABASE_URL='https://oxpeybhsucryghtrnhmm.supabase.co';
-const SUPABASE_KEY='sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
+const SUPABASE_KEY=' sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
 
 let db,currentUser,currentProfile;
 let exercises=[],myClients=[],myPlans=[],measurements=[],logCache={};
@@ -1103,22 +1103,43 @@ function getYoutubeEmbed(url){
   const m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
   return m?`https://www.youtube.com/embed/${m[1]}`:`https://www.youtube.com/embed/${url.split('/').pop()}`;
 }
-function openTutorial(exId){
-  // Check global exercises array (trainer/admin) first, then client plan exercises
+function openTutorial(exId, exNameFallback){
   let ex=exercises.find(e=>e.id===exId);
   if(!ex){
-    // Client context — find exercise nested in plan
     const planEx=clientPlanExercises.find(e=>(e.exercises?.id===exId||e.exercise_id===exId));
     if(planEx)ex=planEx.exercises;
   }
-  if(!ex||!ex.tutorial_url)return toast('No tutorial available for this exercise','error');
-  const embedUrl=getYoutubeEmbed(ex.tutorial_url);
-  document.getElementById('tut-modal-title').textContent=ex.name;
-  document.getElementById('tut-video-container').innerHTML=embedUrl
-    ?`<iframe src="${embedUrl}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`
-    :`<div class="empty"><div class="empty-icon">🎬</div><h3>Cannot embed this URL</h3><a href="${ex.tutorial_url}" target="_blank" class="btn btn-lime btn-sm" style="margin-top:10px">Open Video →</a></div>`;
-  document.getElementById('tut-notes').textContent=ex.notes||'';
+  const name=ex?.name||exNameFallback||'Exercise';
+  const url=ex?.tutorial_url;
+  document.getElementById('tut-modal-title').textContent=name;
+  document.getElementById('tut-notes').textContent=ex?.notes||'';
+  if(url){
+    const embedUrl=getYoutubeEmbed(url);
+    document.getElementById('tut-video-container').innerHTML=embedUrl
+      ?`<iframe src="${embedUrl}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`
+      :`<div class="empty"><div class="empty-icon">🎬</div><h3>Cannot embed this URL</h3><a href="${url}" target="_blank" class="btn btn-lime btn-sm" style="margin-top:10px">Open Video →</a></div>`;
+  } else {
+    // Fallback: YouTube search
+    const searchUrl=`https://www.youtube.com/results?search_query=${encodeURIComponent(name+' exercise tutorial')}`;
+    document.getElementById('tut-video-container').innerHTML=`<div class="empty" style="padding:24px"><div class="empty-icon">🎬</div><h3>No video linked yet</h3><p style="font-size:.82rem;color:var(--text2);margin:8px 0 16px">Your trainer hasn't added a tutorial for this exercise</p><a href="${searchUrl}" target="_blank" class="btn btn-lime btn-sm">Search on YouTube →</a></div>`;
+  }
   document.getElementById('tutorial-modal').classList.remove('hidden');
+}
+async function clearLog(exId,setNum,wi,si,logDate){
+  const key=`${logDate}-${exId}-${setNum}`;
+  const log=logCache[key];
+  // Clear inputs
+  const kgInp=document.getElementById(`w-${wi}-${si}-kg`);
+  const rInp=document.getElementById(`w-${wi}-${si}-r`);
+  if(kgInp)kgInp.value='';
+  if(rInp)rInp.value='';
+  // Delete from DB if exists
+  if(log?.id){
+    await db.from('exercise_logs').delete().eq('id',log.id);
+    delete logCache[key];
+  } else {
+    delete logCache[key];
+  }
 }
 function closeTutorial(){
   document.getElementById('tutorial-modal').classList.add('hidden');
@@ -1995,26 +2016,29 @@ function renderDayWorkout(day){
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-          ${ex.tutorial_url?`<button class="btn btn-ghost btn-sm" style="font-size:.75rem;padding:7px 12px;gap:4px" onclick="openTutorial('${ex.id}')">▶ Tutorial</button>`:''}
+          <button class="btn btn-ghost btn-sm" style="font-size:.75rem;padding:7px 12px" onclick="openTutorial('${ex.id}','${ex.name.replace(/'/g,"\\'")}')">▶ Tutorial</button>
           <button class="check-btn${exDone?' checked':''}" id="excheck-${wi}" onclick="toggleExerciseDone('${ex.id}',${sets},${wi},'${logDateStr}')" title="Mark complete">${exDone?'✓':''}</button>
         </div>
       </div>
       <div style="margin-top:12px">
-        <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:6px;margin-bottom:4px;padding:0 2px">
+        <div style="display:grid;grid-template-columns:40px 1fr 1fr 32px;gap:6px;margin-bottom:4px;padding:0 2px">
           <div></div>
           <div class="label" style="text-align:center;font-size:.58rem">WEIGHT (KG)</div>
           <div class="label" style="text-align:center;font-size:.58rem">REPS</div>
+          <div></div>
         </div>
-        <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:6px;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)">
+        <div style="display:grid;grid-template-columns:40px 1fr 1fr 32px;gap:6px;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)">
           <div class="set-num">S1</div>
           <input class="set-inp" type="number" inputmode="decimal" step="0.5" placeholder="kg" value="${firstLog?.weight_kg||''}" id="w-${wi}-0-kg" oninput="autoSave('${ex.id}',1,${wi},0,'${logDateStr}')">
           <input class="set-inp" type="number" inputmode="numeric" placeholder="reps" value="${firstLog?.reps_completed||''}" id="w-${wi}-0-r" oninput="autoSave('${ex.id}',1,${wi},0,'${logDateStr}')">
+          <button onclick="clearLog('${ex.id}',1,${wi},0,'${logDateStr}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:.85rem;padding:4px;border-radius:6px" title="Clear">✕</button>
         </div>
         ${middleSets}
-        ${sets>1?`<div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:6px;align-items:center;padding:5px 0">
+        ${sets>1?`<div style="display:grid;grid-template-columns:40px 1fr 1fr 32px;gap:6px;align-items:center;padding:5px 0">
           <div class="set-num">S${sets}</div>
           <input class="set-inp" type="number" inputmode="decimal" step="0.5" placeholder="kg" value="${lastLog?.weight_kg||''}" id="w-${wi}-${sets-1}-kg" oninput="autoSave('${ex.id}',${sets},${wi},${sets-1},'${logDateStr}')">
           <input class="set-inp" type="number" inputmode="numeric" placeholder="reps" value="${lastLog?.reps_completed||''}" id="w-${wi}-${sets-1}-r" oninput="autoSave('${ex.id}',${sets},${wi},${sets-1},'${logDateStr}')">
+          <button onclick="clearLog('${ex.id}',${sets},${wi},${sets-1},'${logDateStr}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:.85rem;padding:4px;border-radius:6px" title="Clear">✕</button>
         </div>`:''}
       </div>
       ${ex.notes?`<div style="margin-top:10px;padding:8px 10px;background:var(--bg3);border-radius:10px;font-size:.76rem;color:var(--text2);line-height:1.5">💡 ${ex.notes}</div>`:''}

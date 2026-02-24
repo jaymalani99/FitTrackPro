@@ -72,15 +72,24 @@ select.inp{cursor:pointer}
 .modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:18px}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--lime);border-radius:50%;animation:spin .7s linear infinite}
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9998}
-#auth-screen{min-height:100vh;min-height:-webkit-fill-available;display:flex;align-items:center;justify-content:center;padding:20px 16px;padding-top:calc(20px + var(--safe-top));padding-bottom:calc(20px + var(--safe-bottom));position:relative;overflow:hidden}
-.auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(212,255,0,.05) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(68,136,255,.05) 0%,transparent 55%)}
-.auth-card{width:100%;max-width:420px;position:relative;z-index:1;animation:fadeUp .3s ease}
-.auth-logo{text-align:center;margin-bottom:28px}
+#auth-screen{min-height:100vh;min-height:-webkit-fill-available;display:flex;align-items:stretch;position:relative;overflow:hidden}
+.auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(212,255,0,.06) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(68,136,255,.06) 0%,transparent 55%)}
+.auth-split-left{flex:1;display:flex;align-items:center;justify-content:center;padding:48px;position:relative;z-index:1;border-right:1px solid var(--border)}
+.auth-left-content{max-width:380px}
+.auth-split-right{width:460px;display:flex;align-items:center;justify-content:center;padding:32px 40px;position:relative;z-index:1;background:var(--bg2)}
+.auth-card{width:100%;max-width:380px;animation:fadeUp .3s ease}
 .auth-tabs{display:flex;background:var(--bg3);border-radius:100px;padding:4px;margin-bottom:22px;border:1px solid var(--border)}
 .auth-tab{flex:1;text-align:center;padding:10px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.85rem;transition:all .2s;color:var(--text2)}
 .auth-tab.active{background:var(--lime);color:#000}
 .code-inp{letter-spacing:4px;text-transform:uppercase;font-family:'Syne',sans-serif;font-weight:700;text-align:center}
 .forgot-link{text-align:center;margin-top:10px;font-size:.82rem;color:var(--text2);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.role-card{background:var(--bg3);border:2px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;cursor:pointer;transition:all .2s;-webkit-user-select:none;user-select:none}
+.role-card:hover{border-color:var(--text2)}
+.role-card.active{border-color:var(--lime);background:rgba(212,255,0,.06)}
+@media(max-width:860px){
+  .auth-split-left{display:none}
+  .auth-split-right{width:100%;padding:24px 20px;padding-top:calc(24px + var(--safe-top));padding-bottom:calc(24px + var(--safe-bottom));background:transparent;min-height:100vh;align-items:flex-start;padding-top:40px}
+}
 #app{display:flex;min-height:100vh;min-height:-webkit-fill-available}
 .sidebar{width:var(--sidebar);background:var(--bg2);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:6px;position:fixed;top:0;left:0;height:100%;z-index:100;transition:transform .3s;overflow-y:auto}
 .sidebar-brand{padding:4px 8px 18px;border-bottom:1px solid var(--border);margin-bottom:6px}
@@ -132,9 +141,11 @@ select.inp{cursor:pointer}
 
 
 /* BUILDER TWO-COLUMN LAYOUT */
-.builder-layout{display:grid;grid-template-columns:1fr 280px;gap:16px;align-items:start}
+.builder-layout{display:grid;grid-template-columns:1fr 0px;gap:0;align-items:start;transition:grid-template-columns .3s ease}
+.builder-layout.has-selection{grid-template-columns:1fr 290px;gap:16px}
 .builder-left{min-width:0}
-.builder-right{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);display:flex;flex-direction:column;position:sticky;top:70px;max-height:calc(100vh - 120px);overflow:hidden}
+.builder-right{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);display:flex;flex-direction:column;position:sticky;top:70px;max-height:calc(100vh - 120px);overflow:hidden;opacity:0;transform:translateX(20px);transition:opacity .25s ease,transform .25s ease;pointer-events:none}
+.builder-layout.has-selection .builder-right{opacity:1;transform:translateX(0);pointer-events:all}
 .builder-right-inner{flex:1;overflow-y:auto;padding:14px;-webkit-overflow-scrolling:touch}
 .builder-right-day{margin-bottom:12px}
 .builder-right-day-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;justify-content:space-between}
@@ -281,48 +292,83 @@ select.inp{cursor:pointer}
 <!-- AUTH -->
 <div id="auth-screen" class="hidden">
   <div class="auth-bg"></div>
-  <div class="auth-card">
-    <div class="auth-logo">
-      <div class="brand" style="font-size:2rem">Track<span>MyReps</span></div>
-      <p class="muted" style="margin-top:5px;font-size:.9rem">Your intelligent fitness companion</p>
-    </div>
-    <div class="auth-tabs">
-      <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
-      <div class="auth-tab" onclick="switchTab('signup')">Sign Up</div>
-    </div>
-    <div id="login-form">
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="inp-group"><label class="label">Email</label><input class="inp" id="l-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-        <div class="inp-group"><label class="label">Password</label><input class="inp" id="l-pass" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
-        <button class="btn btn-lime w100" style="margin-top:4px" onclick="login()" id="login-btn">Sign In</button>
-        <div class="forgot-link" onclick="showForgot()">Forgot password?</div>
+  <!-- LEFT SIDE: branding -->
+  <div class="auth-split-left">
+    <div class="auth-left-content">
+      <div class="brand" style="font-size:2.2rem;margin-bottom:18px">Track<span>MyReps</span></div>
+      <div style="font-size:1.5rem;font-weight:800;font-family:'Syne',sans-serif;line-height:1.3;margin-bottom:14px">Your clients.<br>Their progress.<br><span style="color:var(--lime)">All in one place.</span></div>
+      <p style="color:var(--text2);font-size:.92rem;line-height:1.6;max-width:300px">Built for Indian personal trainers. Send plans, track client progress, and stay connected — all for ₹99/client/month.</p>
+      <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> Create & send workout plans</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> Track client progress in real-time</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> WhatsApp clients directly</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> Works offline, mobile-ready</div>
       </div>
     </div>
-    <div id="forgot-form" class="hidden">
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <p class="muted" style="font-size:.85rem;text-align:center">We'll send a reset link to your email</p>
-        <div class="inp-group"><label class="label">Email</label><input class="inp" id="fp-email" type="email" placeholder="you@example.com"></div>
-        <button class="btn btn-lime w100" onclick="sendReset()">Send Reset Link</button>
-        <button class="btn btn-ghost w100" onclick="showForgot(false)">Back to Sign In</button>
+  </div>
+  <!-- RIGHT SIDE: form -->
+  <div class="auth-split-right">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
+        <div class="auth-tab" onclick="switchTab('signup')">Sign Up</div>
       </div>
-    </div>
-    <div id="signup-form" class="hidden">
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="inp-group"><label class="label">Full Name</label><input class="inp" id="s-name" type="text" autocomplete="name" placeholder="Your full name"></div>
-        <div class="inp-group"><label class="label">Email</label><input class="inp" id="s-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-        <div class="inp-group"><label class="label">Password</label><input class="inp" id="s-pass" type="password" autocomplete="new-password" placeholder="Min 6 characters"></div>
-        <div class="inp-group">
-          <label class="label">I am a...</label>
-          <select class="inp" id="s-role" onchange="toggleCodeField()">
-            <option value="client">Client</option>
-            <option value="trainer">Trainer</option>
-          </select>
+      <div id="login-form">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="text-align:center;margin-bottom:4px">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Welcome back 👋</div>
+            <div class="muted" style="font-size:.85rem;margin-top:4px">Sign in to your TrackMyReps account</div>
+          </div>
+          <div class="inp-group"><label class="label">Email</label><input class="inp" id="l-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+          <div class="inp-group"><label class="label">Password</label><input class="inp" id="l-pass" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
+          <button class="btn btn-lime w100" style="margin-top:4px;padding:15px" onclick="login()" id="login-btn">Sign In →</button>
+          <div class="forgot-link" onclick="showForgot()">Forgot password?</div>
         </div>
-        <div id="trainer-code-field" class="inp-group hidden">
-          <label class="label">Trainer Code <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-          <input class="inp code-inp" id="s-trainer-code" placeholder="e.g. JAY-4829" maxlength="8" style="font-size:18px">
+      </div>
+      <div id="forgot-form" class="hidden">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="text-align:center;margin-bottom:4px">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem">Reset Password</div>
+            <p class="muted" style="font-size:.85rem;margin-top:4px">We'll send a reset link to your email</p>
+          </div>
+          <div class="inp-group"><label class="label">Email</label><input class="inp" id="fp-email" type="email" placeholder="you@example.com"></div>
+          <button class="btn btn-lime w100" onclick="sendReset()">Send Reset Link</button>
+          <button class="btn btn-ghost w100" onclick="showForgot(false)">← Back to Sign In</button>
         </div>
-        <button class="btn btn-lime w100" style="margin-top:4px" onclick="signup()">Create Account</button>
+      </div>
+      <div id="signup-form" class="hidden">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="text-align:center;margin-bottom:4px">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Create Account</div>
+            <div class="muted" style="font-size:.85rem;margin-top:4px">Join TrackMyReps today</div>
+          </div>
+          <!-- ROLE SELECTOR - BIG CARDS -->
+          <div>
+            <div class="label" style="margin-bottom:8px">I am a...</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div class="role-card active" id="role-client" onclick="selectRole('client')">
+                <div style="font-size:1.6rem;margin-bottom:6px">🏃</div>
+                <div style="font-weight:700;font-size:.9rem">Client</div>
+                <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I work out</div>
+              </div>
+              <div class="role-card" id="role-trainer" onclick="selectRole('trainer')">
+                <div style="font-size:1.6rem;margin-bottom:6px">💪</div>
+                <div style="font-weight:700;font-size:.9rem">Trainer</div>
+                <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I coach clients</div>
+              </div>
+            </div>
+            <input type="hidden" id="s-role" value="client">
+          </div>
+          <div class="inp-group"><label class="label">Full Name</label><input class="inp" id="s-name" type="text" autocomplete="name" placeholder="Your full name"></div>
+          <div class="inp-group"><label class="label">Email</label><input class="inp" id="s-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+          <div class="inp-group"><label class="label">Password</label><input class="inp" id="s-pass" type="password" autocomplete="new-password" placeholder="Min 6 characters"></div>
+          <div id="trainer-code-field" class="inp-group hidden">
+            <label class="label">Trainer Code <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+            <input class="inp code-inp" id="s-trainer-code" placeholder="e.g. JAY-4829" maxlength="8" style="font-size:18px">
+          </div>
+          <button class="btn btn-lime w100" style="margin-top:4px;padding:15px" onclick="signup()">Create Account →</button>
+          <div style="text-align:center;font-size:.78rem;color:var(--text3)">By signing up you agree to our terms of service</div>
+        </div>
       </div>
     </div>
   </div>
@@ -480,6 +526,19 @@ select.inp{cursor:pointer}
       <div id="new-plan-banner" class="hidden" style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:var(--r);padding:12px 14px;margin-bottom:14px;font-size:.85rem;color:var(--lime);font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:10px">
         <span id="new-plan-banner-text"></span>
         <button onclick="document.getElementById('new-plan-banner').classList.add('hidden')" style="background:none;border:none;color:var(--lime);cursor:pointer;font-size:1rem;flex-shrink:0">✕</button>
+      </div>
+      <!-- DAY PROGRESS BAR -->
+      <div id="day-progress-bar" class="hidden" style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:.8rem;font-weight:600;color:var(--text2)">Today's Progress</span>
+            <span id="day-progress-text" style="font-size:.8rem;font-weight:700;color:var(--lime)">0 / 0</span>
+          </div>
+          <div style="height:6px;background:var(--bg3);border-radius:100px;overflow:hidden">
+            <div id="day-progress-fill" style="height:100%;background:var(--lime);border-radius:100px;transition:width .4s ease;width:0%"></div>
+          </div>
+        </div>
+        <div id="day-progress-emoji" style="font-size:1.4rem">💪</div>
       </div>
       <div id="client-day-tabs" class="day-tabs"></div>
       <div id="client-workout-list"></div>
@@ -808,9 +867,13 @@ async function sendReset(){
   if(error)return toast(error.message,'error');
   toast('Reset link sent! Check your email.');showForgot(false);
 }
-function toggleCodeField(){
-  document.getElementById('trainer-code-field').classList.toggle('hidden',document.getElementById('s-role').value!=='client');
+function selectRole(role){
+  document.getElementById('s-role').value=role;
+  document.getElementById('role-client').classList.toggle('active',role==='client');
+  document.getElementById('role-trainer').classList.toggle('active',role==='trainer');
+  document.getElementById('trainer-code-field').classList.toggle('hidden',role!=='client');
 }
+function toggleCodeField(){selectRole(document.getElementById('s-role').value);}
 async function login(){
   const email=document.getElementById('l-email').value.trim();
   const pass=document.getElementById('l-pass').value;
@@ -1270,7 +1333,9 @@ function renderBuilderStepper(){
       panel.innerHTML='';
     }
   }
-  // Info line (desktop right panel + mobile bar)
+  // Toggle right panel visibility
+  const layout=document.querySelector('.builder-layout');
+  if(layout)layout.classList.toggle('has-selection',total>0);
   const infoEl=document.getElementById('builder-info');
   const mobileInfo=document.getElementById('builder-mobile-info');
   if(total){
@@ -1779,18 +1844,35 @@ function updateFinishBar(){
   const summary=document.getElementById('finish-workout-summary');
   if(!bar)return;
   const dayExs=clientPlanExercises.filter(e=>e.day_of_week===selectedDay);
-  if(!dayExs.length){bar.classList.add('hidden');return;}
-  const dayIdx=days.indexOf(selectedDay);const jsDay=dayIdx===6?0:dayIdx+1;
-  const today=new Date();let logDate=new Date(today);
-  for(let i=0;i<7;i++){if(logDate.getDay()===jsDay)break;logDate.setDate(logDate.getDate()-1);}
-  const logDateStr=logDate.toISOString().split('T')[0];
-  const done=dayExs.filter(e=>{const k=`${logDateStr}-${e.exercises?.id||e.exercise_id}-1`;return logCache[k]?.completed;}).length;
-  bar.classList.remove('hidden');
-  if(summary)summary.innerHTML=`<strong style="color:var(--lime)">${done}/${dayExs.length}</strong> exercises done`;
-  const btn=document.getElementById('finish-workout-btn');
-  if(btn){
-    if(done===dayExs.length&&dayExs.length>0){btn.style.background='var(--green)';btn.textContent='✅ Workout Complete!';}
-    else{btn.style.background='';btn.textContent='🏁 Finish Workout';}
+  // Update day progress bar
+  const progressBar=document.getElementById('day-progress-bar');
+  const progressFill=document.getElementById('day-progress-fill');
+  const progressText=document.getElementById('day-progress-text');
+  const progressEmoji=document.getElementById('day-progress-emoji');
+  if(dayExs.length&&progressBar){
+    const dayIdx=days.indexOf(selectedDay);const jsDay=dayIdx===6?0:dayIdx+1;
+    const today=new Date();let logDate=new Date(today);
+    for(let i=0;i<7;i++){if(logDate.getDay()===jsDay)break;logDate.setDate(logDate.getDate()-1);}
+    const logDateStr=logDate.toISOString().split('T')[0];
+    const done=dayExs.filter(e=>{const k=`${logDateStr}-${e.exercises?.id||e.exercise_id}-1`;return logCache[k]?.completed;}).length;
+    const pct=Math.round(done/dayExs.length*100);
+    progressBar.classList.remove('hidden');
+    if(progressFill)progressFill.style.width=pct+'%';
+    if(progressFill)progressFill.style.background=pct===100?'var(--green)':'var(--lime)';
+    if(progressText)progressText.textContent=`${done} / ${dayExs.length} exercises`;
+    if(progressText)progressText.style.color=pct===100?'var(--green)':'var(--lime)';
+    if(progressEmoji)progressEmoji.textContent=pct===100?'🏆':pct>=50?'🔥':'💪';
+    // Also update finish bar
+    bar.classList.remove('hidden');
+    if(summary)summary.innerHTML=`<strong style="color:var(--lime)">${done}/${dayExs.length}</strong> exercises done`;
+    const btn=document.getElementById('finish-workout-btn');
+    if(btn){
+      if(done===dayExs.length&&dayExs.length>0){btn.style.background='var(--green)';btn.textContent='✅ Workout Complete!';}
+      else{btn.style.background='';btn.textContent='🏁 Finish Workout';}
+    }
+  }else{
+    if(progressBar)progressBar.classList.add('hidden');
+    bar.classList.add('hidden');
   }
 }
 async function finishWorkout(){

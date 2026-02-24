@@ -128,22 +128,7 @@ select.inp{cursor:pointer}
 .cat-chip{padding:7px 12px;border-radius:100px;background:var(--bg3);border:1px solid var(--border);cursor:pointer;font-size:.78rem;font-weight:600;color:var(--text2);transition:all .15s;white-space:nowrap;-webkit-user-select:none;user-select:none}
 .cat-chip.active{background:var(--lime);color:#000;border-color:transparent}
 
-/* ── DAY BUILDER STEPPER ── */
-.builder-stepper{background:var(--bg2);border-top:1px solid var(--border);position:fixed;bottom:0;left:var(--sidebar);right:0;z-index:80;padding:12px 20px calc(12px + var(--safe-bottom))}
-.builder-days{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.builder-days::-webkit-scrollbar{display:none}
-.bday{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;flex-shrink:0;min-width:52px;-webkit-user-select:none;user-select:none}
-.bday.active{border-color:var(--lime);background:rgba(212,255,0,.08)}
-.bday.has-ex{border-color:var(--blue)}
-.bday.active.has-ex{border-color:var(--lime);background:rgba(212,255,0,.08)}
-.bday-name{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)}
-.bday.active .bday-name{color:var(--lime)}
-.bday-count{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;color:var(--text3)}
-.bday.has-ex .bday-count{color:var(--blue)}
-.bday.active .bday-count{color:var(--lime)}
-.builder-actions{display:flex;gap:8px;align-items:center;padding-top:8px;border-top:1px solid var(--border)}
-.builder-info{flex:1;font-size:.8rem;color:var(--text2)}
-.builder-info strong{color:var(--text);font-weight:700}
+
 
 /* INLINE DAY SELECTOR */
 .builder-days-inline{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -206,8 +191,7 @@ select.inp{cursor:pointer}
   #app{display:block}
   .sidebar{transform:translateX(-100%);z-index:200;position:fixed}
   .sidebar.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.7)}
-  .main-content{margin-left:0!important;margin-right:0!important;width:100%;padding:16px 14px calc(90px + var(--safe-bottom))}
-  .builder-stepper{left:0}
+  .main-content{margin-left:0!important;margin-right:0!important;width:100%;padding:16px 14px calc(72px + var(--safe-bottom))}
   .mobile-nav{display:flex}
   .topbar{display:flex}
   .hamburger{display:flex}
@@ -310,14 +294,7 @@ select.inp{cursor:pointer}
   </div>
   <div class="mobile-nav" id="mobile-nav"></div>
 
-  <!-- DAY BUILDER STEPPER (trainer build page only) -->
-  <div class="builder-stepper hidden" id="builder-stepper">
-    <div class="builder-actions" style="border-top:none;padding-top:0">
-      <div class="builder-info" id="builder-info">Select a day then tap exercises</div>
-      <button class="btn btn-ghost btn-sm" onclick="clearBuilder()">Clear</button>
-      <button class="btn btn-lime btn-sm" onclick="openReviewModal()">Review & Send →</button>
-    </div>
-  </div>
+
 
   <div class="main-content" id="main-content">
 
@@ -411,6 +388,15 @@ select.inp{cursor:pointer}
         <div class="cat-chip" onclick="filterTrainerEx('Cardio',this)">🏃 Cardio</div>
       </div>
       <div id="trainer-ex-grid" class="ex-grid"></div>
+
+      <!-- SEND BAR inside page -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px">
+        <div class="builder-info" id="builder-info" style="color:var(--text2);font-size:.85rem">Select a day then tap exercises to add</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost btn-sm" onclick="clearBuilder()">Clear All</button>
+          <button class="btn btn-lime" onclick="openReviewModal()">Review & Send →</button>
+        </div>
+      </div>
     </div>
 
     <div class="page" id="page-trainer-clients">
@@ -724,9 +710,6 @@ function showPage(pageId,clickedEl,isMobile){
     if(other[idx]){other.forEach(e=>e.classList.remove('active'));other[idx].classList.add('active');}
   }
   document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').style.display='none';
-  const stepper=document.getElementById('builder-stepper');
-  if(pageId==='trainer-build'&&currentProfile?.role==='trainer')stepper.classList.remove('hidden');
-  else stepper.classList.add('hidden');
 }
 function toggleSidebar(){
   const s=document.getElementById('sidebar'),o=document.getElementById('sidebar-overlay');

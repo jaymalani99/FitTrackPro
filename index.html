@@ -2058,7 +2058,7 @@ async function flushOfflineQueue(){
 // INIT
 async function init(){
   // Key guard — show clear error instead of silent hang
-  if(!SUPABASE_KEY||SUPABASE_KEY==='sb_publishable_Okh198rl-cQTcPlMkLabkw_zo4THZkE'){
+  if(!SUPABASE_KEY||SUPABASE_KEY==='PASTE_YOUR_PUBLISHABLE_KEY_HERE'){
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');
     setTimeout(()=>toast('⚠️ Supabase key not set — open index.html and replace PASTE_YOUR_PUBLISHABLE_KEY_HERE','error'),300);

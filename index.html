@@ -73,22 +73,26 @@ select.inp{cursor:pointer}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--lime);border-radius:50%;animation:spin .7s linear infinite}
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9998}
 #auth-screen{min-height:100vh;min-height:-webkit-fill-available;display:flex;align-items:stretch;position:relative;overflow:hidden}
-.auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(212,255,0,.06) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(68,136,255,.06) 0%,transparent 55%)}
-.auth-split-left{flex:1;display:flex;align-items:center;justify-content:center;padding:48px;position:relative;z-index:1;border-right:1px solid var(--border)}
-.auth-left-content{max-width:380px}
-.auth-split-right{width:460px;display:flex;align-items:center;justify-content:center;padding:32px 40px;position:relative;z-index:1;background:var(--bg2)}
-.auth-card{width:100%;max-width:380px;animation:fadeUp .3s ease}
-.auth-tabs{display:flex;background:var(--bg3);border-radius:100px;padding:4px;margin-bottom:22px;border:1px solid var(--border)}
-.auth-tab{flex:1;text-align:center;padding:10px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.85rem;transition:all .2s;color:var(--text2)}
+.auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 60%,rgba(212,255,0,.08) 0%,transparent 50%),radial-gradient(ellipse at 85% 20%,rgba(68,136,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(212,255,0,.04) 0%,transparent 50%)}
+.auth-split-left{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 60px 60px 80px;position:relative;z-index:1}
+.auth-split-left::after{content:'';position:absolute;right:0;top:10%;bottom:10%;width:1px;background:linear-gradient(to bottom,transparent,var(--border),transparent)}
+.auth-left-content{max-width:440px}
+.auth-split-right{width:480px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:48px 60px 48px 48px;position:relative;z-index:1}
+.auth-card{width:100%;animation:fadeUp .3s ease}
+.auth-tabs{display:flex;background:var(--bg3);border-radius:100px;padding:4px;margin-bottom:28px;border:1px solid var(--border)}
+.auth-tab{flex:1;text-align:center;padding:11px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.88rem;transition:all .2s;color:var(--text2)}
 .auth-tab.active{background:var(--lime);color:#000}
 .code-inp{letter-spacing:4px;text-transform:uppercase;font-family:'Syne',sans-serif;font-weight:700;text-align:center}
-.forgot-link{text-align:center;margin-top:10px;font-size:.82rem;color:var(--text2);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.role-card{background:var(--bg3);border:2px solid var(--border);border-radius:var(--r);padding:14px;text-align:center;cursor:pointer;transition:all .2s;-webkit-user-select:none;user-select:none}
+.forgot-link{text-align:center;margin-top:12px;font-size:.82rem;color:var(--text2);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.role-card{background:var(--bg3);border:2px solid var(--border);border-radius:var(--r);padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s;-webkit-user-select:none;user-select:none}
 .role-card:hover{border-color:var(--text2)}
-.role-card.active{border-color:var(--lime);background:rgba(212,255,0,.06)}
-@media(max-width:860px){
+.role-card.active{border-color:var(--lime);background:rgba(212,255,0,.07)}
+/* Decorative gym stat pills on left */
+.auth-stat{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;padding:8px 14px;font-size:.82rem;color:var(--text2)}
+@media(max-width:900px){
   .auth-split-left{display:none}
-  .auth-split-right{width:100%;padding:24px 20px;padding-top:calc(24px + var(--safe-top));padding-bottom:calc(24px + var(--safe-bottom));background:transparent;min-height:100vh;align-items:flex-start;padding-top:40px}
+  .auth-split-right{width:100%;padding:32px 24px;padding-top:calc(40px + var(--safe-top));padding-bottom:calc(32px + var(--safe-bottom));justify-content:flex-start;align-items:flex-start;overflow-y:auto}
+  .auth-card{max-width:100%}
 }
 #app{display:flex;min-height:100vh;min-height:-webkit-fill-available}
 .sidebar{width:var(--sidebar);background:var(--bg2);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:6px;position:fixed;top:0;left:0;height:100%;z-index:100;transition:transform .3s;overflow-y:auto}
@@ -295,79 +299,90 @@ select.inp{cursor:pointer}
   <!-- LEFT SIDE: branding -->
   <div class="auth-split-left">
     <div class="auth-left-content">
-      <div class="brand" style="font-size:2.2rem;margin-bottom:18px">Track<span>MyReps</span></div>
-      <div style="font-size:1.5rem;font-weight:800;font-family:'Syne',sans-serif;line-height:1.3;margin-bottom:14px">Your clients.<br>Their progress.<br><span style="color:var(--lime)">All in one place.</span></div>
-      <p style="color:var(--text2);font-size:.92rem;line-height:1.6;max-width:300px">Built for Indian personal trainers. Send plans, track client progress, and stay connected — all for ₹99/client/month.</p>
-      <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
-        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> Create & send workout plans</div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> Track client progress in real-time</div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> WhatsApp clients directly</div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text2)"><span style="color:var(--lime);font-size:1rem">✓</span> Works offline, mobile-ready</div>
+      <div class="brand" style="font-size:1.8rem;margin-bottom:32px;display:flex;align-items:center;gap:8px">
+        <div style="width:36px;height:36px;background:var(--lime);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">💪</div>
+        Track<span>MyReps</span>
+      </div>
+      <div style="font-size:2.4rem;font-weight:800;font-family:'Syne',sans-serif;line-height:1.15;margin-bottom:18px">
+        Your clients.<br>Their progress.<br><span style="color:var(--lime)">All in one place.</span>
+      </div>
+      <p style="color:var(--text2);font-size:.95rem;line-height:1.7;margin-bottom:32px">Built for Indian personal trainers. Send workout plans, track progress, and stay connected — all for <strong style="color:var(--text)">₹99/client/month</strong>.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>Create & send personalised workout plans</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>Track client progress & body weight</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>WhatsApp clients with one tap</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>Works offline, PWA on any device</div>
+      </div>
+      <!-- Stats row -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div class="auth-stat"><span style="color:var(--lime);font-weight:800">₹99</span> per client/month</div>
+        <div class="auth-stat"><span style="color:var(--lime);font-weight:800">10x</span> cheaper than alternatives</div>
       </div>
     </div>
   </div>
   <!-- RIGHT SIDE: form -->
   <div class="auth-split-right">
     <div class="auth-card">
-      <div class="auth-tabs">
-        <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
-        <div class="auth-tab" onclick="switchTab('signup')">Sign Up</div>
-      </div>
-      <div id="login-form">
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div style="text-align:center;margin-bottom:4px">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Welcome back 👋</div>
-            <div class="muted" style="font-size:.85rem;margin-top:4px">Sign in to your TrackMyReps account</div>
-          </div>
-          <div class="inp-group"><label class="label">Email</label><input class="inp" id="l-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-          <div class="inp-group"><label class="label">Password</label><input class="inp" id="l-pass" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
-          <button class="btn btn-lime w100" style="margin-top:4px;padding:15px" onclick="login()" id="login-btn">Sign In →</button>
-          <div class="forgot-link" onclick="showForgot()">Forgot password?</div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:32px 28px">
+        <div class="auth-tabs">
+          <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
+          <div class="auth-tab" onclick="switchTab('signup')">Sign Up</div>
         </div>
-      </div>
-      <div id="forgot-form" class="hidden">
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <div style="text-align:center;margin-bottom:4px">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem">Reset Password</div>
-            <p class="muted" style="font-size:.85rem;margin-top:4px">We'll send a reset link to your email</p>
-          </div>
-          <div class="inp-group"><label class="label">Email</label><input class="inp" id="fp-email" type="email" placeholder="you@example.com"></div>
-          <button class="btn btn-lime w100" onclick="sendReset()">Send Reset Link</button>
-          <button class="btn btn-ghost w100" onclick="showForgot(false)">← Back to Sign In</button>
-        </div>
-      </div>
-      <div id="signup-form" class="hidden">
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div style="text-align:center;margin-bottom:4px">
-            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Create Account</div>
-            <div class="muted" style="font-size:.85rem;margin-top:4px">Join TrackMyReps today</div>
-          </div>
-          <!-- ROLE SELECTOR - BIG CARDS -->
-          <div>
-            <div class="label" style="margin-bottom:8px">I am a...</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <div class="role-card active" id="role-client" onclick="selectRole('client')">
-                <div style="font-size:1.6rem;margin-bottom:6px">🏃</div>
-                <div style="font-weight:700;font-size:.9rem">Client</div>
-                <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I work out</div>
-              </div>
-              <div class="role-card" id="role-trainer" onclick="selectRole('trainer')">
-                <div style="font-size:1.6rem;margin-bottom:6px">💪</div>
-                <div style="font-weight:700;font-size:.9rem">Trainer</div>
-                <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I coach clients</div>
-              </div>
+        <div id="login-form">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="margin-bottom:4px">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Welcome back 👋</div>
+              <div class="muted" style="font-size:.85rem;margin-top:4px">Sign in to your TrackMyReps account</div>
             </div>
-            <input type="hidden" id="s-role" value="client">
+            <div class="inp-group"><label class="label">Email</label><input class="inp" id="l-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+            <div class="inp-group"><label class="label">Password</label><input class="inp" id="l-pass" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
+            <button class="btn btn-lime w100" style="margin-top:4px;padding:15px;font-size:.95rem" onclick="login()" id="login-btn">Sign In →</button>
+            <div class="forgot-link" onclick="showForgot()">Forgot password?</div>
           </div>
-          <div class="inp-group"><label class="label">Full Name</label><input class="inp" id="s-name" type="text" autocomplete="name" placeholder="Your full name"></div>
-          <div class="inp-group"><label class="label">Email</label><input class="inp" id="s-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-          <div class="inp-group"><label class="label">Password</label><input class="inp" id="s-pass" type="password" autocomplete="new-password" placeholder="Min 6 characters"></div>
-          <div id="trainer-code-field" class="inp-group hidden">
-            <label class="label">Trainer Code <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-            <input class="inp code-inp" id="s-trainer-code" placeholder="e.g. JAY-4829" maxlength="8" style="font-size:18px">
+        </div>
+        <div id="forgot-form" class="hidden">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="margin-bottom:4px">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem">Reset Password</div>
+              <p class="muted" style="font-size:.85rem;margin-top:4px">We'll send a reset link to your email</p>
+            </div>
+            <div class="inp-group"><label class="label">Email</label><input class="inp" id="fp-email" type="email" placeholder="you@example.com"></div>
+            <button class="btn btn-lime w100" onclick="sendReset()">Send Reset Link</button>
+            <button class="btn btn-ghost w100" onclick="showForgot(false)">← Back to Sign In</button>
           </div>
-          <button class="btn btn-lime w100" style="margin-top:4px;padding:15px" onclick="signup()">Create Account →</button>
-          <div style="text-align:center;font-size:.78rem;color:var(--text3)">By signing up you agree to our terms of service</div>
+        </div>
+        <div id="signup-form" class="hidden">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="margin-bottom:4px">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Create Account</div>
+              <div class="muted" style="font-size:.85rem;margin-top:4px">Join TrackMyReps today</div>
+            </div>
+            <div>
+              <div class="label" style="margin-bottom:8px">I am a...</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div class="role-card active" id="role-client" onclick="selectRole('client')">
+                  <div style="font-size:1.6rem;margin-bottom:6px">🏃</div>
+                  <div style="font-weight:700;font-size:.9rem">Client</div>
+                  <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I work out</div>
+                </div>
+                <div class="role-card" id="role-trainer" onclick="selectRole('trainer')">
+                  <div style="font-size:1.6rem;margin-bottom:6px">💪</div>
+                  <div style="font-weight:700;font-size:.9rem">Trainer</div>
+                  <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I coach clients</div>
+                </div>
+              </div>
+              <input type="hidden" id="s-role" value="client">
+            </div>
+            <div class="inp-group"><label class="label">Full Name</label><input class="inp" id="s-name" type="text" autocomplete="name" placeholder="Your full name"></div>
+            <div class="inp-group"><label class="label">Email</label><input class="inp" id="s-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+            <div class="inp-group"><label class="label">Password</label><input class="inp" id="s-pass" type="password" autocomplete="new-password" placeholder="Min 6 characters"></div>
+            <div id="trainer-code-field" class="inp-group hidden">
+              <label class="label">Trainer Code <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+              <input class="inp code-inp" id="s-trainer-code" placeholder="e.g. JAY-4829" maxlength="8" style="font-size:18px">
+            </div>
+            <button class="btn btn-lime w100" style="margin-top:4px;padding:15px;font-size:.95rem" onclick="signup()">Create Account →</button>
+            <div style="text-align:center;font-size:.75rem;color:var(--text3)">By signing up you agree to our terms of service</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1115,12 +1130,18 @@ async function bootTrainer(){
   const today=new Date().toISOString().split('T')[0];
   const [{data:exData},{data:cl},{data:pl},{data:reqs},{data:todayLogs}]=await Promise.all([
     db.from('exercises').select('*').order('category').order('name'),
-    db.from('profiles').select('id,full_name,email,phone').eq('trainer_id',currentUser.id).order('full_name'),
+    db.from('client_requests').select('client_id,profiles!client_requests_client_id_fkey(id,full_name,email,phone,trainer_id)').eq('trainer_id',currentUser.id).eq('status','accepted'),
     db.from('workout_plans').select('*,profiles!workout_plans_client_id_fkey(full_name,email),plan_exercises(*,exercises(name,category))').eq('trainer_id',currentUser.id).order('assigned_at',{ascending:false}),
     db.from('client_requests').select('*,profiles!client_requests_client_id_fkey(id,full_name,email)').eq('trainer_id',currentUser.id).eq('status','pending'),
     db.from('exercise_logs').select('client_id,exercise_id,completed,exercises(name)').eq('workout_date',today)
   ]);
-  exercises=exData||[];myClients=cl||[];myPlans=pl||[];pendingRequests=reqs||[];
+  exercises=exData||[];myPlans=pl||[];pendingRequests=reqs||[];
+  // Map accepted requests → client profiles
+  const acceptedClients=(cl||[]).map(r=>({...r.profiles,trainer_id:currentUser.id})).filter(Boolean);
+  // Also supplement with any direct trainer_id on profiles (legacy)
+  const {data:directCl}=await db.from('profiles').select('id,full_name,email,phone').eq('trainer_id',currentUser.id);
+  myClients=acceptedClients.slice();
+  (directCl||[]).forEach(c=>{if(!myClients.find(x=>x.id===c.id))myClients.push(c);});
   document.getElementById('trainer-code-display').textContent=currentProfile.trainer_code||'—';
   document.getElementById('t-stat-clients').textContent=myClients.length;
   document.getElementById('t-stat-plans').textContent=myPlans.length;
@@ -1210,21 +1231,36 @@ function renderPendingRequests(){
   }).join('');
 }
 async function handleRequest(reqId,clientId,status){
-  const {error}=await db.from('client_requests').update({status}).eq('id',reqId);
-  if(error)return toast(error.message,'error');
+  const {error:reqErr}=await db.from('client_requests').update({status}).eq('id',reqId);
+  if(reqErr)return toast('Failed: '+reqErr.message,'error');
   if(status==='accepted'){
-    // Link client to trainer
-    await db.from('profiles').update({trainer_id:currentUser.id}).eq('id',clientId);
-    // Find the accepted client from pendingRequests (already in memory, avoids RLS re-fetch)
-    const req=pendingRequests.find(r=>r.id===reqId);
-    if(req?.profiles&&!myClients.find(c=>c.id===clientId)){
-      myClients.push({id:req.profiles.id,full_name:req.profiles.full_name,email:req.profiles.email,trainer_id:currentUser.id,role:'client'});
-    }
+    // Update trainer_id on profile — log error but don't block
+    const {error:profErr}=await db.from('profiles').update({trainer_id:currentUser.id}).eq('id',clientId);
+    if(profErr)console.warn('profiles update blocked (RLS):', profErr.message);
     toast('Client accepted! 🎉');
-    document.getElementById('t-stat-clients').textContent=myClients.length;
-    renderTrainerClientsMini();renderTrainerClientsFull();populateReviewClients();
   }else{toast('Request declined');}
-  pendingRequests=pendingRequests.filter(r=>r.id!==reqId);renderPendingRequests();
+  pendingRequests=pendingRequests.filter(r=>r.id!==reqId);
+  // Re-fetch clients fresh from DB to reflect true state
+  await reloadTrainerClients();
+  renderPendingRequests();
+}
+
+async function reloadTrainerClients(){
+  // Load clients via accepted requests — works regardless of profiles.trainer_id RLS
+  const {data:accepted}=await db.from('client_requests')
+    .select('client_id,profiles!client_requests_client_id_fkey(id,full_name,email,phone,trainer_id)')
+    .eq('trainer_id',currentUser.id).eq('status','accepted');
+  if(accepted){
+    myClients=accepted.map(r=>({...r.profiles,trainer_id:currentUser.id})).filter(Boolean);
+  }
+  // Also try direct profiles query as supplement
+  const {data:direct}=await db.from('profiles').select('id,full_name,email,phone').eq('trainer_id',currentUser.id);
+  if(direct){
+    direct.forEach(c=>{if(!myClients.find(x=>x.id===c.id))myClients.push(c);});
+  }
+  if(document.getElementById('t-stat-clients'))
+    document.getElementById('t-stat-clients').textContent=myClients.length;
+  renderTrainerClientsMini();renderTrainerClientsFull();populateReviewClients();
 }
 
 // CLIENT LISTS

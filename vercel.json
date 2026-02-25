@@ -1,9 +1,9 @@
 {
   "cleanUrls": true,
   "routes": [
-    { "src": "/", "dest": "/landing.html" },
-    { "src": "/sw.js", "dest": "/sw.js" },
+    { "src": "/sw.js", "dest": "/sw.js", "headers": { "Cache-Control": "no-cache, no-store" } },
     { "src": "/manifest.json", "dest": "/manifest.json" },
+    { "src": "/", "dest": "/landing.html" },
     { "src": "/app", "dest": "/index.html" },
     { "src": "/app/(.*)", "dest": "/index.html" },
     { "src": "/(.*)", "dest": "/index.html" }

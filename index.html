@@ -91,6 +91,10 @@ select.inp{cursor:pointer}
 .role-card:hover{border-color:var(--text2)}
 .role-card.active{border-color:var(--lime);background:rgba(212,255,0,.07)}
 /* Decorative gym stat pills on left */
+.carousel-slide{display:none;animation:fadeUp .3s ease}
+.carousel-slide.active{display:block}
+.carousel-dot{width:8px;height:8px;border-radius:100px;background:var(--border);transition:all .3s}
+.carousel-dot.active{width:24px;background:var(--lime)}
 .auth-stat{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;padding:8px 14px;font-size:.82rem;color:var(--text2)}
 @media(max-width:900px){
   .auth-split-left{display:none}
@@ -299,42 +303,118 @@ select.inp{cursor:pointer}
 <!-- AUTH -->
 <div id="auth-screen" class="hidden">
   <div class="auth-bg"></div>
-  <!-- LEFT SIDE: demo showcase -->
+  <!-- LEFT SIDE: feature carousel -->
   <div class="auth-split-left">
     <div class="auth-left-content">
-      <div class="brand" style="font-size:1.5rem;margin-bottom:40px">Track<span>MyReps</span></div>
-      <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;line-height:1.2;margin-bottom:12px">The smartest way to<br>coach your clients.</h2>
-      <p style="color:var(--text2);font-size:.92rem;line-height:1.6;margin-bottom:36px">Built for Indian personal trainers. Send plans, track progress, and grow your business — all for <strong style="color:var(--text)">₹99/client/month</strong>.</p>
-      <!-- App demo mockup cards -->
-      <div style="position:relative;height:280px">
-        <!-- Card 1 - back -->
-        <div style="position:absolute;top:20px;left:20px;right:20px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px;transform:rotate(-2deg);box-shadow:0 8px 32px rgba(0,0,0,.4)">
-          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Today's Workout</div>
-          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:12px">Wednesday</div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg3);border-radius:8px;font-size:.78rem"><span>🏋️ Lat Pulldown</span><span style="color:var(--lime)">✓</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg3);border-radius:8px;font-size:.78rem"><span>💪 Seated Rows</span><span style="color:var(--text3)">○</span></div>
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg3);border-radius:8px;font-size:.78rem"><span>🎯 Hyperextension</span><span style="color:var(--text3)">○</span></div>
+      <div class="brand" style="font-size:1.5rem;margin-bottom:32px">Track<span>MyReps</span></div>
+
+      <!-- CAROUSEL -->
+      <div id="auth-carousel" style="position:relative;min-height:380px">
+
+        <!-- Slide 1: Today's Workout -->
+        <div class="carousel-slide active" id="slide-0">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">For Clients</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Log workouts<br>in seconds.</div>
+            <div style="color:var(--text2);font-size:.85rem">Your trainer's plan, ready every day. Just tap, log, done.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div>
+                <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3)">Today's Workout</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:800">Wednesday · Back & Tri</div>
+              </div>
+              <div style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:100px;padding:4px 10px;font-size:.7rem;color:var(--lime)">2/5 done</div>
+            </div>
+            <div style="height:4px;background:var(--bg3);border-radius:100px;margin-bottom:12px;overflow:hidden"><div style="width:40%;height:100%;background:var(--lime);border-radius:100px"></div></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;font-size:.8rem"><span>Lat Pulldown · 23kg</span><span style="color:var(--green);font-weight:800">✓</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;font-size:.8rem"><span>Seated Rows · 30kg</span><span style="color:var(--green);font-weight:800">✓</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:10px;font-size:.8rem;color:var(--text2)"><span>Hyperextension</span><span style="color:var(--text3)">○</span></div>
+            </div>
           </div>
         </div>
-        <!-- Card 2 - front -->
-        <div style="position:absolute;bottom:0;right:0;width:58%;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px;transform:rotate(1.5deg);box-shadow:0 8px 32px rgba(0,0,0,.5)">
-          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Client Progress</div>
-          <div style="display:flex;gap:8px;margin-bottom:10px">
-            <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center"><div style="font-size:.6rem;color:var(--text3)">Sessions</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">24</div></div>
-            <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center"><div style="font-size:.6rem;color:var(--text3)">Adherence</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">87%</div></div>
+
+        <!-- Slide 2: Exercise Repository -->
+        <div class="carousel-slide" id="slide-1">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Exercise Library</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">35+ exercises<br>with tutorials.</div>
+            <div style="color:var(--text2);font-size:.85rem">Every exercise has a YouTube tutorial. Tap to watch form guides instantly.</div>
           </div>
-          <div style="font-size:.7rem;color:var(--text2);margin-bottom:4px">Strength: Bench Press</div>
-          <div style="height:4px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:72%;height:100%;background:var(--lime);border-radius:100px"></div></div>
-          <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--text3);margin-top:3px"><span>40kg</span><span style="color:var(--lime)">+8kg</span><span>72kg</span></div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:flex;gap:8px;margin-bottom:10px">
+              <div style="padding:5px 12px;background:var(--lime);color:#000;border-radius:100px;font-size:.72rem;font-weight:700">All</div>
+              <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">🦵 Legs</div>
+              <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">💪 Arms</div>
+              <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">🏋️ Back</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              ${['🦵 Hack Squat','🏋️ Lat Pulldown','💪 Preacher Curl','🎯 Plank'].map(e=>`<div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">${e}</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>`).join('')}
+            </div>
+          </div>
         </div>
-      </div>
-      <!-- Feature pills -->
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px">
-        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ Workout Plans</div>
-        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ Progress Charts</div>
-        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ WhatsApp</div>
-        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ Works Offline</div>
+
+        <!-- Slide 3: Progress Charts -->
+        <div class="carousel-slide" id="slide-2">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Progress Tracking</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">See every gain,<br>every week.</div>
+            <div style="color:var(--text2);font-size:.85rem">Weight history, strength trends, heatmaps. Know exactly what's working.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+              <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">WEIGHT</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">72.4kg</div></div>
+              <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">SESSIONS</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">24</div></div>
+              <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">ADHERENCE</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">87%</div></div>
+            </div>
+            <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px"><span style="font-weight:600">Lat Pulldown</span><span class="badge" style="background:rgba(0,230,118,.15);color:var(--green);padding:2px 7px;border-radius:100px;font-size:.68rem">+12 kg</span></div><div style="height:5px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:78%;height:100%;background:var(--lime);border-radius:100px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px"><span style="font-weight:600">Hack Squat</span><span class="badge" style="background:rgba(0,230,118,.15);color:var(--green);padding:2px 7px;border-radius:100px;font-size:.68rem">+20 kg</span></div><div style="height:5px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:65%;height:100%;background:var(--lime);border-radius:100px"></div></div></div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Trainer Dashboard -->
+        <div class="carousel-slide" id="slide-3">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">For Trainers</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Manage all your<br>clients in one place.</div>
+            <div style="color:var(--text2);font-size:.85rem">Send plans, track progress, WhatsApp clients — all from one dashboard.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+              <div style="background:var(--bg3);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:var(--text3);margin-bottom:4px">MY CLIENTS</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--lime)">8</div></div>
+              <div style="background:var(--bg3);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:var(--text3);margin-bottom:4px">PLANS SENT</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--lime)">12</div></div>
+            </div>
+            ${['Rahul M.','Priya K.','Aakash S.'].map((n,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)"><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lime);color:#000;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center">${n[0]}</div><span style="font-size:.8rem;font-weight:600">${n}</span></div><span style="font-size:.7rem;color:${i===0?'var(--green)':i===1?'var(--lime)':'var(--text3)'}">${i===0?'Trained today':i===1?'Yesterday':'2 days ago'}</span></div>`).join('')}
+          </div>
+        </div>
+
+        <!-- Slide 5: Build Plan -->
+        <div class="carousel-slide" id="slide-4">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Plan Builder</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Build 7-day plans<br>in minutes.</div>
+            <div style="color:var(--text2);font-size:.85rem">Pick exercises by day, set reps and sets, review and send. Client gets it instantly.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:flex;gap:6px;margin-bottom:12px;overflow:hidden">
+              ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d,i)=>`<div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:${i===0?'var(--lime)':i<3?'rgba(68,136,255,.15)':'var(--bg3)'};color:${i===0?'#000':i<3?'var(--blue)':'var(--text3)'}">${d}<div style="font-size:.7rem;margin-top:2px">${i===0?'4':i<3?'3':'-'}</div></div>`).join('')}
+            </div>
+            <div style="font-size:.72rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Monday — Legs</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              ${['Hack Squat','Leg Press','Leg Curl'].map(e=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(212,255,0,.06);border:1px solid rgba(212,255,0,.15);border-radius:8px;font-size:.76rem"><span style="color:var(--lime)">✓</span>${e}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end carousel -->
+
+      <!-- Dots -->
+      <div style="display:flex;gap:6px;margin-top:20px;align-items:center">
+        ${[0,1,2,3,4].map(i=>`<div class="carousel-dot${i===0?' active':''}" id="dot-${i}" onclick="goToSlide(${i})" style="cursor:pointer"></div>`).join('')}
+        <div style="flex:1"></div>
+        <button onclick="prevSlide()" style="background:var(--bg3);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--text2);font-size:.9rem">‹</button>
+        <button onclick="nextSlide()" style="background:var(--bg3);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--text2);font-size:.9rem">›</button>
       </div>
     </div>
   </div>
@@ -851,7 +931,7 @@ select.inp{cursor:pointer}
 
 <script>
 const SUPABASE_URL='https://oxpeybhsucryghtrnhmm.supabase.co';
-const SUPABASE_KEY='sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
+const SUPABASE_KEY=' sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
 
 let db,currentUser,currentProfile;
 let exercises=[],myClients=[],myPlans=[],measurements=[],logCache={};
@@ -883,6 +963,19 @@ function toast(msg,type='success'){
 }
 
 // AUTH
+// AUTH CAROUSEL
+let carouselIdx=0,carouselTimer=null;
+function goToSlide(n){
+  document.getElementById('slide-'+carouselIdx)?.classList.remove('active');
+  document.getElementById('dot-'+carouselIdx)?.classList.remove('active');
+  carouselIdx=((n%5)+5)%5;
+  document.getElementById('slide-'+carouselIdx)?.classList.add('active');
+  document.getElementById('dot-'+carouselIdx)?.classList.add('active');
+}
+function nextSlide(){clearTimeout(carouselTimer);goToSlide(carouselIdx+1);startCarousel();}
+function prevSlide(){clearTimeout(carouselTimer);goToSlide(carouselIdx-1);startCarousel();}
+function startCarousel(){carouselTimer=setTimeout(()=>{goToSlide(carouselIdx+1);startCarousel();},4000);}
+
 function switchTab(t){
   ['login-form','forgot-form','signup-form'].forEach(id=>document.getElementById(id).classList.add('hidden'));
   document.getElementById(t+'-form').classList.remove('hidden');
@@ -2235,9 +2328,35 @@ function renderClientProfile(){
   const table=document.getElementById('measurements-table');if(!table)return;
   table.innerHTML=measurements.length?measurements.slice(0,12).map(m=>`
     <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)">
-      <div style="font-size:.85rem">${new Date(m.measured_at+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric',year:'numeric'})}</div>
-      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem">${m.weight_kg} kg</div>
+      <div style="font-size:.85rem;color:var(--text2)">${new Date(m.measured_at+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric',year:'numeric'})}</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div id="wval-${m.id}" style="font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem">${m.weight_kg} kg</div>
+        <button onclick="editWeight('${m.id}',${m.weight_kg})" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:.8rem;padding:3px 6px;border-radius:6px;transition:color .15s" title="Edit">✏️</button>
+        <button onclick="deleteWeight('${m.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:.8rem;padding:3px 6px;border-radius:6px;transition:color .15s" title="Delete">🗑️</button>
+      </div>
     </div>`).join(''):'<div class="muted" style="text-align:center;padding:18px;font-size:.85rem">No weight logs yet</div>';
+}
+async function editWeight(id, currentVal){
+  const newVal=prompt('Edit weight (kg):', currentVal);
+  if(!newVal||isNaN(parseFloat(newVal)))return;
+  const kg=parseFloat(newVal);
+  const {error}=await db.from('body_measurements').update({weight_kg:kg}).eq('id',id);
+  if(error)return toast(error.message,'error');
+  measurements=measurements.map(m=>m.id===id?{...m,weight_kg:kg}:m);
+  renderMeasurementsTable();
+  updateCharts();
+  renderProgressStats(measurements,[]);
+  toast('Weight updated ✓');
+}
+async function deleteWeight(id){
+  if(!confirm('Delete this weight entry?'))return;
+  const {error}=await db.from('body_measurements').delete().eq('id',id);
+  if(error)return toast(error.message,'error');
+  measurements=measurements.filter(m=>m.id!==id);
+  renderMeasurementsTable();
+  updateCharts();
+  renderProgressStats(measurements,[]);
+  toast('Entry deleted');
 }
 
 // CHARTS
@@ -2306,7 +2425,7 @@ async function init(){
     db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
     const {data:{session}}=await db.auth.getSession();
     if(session?.user)await bootApp(session.user);
-    else{document.getElementById('loading').classList.add('hidden');document.getElementById('auth-screen').classList.remove('hidden');}
+    else{document.getElementById('loading').classList.add('hidden');document.getElementById('auth-screen').classList.remove('hidden');startCarousel();}
     db.auth.onAuthStateChange(async(event,session)=>{
       if(event==='SIGNED_IN'&&session?.user&&document.getElementById('app').classList.contains('hidden')){
         document.getElementById('loading').classList.remove('hidden');

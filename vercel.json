@@ -1,11 +1,11 @@
 {
   "cleanUrls": true,
   "routes": [
+    { "src": "/", "dest": "/landing.html" },
     { "src": "/sw.js", "dest": "/sw.js" },
     { "src": "/manifest.json", "dest": "/manifest.json" },
     { "src": "/app", "dest": "/index.html" },
     { "src": "/app/(.*)", "dest": "/index.html" },
-    { "src": "/", "dest": "/landing.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

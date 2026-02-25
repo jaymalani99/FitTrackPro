@@ -1,9 +1,12 @@
-<!-- TrackMyReps v2.7 — build 20260224-FINAL -->
+<!-- TrackMyReps v2.8 — build 20260225 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>TrackMyReps</title>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0a0a0a">
@@ -296,92 +299,106 @@ select.inp{cursor:pointer}
 <!-- AUTH -->
 <div id="auth-screen" class="hidden">
   <div class="auth-bg"></div>
-  <!-- LEFT SIDE: branding -->
+  <!-- LEFT SIDE: demo showcase -->
   <div class="auth-split-left">
     <div class="auth-left-content">
-      <div class="brand" style="font-size:1.8rem;margin-bottom:32px;display:flex;align-items:center;gap:8px">
-        <div style="width:36px;height:36px;background:var(--lime);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">💪</div>
-        Track<span>MyReps</span>
+      <div class="brand" style="font-size:1.5rem;margin-bottom:40px">Track<span>MyReps</span></div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;line-height:1.2;margin-bottom:12px">The smartest way to<br>coach your clients.</h2>
+      <p style="color:var(--text2);font-size:.92rem;line-height:1.6;margin-bottom:36px">Built for Indian personal trainers. Send plans, track progress, and grow your business — all for <strong style="color:var(--text)">₹99/client/month</strong>.</p>
+      <!-- App demo mockup cards -->
+      <div style="position:relative;height:280px">
+        <!-- Card 1 - back -->
+        <div style="position:absolute;top:20px;left:20px;right:20px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px;transform:rotate(-2deg);box-shadow:0 8px 32px rgba(0,0,0,.4)">
+          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Today's Workout</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:12px">Wednesday</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg3);border-radius:8px;font-size:.78rem"><span>🏋️ Lat Pulldown</span><span style="color:var(--lime)">✓</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg3);border-radius:8px;font-size:.78rem"><span>💪 Seated Rows</span><span style="color:var(--text3)">○</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg3);border-radius:8px;font-size:.78rem"><span>🎯 Hyperextension</span><span style="color:var(--text3)">○</span></div>
+          </div>
+        </div>
+        <!-- Card 2 - front -->
+        <div style="position:absolute;bottom:0;right:0;width:58%;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:14px;transform:rotate(1.5deg);box-shadow:0 8px 32px rgba(0,0,0,.5)">
+          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px">Client Progress</div>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center"><div style="font-size:.6rem;color:var(--text3)">Sessions</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">24</div></div>
+            <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center"><div style="font-size:.6rem;color:var(--text3)">Adherence</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">87%</div></div>
+          </div>
+          <div style="font-size:.7rem;color:var(--text2);margin-bottom:4px">Strength: Bench Press</div>
+          <div style="height:4px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:72%;height:100%;background:var(--lime);border-radius:100px"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--text3);margin-top:3px"><span>40kg</span><span style="color:var(--lime)">+8kg</span><span>72kg</span></div>
+        </div>
       </div>
-      <div style="font-size:2.4rem;font-weight:800;font-family:'Syne',sans-serif;line-height:1.15;margin-bottom:18px">
-        Your clients.<br>Their progress.<br><span style="color:var(--lime)">All in one place.</span>
-      </div>
-      <p style="color:var(--text2);font-size:.95rem;line-height:1.7;margin-bottom:32px">Built for Indian personal trainers. Send workout plans, track progress, and stay connected — all for <strong style="color:var(--text)">₹99/client/month</strong>.</p>
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px">
-        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>Create & send personalised workout plans</div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>Track client progress & body weight</div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>WhatsApp clients with one tap</div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text2)"><div style="width:20px;height:20px;background:rgba(212,255,0,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:var(--lime);font-size:.65rem;font-weight:800">✓</span></div>Works offline, PWA on any device</div>
-      </div>
-      <!-- Stats row -->
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <div class="auth-stat"><span style="color:var(--lime);font-weight:800">₹99</span> per client/month</div>
-        <div class="auth-stat"><span style="color:var(--lime);font-weight:800">10x</span> cheaper than alternatives</div>
+      <!-- Feature pills -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:24px">
+        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ Workout Plans</div>
+        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ Progress Charts</div>
+        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ WhatsApp</div>
+        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:6px 12px;font-size:.75rem;color:var(--lime)">✓ Works Offline</div>
       </div>
     </div>
   </div>
   <!-- RIGHT SIDE: form -->
   <div class="auth-split-right">
     <div class="auth-card">
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:32px 28px">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:36px 32px">
         <div class="auth-tabs">
           <div class="auth-tab active" onclick="switchTab('login')">Sign In</div>
           <div class="auth-tab" onclick="switchTab('signup')">Sign Up</div>
         </div>
         <div id="login-form">
           <div style="display:flex;flex-direction:column;gap:14px">
-            <div style="margin-bottom:4px">
-              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Welcome back 👋</div>
-              <div class="muted" style="font-size:.85rem;margin-top:4px">Sign in to your TrackMyReps account</div>
+            <div style="margin-bottom:6px">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem">Welcome back 👋</div>
+              <div class="muted" style="font-size:.85rem;margin-top:5px">Sign in to continue</div>
             </div>
-            <div class="inp-group"><label class="label">Email</label><input class="inp" id="l-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-            <div class="inp-group"><label class="label">Password</label><input class="inp" id="l-pass" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
-            <button class="btn btn-lime w100" style="margin-top:4px;padding:15px;font-size:.95rem" onclick="login()" id="login-btn">Sign In →</button>
+            <input class="inp" id="l-email" type="email" autocomplete="email" placeholder="Email address">
+            <input class="inp" id="l-pass" type="password" autocomplete="current-password" placeholder="Password" onkeydown="if(event.key==='Enter')login()">
+            <button class="btn btn-lime w100" style="padding:15px;font-size:.95rem;border-radius:12px" onclick="login()" id="login-btn">Continue →</button>
             <div class="forgot-link" onclick="showForgot()">Forgot password?</div>
           </div>
         </div>
         <div id="forgot-form" class="hidden">
           <div style="display:flex;flex-direction:column;gap:14px">
-            <div style="margin-bottom:4px">
-              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem">Reset Password</div>
-              <p class="muted" style="font-size:.85rem;margin-top:4px">We'll send a reset link to your email</p>
+            <div style="margin-bottom:6px">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Reset Password</div>
+              <p class="muted" style="font-size:.85rem;margin-top:5px">We'll email you a reset link</p>
             </div>
-            <div class="inp-group"><label class="label">Email</label><input class="inp" id="fp-email" type="email" placeholder="you@example.com"></div>
-            <button class="btn btn-lime w100" onclick="sendReset()">Send Reset Link</button>
-            <button class="btn btn-ghost w100" onclick="showForgot(false)">← Back to Sign In</button>
+            <input class="inp" id="fp-email" type="email" placeholder="Email address">
+            <button class="btn btn-lime w100" style="padding:15px;border-radius:12px" onclick="sendReset()">Send Reset Link</button>
+            <button class="btn btn-ghost w100" onclick="showForgot(false)">← Back</button>
           </div>
         </div>
         <div id="signup-form" class="hidden">
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div style="margin-bottom:4px">
-              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem">Create Account</div>
-              <div class="muted" style="font-size:.85rem;margin-top:4px">Join TrackMyReps today</div>
+          <div style="display:flex;flex-direction:column;gap:13px">
+            <div style="margin-bottom:6px">
+              <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem">Create account</div>
+              <div class="muted" style="font-size:.85rem;margin-top:5px">Join TrackMyReps today</div>
             </div>
             <div>
               <div class="label" style="margin-bottom:8px">I am a...</div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
                 <div class="role-card active" id="role-client" onclick="selectRole('client')">
-                  <div style="font-size:1.6rem;margin-bottom:6px">🏃</div>
-                  <div style="font-weight:700;font-size:.9rem">Client</div>
-                  <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I work out</div>
+                  <div style="font-size:1.5rem;margin-bottom:5px">🏃</div>
+                  <div style="font-weight:700;font-size:.88rem">Client</div>
+                  <div style="font-size:.7rem;color:var(--text2);margin-top:2px">I work out</div>
                 </div>
                 <div class="role-card" id="role-trainer" onclick="selectRole('trainer')">
-                  <div style="font-size:1.6rem;margin-bottom:6px">💪</div>
-                  <div style="font-weight:700;font-size:.9rem">Trainer</div>
-                  <div style="font-size:.72rem;color:var(--text2);margin-top:3px">I coach clients</div>
+                  <div style="font-size:1.5rem;margin-bottom:5px">💪</div>
+                  <div style="font-weight:700;font-size:.88rem">Trainer</div>
+                  <div style="font-size:.7rem;color:var(--text2);margin-top:2px">I coach clients</div>
                 </div>
               </div>
               <input type="hidden" id="s-role" value="client">
             </div>
-            <div class="inp-group"><label class="label">Full Name</label><input class="inp" id="s-name" type="text" autocomplete="name" placeholder="Your full name"></div>
-            <div class="inp-group"><label class="label">Email</label><input class="inp" id="s-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-            <div class="inp-group"><label class="label">Password</label><input class="inp" id="s-pass" type="password" autocomplete="new-password" placeholder="Min 6 characters"></div>
-            <div id="trainer-code-field" class="inp-group hidden">
-              <label class="label">Trainer Code <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-              <input class="inp code-inp" id="s-trainer-code" placeholder="e.g. JAY-4829" maxlength="8" style="font-size:18px">
+            <input class="inp" id="s-name" type="text" autocomplete="name" placeholder="Full name">
+            <input class="inp" id="s-email" type="email" autocomplete="email" placeholder="Email address">
+            <input class="inp" id="s-pass" type="password" autocomplete="new-password" placeholder="Password (min 6 characters)">
+            <div id="trainer-code-field" class="hidden">
+              <input class="inp code-inp" id="s-trainer-code" placeholder="Trainer code (optional)" maxlength="8" style="font-size:16px;text-align:center;letter-spacing:3px">
             </div>
-            <button class="btn btn-lime w100" style="margin-top:4px;padding:15px;font-size:.95rem" onclick="signup()">Create Account →</button>
-            <div style="text-align:center;font-size:.75rem;color:var(--text3)">By signing up you agree to our terms of service</div>
+            <button class="btn btn-lime w100" style="padding:15px;font-size:.95rem;border-radius:12px" onclick="signup()">Create Account →</button>
+            <div style="text-align:center;font-size:.73rem;color:var(--text3)">By signing up you agree to our terms</div>
           </div>
         </div>
       </div>
@@ -834,7 +851,7 @@ select.inp{cursor:pointer}
 
 <script>
 const SUPABASE_URL='https://oxpeybhsucryghtrnhmm.supabase.co';
-const SUPABASE_KEY=' sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
+const SUPABASE_KEY='sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
 
 let db,currentUser,currentProfile;
 let exercises=[],myClients=[],myPlans=[],measurements=[],logCache={};
@@ -1169,6 +1186,18 @@ async function bootTrainer(){
   renderPendingRequests();renderTrainerClientsMini();renderTrainerExercises();renderTrainerClientsFull();renderTrainerPlans();
   populateReviewClients();renderBuilderStepper();
   renderTodayFeed(todayLogs||[]);
+  // Real-time: new client requests
+  db.channel('trainer-requests-'+currentUser.id)
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'client_requests',filter:`trainer_id=eq.${currentUser.id}`},async(payload)=>{
+      if(payload.new.status==='pending'){
+        const {data:p}=await db.from('profiles').select('id,full_name,email').eq('id',payload.new.client_id).single();
+        if(p){pendingRequests.push({...payload.new,profiles:p});renderPendingRequests();toast('📩 New client request from '+p.full_name);}
+      }
+    })
+    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'client_requests',filter:`trainer_id=eq.${currentUser.id}`},async(payload)=>{
+      if(payload.new.status==='accepted'){await reloadTrainerClients();}
+    })
+    .subscribe();
 }
 function copyCode(){
   const code=currentProfile.trainer_code||'';
@@ -1574,6 +1603,19 @@ async function bootClient(){
   renderClientActivityFeed(allLogsData||[],measurements);
   renderTrainerNotes(notesData||[]);
   checkNewPlanBanner();
+  // Real-time: new plan assigned or trainer notes
+  db.channel('client-plan-'+currentUser.id)
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'workout_plans',filter:`client_id=eq.${currentUser.id}`},async(payload)=>{
+      toast('🎉 Your trainer sent you a new plan!');
+      // Reload plan data
+      const {data:newPlan}=await db.from('workout_plans').select('*,plan_exercises(*,exercises(*))').eq('id',payload.new.id).single();
+      if(newPlan){clientPlan=newPlan;clientPlanExercises=newPlan.plan_exercises||[];renderClientToday();renderClientPlan();checkNewPlanBanner();}
+    })
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'trainer_notes',filter:`client_id=eq.${currentUser.id}`},async()=>{
+      const {data:notesData}=await db.from('trainer_notes').select('*').eq('client_id',currentUser.id).order('created_at',{ascending:false}).limit(10);
+      renderTrainerNotes(notesData||[]);toast('📝 Your trainer left you a note');
+    })
+    .subscribe();
 }
 // PROGRESS PAGE RENDERS
 function renderProgressStats(meas,allLogs){
@@ -1803,83 +1845,136 @@ async function savePlanEdits(){
 // TRAINER PROGRESS — per-exercise chart (Gap 6)
 async function openClientProgress(clientId,clientName){
   document.getElementById('cp-modal-title').textContent=clientName+"'s Progress";
-  document.getElementById('cp-modal-body').innerHTML='<div style="text-align:center;padding:30px"><div class="spinner" style="margin:0 auto"></div></div>';
+  document.getElementById('cp-modal-body').innerHTML='<div style="text-align:center;padding:40px"><div class="spinner" style="margin:0 auto"></div><div style="margin-top:12px;color:var(--text2);font-size:.85rem">Loading progress...</div></div>';
   document.getElementById('client-progress-modal').classList.remove('hidden');
-  const last7=Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d.toISOString().split('T')[0];});
   const last56=Array.from({length:56},(_,i)=>{const d=new Date();d.setDate(d.getDate()-55+i);return d.toISOString().split('T')[0];});
-  const [{data:logs},{data:plan},{data:weights},{data:allLogs}]=await Promise.all([
-    db.from('exercise_logs').select('*,exercises(name,category)').eq('client_id',clientId).in('workout_date',last7).order('workout_date',{ascending:false}),
-    db.from('workout_plans').select('name').eq('client_id',clientId).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
-    db.from('body_measurements').select('weight_kg,measured_at').eq('client_id',clientId).order('measured_at',{ascending:false}).limit(8),
-    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,exercises(name)').eq('client_id',clientId).in('workout_date',last56).eq('completed',true).not('weight_kg','is',null)
+  const [{data:plan},{data:weights},{data:allLogs},{data:planData}]=await Promise.all([
+    db.from('workout_plans').select('name,assigned_at').eq('client_id',clientId).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
+    db.from('body_measurements').select('weight_kg,measured_at').eq('client_id',clientId).order('measured_at',{ascending:false}).limit(20),
+    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps_completed,completed,set_number,exercises(name,category)').eq('client_id',clientId).in('workout_date',last56).order('workout_date'),
+    db.from('workout_plans').select('plan_exercises(day_of_week)').eq('client_id',clientId).eq('active',true).limit(1).maybeSingle()
   ]);
-  const byDate={};
-  logs?.forEach(l=>{if(!byDate[l.workout_date])byDate[l.workout_date]=[];byDate[l.workout_date].push(l);});
-  const sessionDates=Object.keys(byDate).sort().reverse();
-  const totalSets=logs?.filter(l=>l.completed).length||0;
-  const latestWeight=weights?.[0];
-  let html=`<div class="grid2" style="margin-bottom:12px">
-    <div class="stat-card"><div class="label">Sessions</div><div class="stat-num">${sessionDates.length}</div><div class="muted" style="font-size:.78rem">Last 7 days</div></div>
-    <div class="stat-card"><div class="label">Sets Done</div><div class="stat-num">${totalSets}</div><div class="muted" style="font-size:.78rem">Completed sets</div></div>
+  // --- STATS ---
+  const completedLogs=allLogs?.filter(l=>l.completed)||[];
+  const sessionDates=new Set(completedLogs.map(l=>l.workout_date));
+  const thisWeekDates=last56.slice(-7);
+  const thisWeekSessions=thisWeekDates.filter(d=>sessionDates.has(d)).length;
+  const planDays=planData?.plan_exercises?new Set(planData.plan_exercises.map(e=>e.day_of_week)).size:0;
+  const weeksActive=plan?.assigned_at?Math.max(1,Math.ceil((Date.now()-new Date(plan.assigned_at))/604800000)):1;
+  const scheduled=planDays*weeksActive;
+  const adherence=scheduled>0?Math.min(100,Math.round(sessionDates.size/scheduled*100)):0;
+  const latestW=weights?.[0];const startW=weights?.length>1?weights[weights.length-1]:null;
+  const wDiff=latestW&&startW?(latestW.weight_kg-startW.weight_kg).toFixed(1):null;
+
+  let html=`
+  <div class="grid3" style="margin-bottom:14px">
+    <div class="stat-card"><div class="label">Total Sessions</div><div class="stat-num">${sessionDates.size}</div><div class="muted" style="font-size:.76rem">${scheduled>0?`${sessionDates.size}/${scheduled} scheduled`:''}</div><div class="stat-accent">🔥</div></div>
+    <div class="stat-card"><div class="label">This Week</div><div class="stat-num">${thisWeekSessions}</div><div class="muted" style="font-size:.76rem">sessions</div><div class="stat-accent">📅</div></div>
+    <div class="stat-card lime-hl"><div class="label">Adherence</div><div class="stat-num">${adherence}%</div><div class="muted" style="font-size:.76rem">of scheduled</div><div class="stat-accent">⚡</div></div>
   </div>`;
-  if(latestWeight)html+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:var(--r);margin-bottom:12px">
-    <span style="font-size:1.2rem">⚖️</span>
-    <div><div class="label">Latest Body Weight</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem">${latestWeight.weight_kg} kg <span style="font-size:.75rem;color:var(--text2);font-weight:400">— ${new Date(latestWeight.measured_at+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric'})}</span></div></div>
-  </div>`;
-  if(plan)html+=`<div style="margin-bottom:12px;font-size:.84rem;color:var(--text2)">Active Plan: <strong style="color:var(--text)">${plan.name}</strong></div>`;
-  // Per-exercise strength chart section
-  if(allLogs?.length){
-    const exMap={};
-    allLogs.forEach(l=>{
-      const name=l.exercises?.name||'?';
-      if(!exMap[name])exMap[name]=[];
-      const existing=exMap[name].find(e=>e.date===l.workout_date);
-      if(existing){if(l.weight_kg>existing.w)existing.w=l.weight_kg;}
-      else exMap[name].push({date:l.workout_date,w:l.weight_kg});
-    });
-    const topEx=Object.entries(exMap).filter(([,v])=>v.length>=2).sort((a,b)=>b[1].length-a[1].length).slice(0,4);
-    if(topEx.length){
-      html+=`<div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin:14px 0 10px">💪 Strength Trends (8 weeks)</div>`;
-      topEx.forEach(([name,pts])=>{
-        const sorted=pts.sort((a,b)=>new Date(a.date)-new Date(b.date));
-        const first=sorted[0].w,last=sorted[sorted.length-1].w;
-        const diff=(last-first).toFixed(1);
-        const pct=Math.min(100,Math.round((last/Math.max(last*1.4,last+15))*100));
-        html+=`<div style="margin-bottom:10px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-            <span style="font-size:.82rem;font-weight:600">${name}</span>
-            <span class="badge badge-${diff>=0?'green':'orange'}">${diff>=0?'+':''}${diff} kg</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:.72rem;color:var(--text2);width:40px;text-align:right">${first}kg</span>
-            <div style="flex:1;height:5px;background:var(--bg3);border-radius:100px;overflow:hidden">
-              <div style="width:${pct}%;height:100%;background:${diff>=0?'var(--lime)':'var(--orange)'};border-radius:100px"></div>
-            </div>
-            <span style="font-size:.72rem;color:var(--text);width:40px">${last}kg</span>
-          </div>
-        </div>`;
-      });
-    }
+
+  if(latestW){
+    html+=`<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg3);border-radius:var(--r);margin-bottom:14px">
+      <span style="font-size:1.4rem">⚖️</span>
+      <div style="flex:1">
+        <div class="label">Body Weight</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem">${latestW.weight_kg} kg</div>
+      </div>
+      ${wDiff?`<span class="badge badge-${wDiff<=0?'green':'orange'}">${wDiff>0?'+':''}${wDiff} kg since start</span>`:''}
+    </div>`;
   }
-  // Last 7 days sessions
-  if(!sessionDates.length){html+='<div class="empty" style="padding:20px"><div class="empty-icon">📊</div><h3>No activity this week</h3></div>';}
-  else{
-    html+=`<div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin:14px 0 10px">Last 7 Days</div>`;
-    sessionDates.forEach(date=>{
+  if(plan)html+=`<div style="margin-bottom:14px;font-size:.84rem;color:var(--text2)">Active Plan: <strong style="color:var(--lime)">${plan.name}</strong></div>`;
+
+  // --- WORKOUT HEATMAP ---
+  const heatCells=last56.map(d=>{
+    const trained=sessionDates.has(d);
+    return `<div style="width:100%;aspect-ratio:1;border-radius:3px;background:${trained?'rgba(212,255,0,.8)':'var(--bg3)'}" title="${d}"></div>`;
+  }).join('');
+  html+=`<div class="card" style="margin-bottom:14px">
+    <div style="font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem;margin-bottom:8px;display:flex;justify-content:space-between">Workout Heatmap <span style="font-size:.72rem;color:var(--text2);font-weight:400">Last 8 weeks</span></div>
+    <div style="display:grid;grid-template-columns:repeat(56,1fr);gap:2px">${heatCells}</div>
+  </div>`;
+
+  // --- WEIGHT CHART ---
+  if(weights?.length>1){
+    const wSorted=[...weights].sort((a,b)=>new Date(a.measured_at)-new Date(b.measured_at));
+    html+=`<div class="card" style="margin-bottom:14px">
+      <div style="font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem;margin-bottom:10px">Weight History</div>
+      <div style="height:160px"><canvas id="cp-weight-chart"></canvas></div>
+    </div>`;
+    // Chart rendered after innerHTML set
+    setTimeout(()=>{
+      const ctx=document.getElementById('cp-weight-chart')?.getContext('2d');
+      if(!ctx)return;
+      new Chart(ctx,{type:'line',data:{labels:wSorted.map(w=>new Date(w.measured_at+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric'})),datasets:[{data:wSorted.map(w=>w.weight_kg),borderColor:'#d4ff00',backgroundColor:'rgba(212,255,0,.08)',tension:.4,pointRadius:4,pointBackgroundColor:'#d4ff00',fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#888',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'#888',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}}}}});
+    },100);
+  }
+
+  // --- STRENGTH PROGRESS ---
+  const exMap={};
+  completedLogs.forEach(l=>{
+    if(!l.weight_kg||!l.exercises?.name)return;
+    const name=l.exercises.name;
+    if(!exMap[name])exMap[name]=[];
+    const ex=exMap[name].find(e=>e.date===l.workout_date);
+    if(ex){if(l.weight_kg>ex.w)ex.w=l.weight_kg;}
+    else exMap[name].push({date:l.workout_date,w:l.weight_kg});
+  });
+  const topEx=Object.entries(exMap).filter(([,v])=>v.length>=2).sort((a,b)=>b[1].length-a[1].length).slice(0,6);
+  if(topEx.length){
+    html+=`<div class="card" style="margin-bottom:14px">
+      <div style="font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem;margin-bottom:12px">💪 Strength Progress (8 weeks)</div>`;
+    topEx.forEach(([name,pts])=>{
+      const sorted=pts.sort((a,b)=>new Date(a.date)-new Date(b.date));
+      const first=sorted[0].w,last=sorted[sorted.length-1].w;
+      const diff=(last-first).toFixed(1);
+      const pct=Math.min(100,Math.round((last/Math.max(last*1.5,last+20))*100));
+      html+=`<div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span style="font-size:.82rem;font-weight:600">${name}</span>
+          <span class="badge badge-${diff>=0?'green':'orange'}">${diff>=0?'+':''}${diff} kg</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:.72rem;color:var(--text2);width:38px;text-align:right">${first}kg</span>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:100px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:${diff>=0?'var(--lime)':'var(--orange)'};border-radius:100px;transition:width .6s"></div>
+          </div>
+          <span style="font-size:.72rem;color:var(--text);width:38px">${last}kg</span>
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  // --- RECENT SESSIONS ---
+  const byDate={};
+  allLogs?.forEach(l=>{if(!byDate[l.workout_date])byDate[l.workout_date]=[];byDate[l.workout_date].push(l);});
+  const recentDates=Object.keys(byDate).sort().reverse().slice(0,5);
+  if(recentDates.length){
+    html+=`<div class="card"><div style="font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem;margin-bottom:12px">Recent Sessions</div>`;
+    recentDates.forEach(date=>{
       const dayLogs=byDate[date];
-      html+=`<div style="margin-bottom:12px">
-        <div style="font-weight:700;font-size:.82rem;margin-bottom:6px;color:var(--text2)">${new Date(date+'T12:00:00').toLocaleDateString('en-IN',{weekday:'short',month:'short',day:'numeric'})}</div>`;
       const byEx={};dayLogs.forEach(l=>{if(!byEx[l.exercise_id])byEx[l.exercise_id]={name:l.exercises?.name||'?',sets:[]};byEx[l.exercise_id].sets.push(l);});
-      Object.values(byEx).forEach(exData=>{
-        const done=exData.sets.filter(s=>s.completed);
-        const wts=exData.sets.filter(s=>s.weight_kg).map(s=>`${s.weight_kg}kg`).join(' → ');
-        html+=`<div class="client-log-row">
-          <div><div style="font-weight:600;font-size:.83rem">${exData.name}</div>${wts?`<div style="font-size:.72rem;color:var(--text2)">${wts}</div>`:''}</div>
-          <span class="badge badge-${done.length?'green':'orange'}">${done.length}/${exData.sets.length} sets</span>
+      const done=Object.values(byEx).filter(e=>e.sets.some(s=>s.completed)).length;
+      html+=`<div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-weight:700;font-size:.82rem">${new Date(date+'T12:00:00').toLocaleDateString('en-IN',{weekday:'short',month:'short',day:'numeric'})}</span>
+          <span class="badge badge-lime">${done} exercises</span>
+        </div>`;
+      Object.values(byEx).slice(0,4).forEach(ex=>{
+        const maxW=Math.max(...ex.sets.map(s=>s.weight_kg||0));
+        const completedSets=ex.sets.filter(s=>s.completed).length;
+        html+=`<div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text2);padding:2px 0">
+          <span>${ex.name}</span>
+          <span style="color:var(--text)">${completedSets} sets${maxW>0?' · '+maxW+'kg':''}</span>
         </div>`;
       });
-      html+='</div>';
+      if(Object.values(byEx).length>4)html+=`<div style="font-size:.72rem;color:var(--text3);margin-top:4px">+${Object.values(byEx).length-4} more exercises</div>`;
+      html+=`</div>`;
     });
+    html+=`</div>`;
+  } else {
+    html+=`<div class="empty" style="padding:20px"><div class="empty-icon">📊</div><h3>No activity yet</h3><p>Client hasn't logged any workouts</p></div>`;
   }
   document.getElementById('cp-modal-body').innerHTML=html;
 }

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrackMyReps — Fitness Coaching for India</title>
+<meta name="description" content="The fitness coaching platform built for Indian personal trainers. Build plans, track clients, send workouts via WhatsApp. ₹99/client/month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --lime: #D4FF00;
+  --lime2: #b8e000;
+  --border: #1e1e1e;
+  --text: #f0f0f0;
+  --text2: #777;
+  --text3: #444;
+  --green: #00E676;
+  --blue: #4488FF;
+  --r: 16px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1,h2,h3,h4 { font-family: 'Syne', sans-serif; }
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: .4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(8,8,8,.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -.5px; }
+.brand span { color: var(--lime); }
+.nav-cta {
+  background: var(--lime);
+  color: #000;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: .88rem;
+  padding: 10px 22px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+}
+.nav-cta:hover { background: var(--lime2); transform: scale(.97); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a { color: var(--text2); text-decoration: none; font-size: .9rem; transition: color .2s; }
+.nav-links a:hover { color: var(--text); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(212,255,0,.12) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  pointer-events: none;
+}
+.hero-glow2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(68,136,255,.08) 0%, transparent 70%);
+  bottom: 0; right: 10%;
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212,255,0,.08);
+  border: 1px solid rgba(212,255,0,.2);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: .8rem;
+  color: var(--lime);
+  font-weight: 600;
+  margin-bottom: 32px;
+  letter-spacing: .5px;
+  animation: fadeUp .6s ease both;
+}
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -2px;
+  max-width: 900px;
+  margin-bottom: 28px;
+  animation: fadeUp .6s .1s ease both;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--lime);
+  position: relative;
+}
+.hero p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text2);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+  animation: fadeUp .6s .2s ease both;
+}
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp .6s .3s ease both;
+}
+.btn-primary {
+  background: var(--lime);
+  color: #000;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 16px 36px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary:hover { background: var(--lime2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(212,255,0,.25); }
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 16px 36px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-secondary:hover { border-color: var(--text2); transform: translateY(-2px); }
+
+/* ── HERO STATS STRIP ── */
+.stats-strip {
+  display: flex;
+  gap: 0;
+  margin-top: 80px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--bg2);
+  animation: fadeUp .6s .4s ease both;
+  max-width: 680px;
+  width: 100%;
+}
+.stat-item {
+  flex: 1;
+  padding: 24px 28px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--lime);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label { font-size: .78rem; color: var(--text2); font-weight: 500; }
+
+/* ── SECTION ── */
+section {
+  padding: 100px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.section-label {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--lime);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--text2);
+  max-width: 520px;
+  line-height: 1.7;
+}
+
+/* ── HOW IT WORKS ── */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 64px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--border);
+}
+.step {
+  background: var(--bg2);
+  padding: 40px 32px;
+  position: relative;
+  transition: background .2s;
+}
+.step:hover { background: var(--bg3); }
+.step-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 3.5rem;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 20px;
+  transition: color .2s;
+}
+.step:hover .step-num { color: rgba(212,255,0,.15); }
+.step-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.step h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.step p {
+  font-size: .88rem;
+  color: var(--text2);
+  line-height: 1.65;
+}
+.step-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.step:hover .step-accent { transform: scaleX(1); }
+
+/* ── FEATURES GRID ── */
+.features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 64px;
+}
+.feature-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+}
+.feature-card:hover { border-color: rgba(212,255,0,.3); transform: translateY(-4px); }
+.feature-card.featured {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+.feature-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(212,255,0,.04), transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.feature-card:hover::after { opacity: 1; }
+.feature-icon {
+  width: 48px; height: 48px;
+  background: rgba(212,255,0,.08);
+  border: 1px solid rgba(212,255,0,.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+.feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.feature-card p {
+  font-size: .88rem;
+  color: var(--text2);
+  line-height: 1.65;
+}
+.feature-mockup {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  font-size: .8rem;
+}
+.mockup-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.mockup-row:last-child { border-bottom: none; }
+.mockup-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: #000;
+  font-weight: 800;
+  font-size: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mockup-badge {
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: .7rem;
+  font-weight: 700;
+}
+.badge-green { background: rgba(0,230,118,.12); color: var(--green); }
+.badge-lime  { background: rgba(212,255,0,.12); color: var(--lime); }
+.badge-gray  { background: rgba(255,255,255,.06); color: var(--text2); }
+
+/* ── WHATSAPP SECTION ── */
+.wa-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  margin-top: 0;
+  position: relative;
+  overflow: hidden;
+}
+.wa-section::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(37,211,102,.08), transparent 70%);
+  pointer-events: none;
+}
+.wa-phone {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 320px;
+}
+.wa-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+.wa-dot { width: 10px; height: 10px; border-radius: 50%; }
+.wa-bubble {
+  background: rgba(37,211,102,.1);
+  border: 1px solid rgba(37,211,102,.2);
+  border-radius: 0 12px 12px 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  font-size: .82rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+.wa-bubble strong { color: #25D366; }
+.wa-time { font-size: .68rem; color: var(--text3); text-align: right; margin-top: 6px; }
+.wa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(37,211,102,.08);
+  border: 1px solid rgba(37,211,102,.15);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: .75rem;
+  color: #25D366;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* ── PRICING ── */
+.pricing-card {
+  background: var(--bg2);
+  border: 1px solid rgba(212,255,0,.2);
+  border-radius: 28px;
+  padding: 56px;
+  text-align: center;
+  max-width: 520px;
+  margin: 64px auto 0;
+  position: relative;
+  overflow: hidden;
+}
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--lime);
+}
+.price-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 4rem;
+  color: var(--lime);
+  line-height: 1;
+  margin: 20px 0 8px;
+}
+.price-per { color: var(--text2); font-size: .95rem; margin-bottom: 32px; }
+.price-features { list-style: none; text-align: left; margin-bottom: 36px; }
+.price-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .92rem;
+  color: var(--text2);
+}
+.price-features li:last-child { border-bottom: none; }
+.price-features li span { color: var(--lime); font-size: 1rem; }
+.price-compare {
+  font-size: .82rem;
+  color: var(--text3);
+  margin-top: 16px;
+}
+.price-compare s { color: var(--text3); }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  text-align: center;
+  padding: 120px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(212,255,0,.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cta-section h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-section p {
+  color: var(--text2);
+  font-size: 1.05rem;
+  margin-bottom: 40px;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+footer p { font-size: .82rem; color: var(--text3); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: .82rem; color: var(--text3); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--text2); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  .hero h1 { letter-spacing: -1px; }
+  .stats-strip { flex-direction: column; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+  section { padding: 64px 20px; }
+  .steps { grid-template-columns: 1fr; }
+  .features { grid-template-columns: 1fr; }
+  .feature-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  .wa-section { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
+  .wa-phone { max-width: 100%; }
+  .pricing-card { padding: 40px 24px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 20px; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="brand">Track<span>MyReps</span></div>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <a href="/index.html" class="nav-cta">Start Free →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge">🇮🇳 Built for Indian Personal Trainers</div>
+  <h1>Your clients.<br>Your plans.<br><em>One tap.</em></h1>
+  <p>Build 7-day workout plans, track every client's progress, and send it all via WhatsApp — in seconds. The coaching platform India's trainers actually want.</p>
+  <div class="hero-actions">
+    <a href="/index.html" class="btn-primary">Get started free →</a>
+    <a href="#how-it-works" class="btn-secondary">See how it works</a>
+  </div>
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">35+</div>
+      <div class="stat-label">Exercises with tutorials</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">₹99</div>
+      <div class="stat-label">Per client / month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7-day</div>
+      <div class="stat-label">Plan builder</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="reveal">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">From sign up to<br>first plan in minutes.</h2>
+    <p class="section-sub">No onboarding calls. No complex setup. Just open the app and start coaching.</p>
+  </div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-accent"></div>
+      <div class="step-num">01</div>
+      <span class="step-icon">👤</span>
+      <h3>Create your trainer profile</h3>
+      <p>Sign up as a trainer in 30 seconds. You get a unique trainer code your clients use to link to you.</p>
+    </div>
+    <div class="step">
+      <div class="step-accent"></div>
+      <div class="step-num">02</div>
+      <span class="step-icon">📋</span>
+      <h3>Build a 7-day plan</h3>
+      <p>Pick exercises from 35+ options, assign sets and reps for each day, review and send. Takes under 5 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-accent"></div>
+      <div class="step-num">03</div>
+      <span class="step-icon">💪</span>
+      <h3>Client trains, you track</h3>
+      <p>Your client logs every set in real time. You see their weight progress, strength gains, and adherence — live.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="padding-top:0">
+  <div class="reveal">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything a trainer<br>actually needs.</h2>
+    <p class="section-sub">No bloat. No features you'll never use. Just the tools that make you a better coach.</p>
+  </div>
+
+  <div class="features reveal">
+    <!-- Featured: WhatsApp -->
+    <div class="feature-card featured">
+      <div>
+        <div class="wa-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Integration
+        </div>
+        <h3 style="font-size:1.4rem;margin-bottom:12px">Send plans. Start conversations.<br>Never leave the app.</h3>
+        <p style="font-size:.92rem;line-height:1.7">The moment you send a plan, a pre-written WhatsApp message goes straight to your client. One tap. No copy-pasting. No switching apps. Your client gets the app link, your trainer code, and a motivational message — all at once.</p>
+      </div>
+      <div class="wa-phone">
+        <div class="wa-header">
+          <div class="wa-dot" style="background:#25D366"></div>
+          <div class="wa-dot" style="background:#FFB800"></div>
+          <div class="wa-dot" style="background:#FF4444"></div>
+          <span style="font-size:.75rem;color:var(--text2);margin-left:8px">WhatsApp</span>
+        </div>
+        <div style="font-size:.7rem;color:var(--text3);text-align:center;margin-bottom:12px">Today 8:14 AM</div>
+        <div class="wa-bubble">
+          Hey Rahul! 💪 Your new workout plan <strong>"Push Pull Legs v2"</strong> is ready on TrackMyReps.<br><br>
+          Sign in at: <strong>trackmyreps.in</strong><br>
+          Trainer code: <strong>JAY-4829</strong><br><br>
+          Let's crush it! 🔥
+          <div class="wa-time">8:14 AM ✓✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Live progress tracking</h3>
+      <p>See every client's weight history, strength gains, workout heatmap, and adherence score. Know exactly who needs a push before they drop off.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>35+ exercises with tutorials</h3>
+      <p>Every exercise has a YouTube tutorial your client can watch right in the app. No more "how do I do this?" messages at 10pm.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Works on any phone</h3>
+      <p>TrackMyReps is a PWA — clients install it like an app directly from the browser. No App Store. No Play Store. Just tap and add to home screen.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Smart push notifications</h3>
+      <p>Clients get notified when you send a new plan. Daily workout reminders at 8am. Weekly weight log nudges every Sunday. Retention on autopilot.</p>
+    </div>
+
+    <!-- Trainer dashboard mockup -->
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>All your clients, one view</h3>
+      <div class="feature-mockup" style="margin-top:16px">
+        <div class="mockup-row">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="mockup-avatar">R</div>
+            <span style="font-size:.82rem;font-weight:600">Rahul M.</span>
+          </div>
+          <span class="mockup-badge badge-green">Trained today</span>
+        </div>
+        <div class="mockup-row">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="mockup-avatar">P</div>
+            <span style="font-size:.82rem;font-weight:600">Priya K.</span>
+          </div>
+          <span class="mockup-badge badge-lime">Yesterday</span>
+        </div>
+        <div class="mockup-row">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="mockup-avatar">A</div>
+            <span style="font-size:.82rem;font-weight:600">Aakash S.</span>
+          </div>
+          <span class="mockup-badge badge-gray">2 days ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="padding-top:0;text-align:center">
+  <div class="reveal">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">One simple price.<br>No surprises.</h2>
+    <p class="section-sub" style="margin:0 auto">Pay only for what you use. Add clients when you grow, remove them when you don't.</p>
+  </div>
+  <div class="pricing-card reveal">
+    <div class="section-label" style="margin-bottom:8px">Trainer plan</div>
+    <div class="price-num">₹99</div>
+    <div class="price-per">per client / per month</div>
+    <ul class="price-features">
+      <li><span>✓</span> Unlimited workout plans per client</li>
+      <li><span>✓</span> Full progress tracking & charts</li>
+      <li><span>✓</span> WhatsApp plan delivery</li>
+      <li><span>✓</span> Push notifications for clients</li>
+      <li><span>✓</span> 35+ exercises with YouTube tutorials</li>
+      <li><span>✓</span> Client mobile app (PWA) included</li>
+    </ul>
+    <a href="/index.html" class="btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:16px">Start coaching free →</a>
+    <p class="price-compare">vs. alternatives: <s>$20–50/client/month</s> — TrackMyReps is 10× cheaper</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2 class="reveal">Ready to coach<br><em style="color:var(--lime);font-style:normal">smarter?</em></h2>
+  <p class="reveal">Join the trainers already using TrackMyReps in Mumbai.</p>
+  <a href="/index.html" class="btn-primary reveal" style="font-size:1.05rem;padding:18px 44px">Create your trainer account →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="brand">Track<span>MyReps</span></div>
+  <p>© 2026 TrackMyReps. Built for Indian fitness professionals.</p>
+  <div class="footer-links">
+    <a href="/index.html">Sign In</a>
+    <a href="mailto:contact@trackmyreps.in">Contact</a>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Stagger children of steps/features
+document.querySelectorAll('.steps, .features').forEach(container => {
+  container.querySelectorAll('.step, .feature-card').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.08}s`;
+  });
+});
+</script>
+</body>
+</html>

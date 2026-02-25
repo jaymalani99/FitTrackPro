@@ -188,8 +188,11 @@ select.inp{cursor:pointer}
 .day-tabs::-webkit-scrollbar{display:none}
 .day-tab{padding:9px 14px;border-radius:10px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.8rem;font-weight:600;white-space:nowrap;transition:all .15s;flex:1;min-width:40px;text-align:center;-webkit-user-select:none;user-select:none}
 .day-tab.active{background:var(--lime);color:#000}
-.workout-ex{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:10px}
-.workout-ex.done{border-color:var(--green)}
+.workout-ex{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:10px;transition:all .3s ease}
+.workout-ex.done{border-color:var(--green);opacity:.6;position:relative}
+.workout-ex.done::after{content:'✓ Done';position:absolute;top:12px;right:52px;background:rgba(0,230,118,.12);color:var(--green);border:1px solid rgba(0,230,118,.25);border-radius:100px;padding:3px 10px;font-size:.72rem;font-weight:700;pointer-events:none}
+.workout-ex.done .ex-icon{filter:grayscale(.5)}
+.workout-ex.done input{opacity:.4;pointer-events:none}
 .set-row{display:grid;grid-template-columns:32px 1fr 1fr 36px;gap:6px;align-items:center;margin-top:8px}
 .set-num{background:var(--bg3);border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--text2)}
 .set-inp{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:8px 4px;color:var(--text);font-size:16px;text-align:center;outline:none;width:100%;-webkit-appearance:none}
@@ -563,11 +566,27 @@ select.inp{cursor:pointer}
 
     <!-- ADMIN PAGES -->
     <div class="page" id="page-admin-overview">
-      <div class="page-header"><div><div class="label">Admin</div><h1 class="page-title">Overview</h1></div></div>
+      <div class="page-header"><div><div class="label">Admin</div><h1 class="page-title">Overview</h1></div>
+        <button class="btn btn-ghost btn-sm" onclick="bootAdmin()">↻ Refresh</button>
+      </div>
       <div class="grid3" style="margin-bottom:18px">
-        <div class="stat-card"><div class="label">Exercises</div><div class="stat-num" id="stat-ex">—</div><div class="muted" style="font-size:.8rem">Repository</div><div class="stat-accent">🏋️</div></div>
+        <div class="stat-card lime-hl"><div class="label">Exercises</div><div class="stat-num" id="stat-ex">—</div><div class="muted" style="font-size:.8rem">In library</div><div class="stat-accent">🏋️</div></div>
         <div class="stat-card"><div class="label">Trainers</div><div class="stat-num" id="stat-tr">—</div><div class="muted" style="font-size:.8rem">Active</div><div class="stat-accent">👤</div></div>
         <div class="stat-card"><div class="label">Clients</div><div class="stat-num" id="stat-cl">—</div><div class="muted" style="font-size:.8rem">Registered</div><div class="stat-accent">💪</div></div>
+      </div>
+      <!-- ANALYTICS ROW -->
+      <div class="grid3" style="margin-bottom:18px">
+        <div class="stat-card"><div class="label">Total Plans Sent</div><div class="stat-num" id="stat-plans-total">—</div><div class="muted" style="font-size:.8rem">All time</div><div class="stat-accent">📋</div></div>
+        <div class="stat-card"><div class="label">Active Plans</div><div class="stat-num" id="stat-plans-active">—</div><div class="muted" style="font-size:.8rem">Currently active</div><div class="stat-accent">✅</div></div>
+        <div class="stat-card"><div class="label">Logs This Week</div><div class="stat-num" id="stat-logs-week">—</div><div class="muted" style="font-size:.8rem">Workout entries</div><div class="stat-accent">📊</div></div>
+      </div>
+      <!-- TRAINER ACTIVITY TABLE -->
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem;display:flex;align-items:center;justify-content:space-between">
+          Trainer Activity
+          <span class="badge badge-lime" id="admin-trainer-count">0 trainers</span>
+        </div>
+        <div id="admin-trainer-activity"></div>
       </div>
       <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem">All Users</div><div id="admin-users-list"></div></div>
     </div>
@@ -610,7 +629,11 @@ select.inp{cursor:pointer}
       <div class="code-display">
         <div class="label" style="margin-bottom:8px">Your Trainer Code — share with clients</div>
         <div class="code-big" id="trainer-code-display">——</div>
-        <button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="copyCode()">📋 Copy Code</button>
+        <div style="display:flex;gap:8px;margin-top:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="copyCode()">📋 Copy Code</button>
+          <button class="btn btn-lime btn-sm" onclick="copyInviteLink()">🔗 Copy Invite Link</button>
+          <button class="btn btn-ghost btn-sm" onclick="showQRCode()">📱 Show QR</button>
+        </div>
       </div>
       <div class="grid2" style="margin-bottom:18px">
         <div class="stat-card"><div class="label">My Clients</div><div class="stat-num" id="t-stat-clients">—</div><div class="muted" style="font-size:.8rem">Linked to you</div><div class="stat-accent">👥</div></div>
@@ -676,6 +699,25 @@ select.inp{cursor:pointer}
     <!-- CLIENT PAGES -->
     <div class="page" id="page-client-today">
       <div class="page-header"><div><div class="label">Today's Workout</div><h1 class="page-title">Workout</h1></div></div>
+
+      <!-- PROGRESS SUMMARY STRIP -->
+      <div id="client-home-stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+        <div class="stat-card" style="padding:12px 14px;cursor:pointer" onclick="showPage('client-progress',null,false)">
+          <div class="label" style="font-size:.6rem">WEIGHT</div>
+          <div class="stat-num" id="home-weight" style="font-size:1.2rem">—</div>
+          <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">⚖️</div>
+        </div>
+        <div class="stat-card" style="padding:12px 14px;cursor:pointer" onclick="showPage('client-progress',null,false)">
+          <div class="label" style="font-size:.6rem">STREAK</div>
+          <div class="stat-num" id="home-streak" style="font-size:1.2rem">—</div>
+          <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">🔥</div>
+        </div>
+        <div class="stat-card" style="padding:12px 14px;cursor:pointer" onclick="showPage('client-progress',null,false)">
+          <div class="label" style="font-size:.6rem">THIS WEEK</div>
+          <div class="stat-num" id="home-weekly" style="font-size:1.2rem">—</div>
+          <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">📅</div>
+        </div>
+      </div>
       <div id="new-plan-banner" class="hidden" style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:var(--r);padding:12px 14px;margin-bottom:14px;font-size:.85rem;color:var(--lime);font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:10px">
         <span id="new-plan-banner-text"></span>
         <button onclick="document.getElementById('new-plan-banner').classList.add('hidden')" style="background:none;border:none;color:var(--lime);cursor:pointer;font-size:1rem;flex-shrink:0">✕</button>
@@ -950,6 +992,7 @@ select.inp{cursor:pointer}
     </div>
   </div>
 </div>
+<div class="modal-overlay hidden" id="add-user-modal">
   <div class="modal">
     <div class="modal-title">Add User Manually</div>
     <div style="display:flex;flex-direction:column;gap:12px">
@@ -962,6 +1005,20 @@ select.inp{cursor:pointer}
         <button class="btn btn-lime w100" onclick="adminAddUser()">Add User</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- QR CODE MODAL -->
+<div class="modal-overlay hidden" id="qr-modal">
+  <div class="modal" style="max-width:340px;text-align:center">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="modal-title" style="margin-bottom:0">Client Invite QR</div>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('qr-modal').classList.add('hidden')">✕</button>
+    </div>
+    <div style="font-size:.82rem;color:var(--text2);margin-bottom:16px">Client scans this to join directly — no code needed</div>
+    <div id="qr-container" style="background:#fff;border-radius:12px;padding:16px;display:inline-block;margin-bottom:16px"></div>
+    <div id="qr-link-display" style="font-size:.75rem;color:var(--text3);word-break:break-all;margin-bottom:16px"></div>
+    <button class="btn btn-lime w100" onclick="copyInviteLink();document.getElementById('qr-modal').classList.add('hidden')">📋 Copy Link</button>
   </div>
 </div>
 
@@ -1056,7 +1113,7 @@ const SUPABASE_KEY=' sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
 const VAPID_PUBLIC_KEY='BAjhEm546htMI36ODdsREBN9_fjAV3go1wdQsmbnK2fM73OGg7Y0cuRub0mowyIksPMqrpeC2ewQgkXEMNf4lt0';
 
 let db,currentUser,currentProfile;
-let exercises=[],myClients=[],myPlans=[],measurements=[],logCache={};
+let exercises=[],myClients=[],myPlans=[],measurements=[],logCache={},allLogs=[];
 let adminExFilter='All',trainerExFilter='All';
 let weightChart,volumeChart,editingExId=null;
 let clientPlan=null,clientPlanExercises=[],selectedDay=null;
@@ -1134,12 +1191,16 @@ async function signup(){
   const email=document.getElementById('s-email').value.trim();
   const pass=document.getElementById('s-pass').value;
   const role=document.getElementById('s-role').value;
-  const code=document.getElementById('s-trainer-code')?.value.trim().toUpperCase()||'';
+  // Use code from invite link if available, otherwise from input field
+  const pendingCode=sessionStorage.getItem('pendingTrainerCode')||'';
+  const inputCode=document.getElementById('s-trainer-code')?.value.trim().toUpperCase()||'';
+  const code=inputCode||pendingCode;
   if(!name||!email||!pass)return toast('Fill in all fields','error');
   if(pass.length<6)return toast('Password must be at least 6 characters','error');
   const {data,error}=await db.auth.signUp({email,password:pass,options:{data:{full_name:name,role}}});
   if(error)return toast(error.message,'error');
   if(role==='client'&&code&&data.user){
+    sessionStorage.removeItem('pendingTrainerCode');
     setTimeout(async()=>{
       const {data:trRpc}=await db.rpc('find_trainer_by_code',{p_code:code});
       if(trRpc?.length)await db.from('client_requests').insert({client_id:data.user.id,trainer_id:trRpc[0].id,status:'pending'});
@@ -1227,15 +1288,54 @@ function toggleSidebar(){
 
 // ADMIN
 async function bootAdmin(){
-  const [{data:exData},{count:exC},{data:users}]=await Promise.all([
+  const weekAgo=new Date();weekAgo.setDate(weekAgo.getDate()-7);
+  const weekAgoStr=weekAgo.toISOString().split('T')[0];
+
+  const [{data:exData},{count:exC},{data:users},{data:plans},{data:weekLogs}]=await Promise.all([
     db.from('exercises').select('*').order('category').order('name'),
     db.from('exercises').select('*',{count:'exact',head:true}),
-    db.from('profiles').select('*').order('created_at',{ascending:false})
+    db.from('profiles').select('*').order('created_at',{ascending:false}),
+    db.from('workout_plans').select('id,name,active,assigned_at,trainer_id,client_id,profiles!workout_plans_trainer_id_fkey(full_name,email)'),
+    db.from('exercise_logs').select('id,workout_date,client_id').gte('workout_date',weekAgoStr)
   ]);
+
   exercises=exData||[];
+  const trainers=users?.filter(u=>u.role==='trainer')||[];
+  const clients=users?.filter(u=>u.role==='client')||[];
+
   document.getElementById('stat-ex').textContent=exC||0;
-  document.getElementById('stat-tr').textContent=users?.filter(u=>u.role==='trainer').length||0;
-  document.getElementById('stat-cl').textContent=users?.filter(u=>u.role==='client').length||0;
+  document.getElementById('stat-tr').textContent=trainers.length;
+  document.getElementById('stat-cl').textContent=clients.length;
+  document.getElementById('stat-plans-total').textContent=plans?.length||0;
+  document.getElementById('stat-plans-active').textContent=plans?.filter(p=>p.active).length||0;
+  document.getElementById('stat-logs-week').textContent=weekLogs?.length||0;
+  document.getElementById('admin-trainer-count').textContent=trainers.length+' trainers';
+
+  // Trainer activity table
+  const activityEl=document.getElementById('admin-trainer-activity');
+  if(activityEl){
+    if(!trainers.length){activityEl.innerHTML='<div class="empty" style="padding:20px 0"><p>No trainers yet</p></div>';}
+    else{
+      const trainerPlans={};
+      plans?.forEach(p=>{if(!trainerPlans[p.trainer_id])trainerPlans[p.trainer_id]={total:0,active:0};trainerPlans[p.trainer_id].total++;if(p.active)trainerPlans[p.trainer_id].active++;});
+      const trainerClients={};
+      clients?.forEach(c=>{if(c.trainer_id){if(!trainerClients[c.trainer_id])trainerClients[c.trainer_id]=0;trainerClients[c.trainer_id]++;}});
+      activityEl.innerHTML=trainers.map(t=>`
+        <div class="client-row" style="flex-wrap:wrap;gap:8px">
+          <div class="avatar">${(t.full_name||t.email).charAt(0).toUpperCase()}</div>
+          <div style="flex:1;min-width:120px">
+            <div style="font-weight:600;font-size:.88rem">${t.full_name||t.email}</div>
+            <div class="muted" style="font-size:.76rem">Code: ${t.trainer_code||'—'}</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="badge badge-blue">${trainerClients[t.id]||0} clients</span>
+            <span class="badge badge-lime">${trainerPlans[t.id]?.total||0} plans</span>
+            <span class="badge badge-green">${trainerPlans[t.id]?.active||0} active</span>
+          </div>
+        </div>`).join('');
+    }
+  }
+
   renderUsersList(users||[]);renderAdminExercises();
 }
 function renderUsersList(users){
@@ -1417,8 +1517,34 @@ async function bootTrainer(){
 }
 function copyCode(){
   const code=currentProfile.trainer_code||'';
-  if(navigator.clipboard?.writeText)navigator.clipboard.writeText(code).then(()=>toast('Code copied! 📋')).catch(()=>fallbackCopy(code));
-  else fallbackCopy(code);
+  if(!code)return toast('No trainer code yet','error');
+  if(navigator.clipboard){navigator.clipboard.writeText(code).then(()=>toast('Code copied!'));}
+  else{fallbackCopy(code);toast('Code copied!');}
+}
+
+function copyInviteLink(){
+  const code=currentProfile.trainer_code||'';
+  if(!code)return toast('No trainer code yet','error');
+  const link=`https://trackmyreps.in/app?join=${code}`;
+  if(navigator.clipboard){navigator.clipboard.writeText(link).then(()=>toast('Invite link copied! 🔗'));}
+  else{fallbackCopy(link);toast('Invite link copied! 🔗');}
+}
+
+function showQRCode(){
+  const code=currentProfile.trainer_code||'';
+  if(!code)return toast('No trainer code yet','error');
+  const link=`https://trackmyreps.in/app?join=${code}`;
+  document.getElementById('qr-link-display').textContent=link;
+  const container=document.getElementById('qr-container');
+  container.innerHTML='';
+  // Generate QR using Google Charts API (no library needed)
+  const size=200;
+  const img=document.createElement('img');
+  img.src=`https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(link)}&bgcolor=ffffff&color=000000&margin=0`;
+  img.width=size;img.height=size;img.style.display='block';
+  img.alt='QR Code';
+  container.appendChild(img);
+  document.getElementById('qr-modal').classList.remove('hidden');
 }
 function fallbackCopy(text){
   const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';
@@ -1580,7 +1706,7 @@ function renderTrainerPlans(){
           <div class="muted" style="font-size:.8rem;margin-top:2px">→ ${c?.full_name||c?.email||'Unknown'}</div>
         </div>
         <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
-          <span class="badge badge-${p.active?'green':'red'}">${p.active?'Active':'Inactive'}</span>
+          <span class="badge badge-${p.active?'green':'red'}" style="cursor:pointer" onclick="togglePlanActive('${p.id}',${p.active})" title="Click to toggle">${p.active?'Active':'Inactive'}</span>
           <button class="btn btn-ghost btn-sm" onclick="openPlanEdit('${p.id}')">Edit</button>
           <button class="btn btn-danger btn-sm" onclick="deletePlan('${p.id}')">Delete</button>
         </div>
@@ -1747,8 +1873,7 @@ async function sendPlan(){
   if(!clientId)return toast('Select a client','error');
   const total=Object.values(builderPlan).reduce((s,arr)=>s+arr.length,0);
   if(!total)return toast('Add exercises first','error');
-  // Deactivate any existing active plans for this client
-  await db.from('workout_plans').update({active:false}).eq('client_id',clientId).eq('active',true);
+  // New plan is active by default — trainer can toggle manually
   const {data:plan,error}=await db.from('workout_plans').insert({name,client_id:clientId,trainer_id:currentUser.id,active:true}).select().single();
   if(error)return toast(error.message,'error');
   const rows=[];let order=0;
@@ -1764,10 +1889,20 @@ async function sendPlan(){
   openWaModal();
 }
 async function deletePlan(id){
-  if(!confirm('Delete this plan?'))return;
-  await db.from('workout_plans').delete().eq('id',id);
-  toast('Plan deleted');myPlans=myPlans.filter(p=>p.id!==id);
-  renderTrainerPlans();document.getElementById('t-stat-plans').textContent=myPlans.length;
+  showConfirm('Delete plan?','This will remove the plan permanently. The client will lose access to it.',async()=>{
+    await db.from('workout_plans').delete().eq('id',id);
+    toast('Plan deleted');myPlans=myPlans.filter(p=>p.id!==id);
+    renderTrainerPlans();document.getElementById('t-stat-plans').textContent=myPlans.length;
+  });
+}
+
+async function togglePlanActive(id, currentlyActive){
+  const newState=!currentlyActive;
+  await db.from('workout_plans').update({active:newState}).eq('id',id);
+  const plan=myPlans.find(p=>p.id===id);
+  if(plan)plan.active=newState;
+  renderTrainerPlans();
+  toast(newState?'Plan set to Active':'Plan set to Inactive');
 }
 
 // WHATSAPP
@@ -1811,10 +1946,18 @@ async function bootClient(){
   ]);
   clientPlan=planData;clientPlanExercises=planData?.plan_exercises||[];
   measurements=measData||[];
+  allLogs=allLogsData||[];
   logCache={};logsData?.forEach(l=>{logCache[`${l.workout_date}-${l.exercise_id}-${l.set_number}`]=l;});
   const currentWeightEl=document.getElementById('current-weight');
   if(measurements.length&&currentWeightEl)currentWeightEl.textContent=measurements[0].weight_kg+' kg';
-  renderClientToday();renderClientPlan();renderClientProfile();renderClientStats();initCharts();
+  renderClientToday();renderClientPlan();renderClientProfile();renderClientStats();initCharts();renderHomeStats();
+  // Auto-fill trainer code if user came via invite link
+  const pendingCode=sessionStorage.getItem('pendingTrainerCode');
+  if(pendingCode&&currentProfile.role==='client'&&!currentProfile.trainer_id){
+    sessionStorage.removeItem('pendingTrainerCode');
+    const inp=document.getElementById('profile-trainer-code');
+    if(inp){inp.value=pendingCode;showPage('client-profile',null,false);toast('Trainer code pre-filled — tap Send Request to link! 🔗');}
+  }
   renderProgressStats(measurements,allLogsData||[]);
   renderWorkoutHeatmap(allLogsData||[]);
   renderStrengthProgress(allLogsData||[]);
@@ -2267,6 +2410,25 @@ async function finishWorkout(){
   renderDayWorkout(selectedDay);
   updateFinishBar();
   updateCharts();
+  // Show celebration
+  showWorkoutComplete(dayExs.length);
+}
+
+function showWorkoutComplete(exerciseCount){
+  const existing=document.getElementById('workout-complete-modal');
+  if(existing)existing.remove();
+  const modal=document.createElement('div');
+  modal.id='workout-complete-modal';
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)';
+  modal.innerHTML=`
+    <div style="background:var(--card);border:1px solid var(--green);border-radius:24px;padding:40px 32px;max-width:340px;width:100%;text-align:center">
+      <div style="font-size:3.5rem;margin-bottom:16px;animation:fadeUp .4s ease">🏆</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:8px;color:var(--green)">Workout Done!</div>
+      <div style="color:var(--text2);font-size:.9rem;margin-bottom:24px;line-height:1.6">${exerciseCount} exercises crushed.<br>Your progress has been saved.</div>
+      <button onclick="document.getElementById('workout-complete-modal').remove()" class="btn btn-lime" style="width:100%;padding:14px">Back to workout ✓</button>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal)modal.remove();});
 }
 async function linkTrainer(){
   const inp=document.getElementById('profile-trainer-code');
@@ -2475,7 +2637,7 @@ async function saveEditWeight(){
   if(error)return toast(error.message,'error');
   measurements=measurements.map(m=>m.id===id?{...m,weight_kg:kg}:m);
   closeEditWeightModal();
-  renderMeasurementsTable();updateCharts();renderProgressStats(measurements,[]);
+  renderClientProfile();updateCharts();renderProgressStats(measurements,[]);
   toast('Weight updated ✓');
 }
 function confirmDeleteWeight(){
@@ -2485,7 +2647,7 @@ function confirmDeleteWeight(){
     const {error}=await db.from('body_measurements').delete().eq('id',id);
     if(error)return toast(error.message,'error');
     measurements=measurements.filter(m=>m.id!==id);
-    renderMeasurementsTable();updateCharts();renderProgressStats(measurements,[]);
+    renderClientProfile();updateCharts();renderProgressStats(measurements,[]);
     toast('Entry deleted');
   });
 }
@@ -2526,6 +2688,31 @@ async function saveStatEdit(){
   renderClientStats();
   toast(key.replace('_',' ')+' saved ✓');
 }
+function renderHomeStats(){
+  // Current weight
+  if(measurements?.length){
+    const latest=measurements[measurements.length-1];
+    document.getElementById('home-weight').textContent=latest.weight_kg+'kg';
+  }
+  // Workout streak — count consecutive days with at least one completed log
+  if(allLogs?.length){
+    const logDays=[...new Set(allLogs.filter(l=>l.completed).map(l=>l.workout_date))].sort().reverse();
+    let streak=0;const today=new Date();
+    for(let i=0;i<30;i++){
+      const d=new Date(today);d.setDate(d.getDate()-i);
+      const ds=d.toISOString().split('T')[0];
+      if(logDays.includes(ds))streak++;
+      else if(i>0)break;
+    }
+    document.getElementById('home-streak').textContent=streak+'d';
+    // This week workouts
+    const weekStart=new Date();weekStart.setDate(weekStart.getDate()-weekStart.getDay());
+    const weekWS=weekStart.toISOString().split('T')[0];
+    const weekDays=new Set(allLogs.filter(l=>l.completed&&l.workout_date>=weekWS).map(l=>l.workout_date));
+    document.getElementById('home-weekly').textContent=weekDays.size+'/7';
+  }
+}
+
 function renderClientStats(){
   const stats={age:'age',height_cm:'height_cm',fitness_goal:'fitness_goal',experience_level:'experience_level',injuries:'injuries'};
   const units={age:' yrs',height_cm:' cm'};
@@ -2656,7 +2843,16 @@ async function flushOfflineQueue(){
 
 // INIT
 async function init(){
-  // Key guard — show clear error instead of silent hang
+  // Handle invite link — ?join=CODE pre-fills trainer code after signup
+  const urlParams=new URLSearchParams(window.location.search);
+  const joinCode=urlParams.get('join');
+  if(joinCode){
+    sessionStorage.setItem('pendingTrainerCode',joinCode.toUpperCase());
+    // Clean URL without reloading
+    window.history.replaceState({},'',window.location.pathname);
+  }
+
+  // Key guard
   if(!SUPABASE_KEY||SUPABASE_KEY==='PASTE_YOUR_PUBLISHABLE_KEY_HERE'){
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');

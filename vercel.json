@@ -3,7 +3,7 @@
   "routes": [
     { "src": "/sw.js", "dest": "/sw.js", "headers": { "Cache-Control": "no-cache, no-store" } },
     { "src": "/manifest.json", "dest": "/manifest.json" },
-    { "src": "/", "dest": "/landing.html" },
+    { "src": "/", "dest": "/landing.html", "headers": { "Cache-Control": "no-cache, no-store, must-revalidate" } },
     { "src": "/app", "dest": "/index.html" },
     { "src": "/app/(.*)", "dest": "/index.html" },
     { "src": "/(.*)", "dest": "/index.html" }

@@ -798,61 +798,66 @@ select.inp{cursor:pointer}
 
     <div class="page" id="page-client-profile">
       <div class="page-header"><div><div class="label">Account</div><h1 class="page-title">Profile</h1></div><button class="btn btn-ghost btn-sm" onclick="logout()">Sign Out</button></div>
-      <div class="card" style="max-width:460px;margin-bottom:14px">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-          <div class="avatar avatar-lg" id="profile-avatar">?</div>
-          <div><div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700" id="profile-name">—</div><div class="muted" id="profile-email">—</div><div style="margin-top:6px" id="profile-badge"></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:960px">
+        <!-- LEFT COL: Account info + weight -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+              <div class="avatar avatar-lg" id="profile-avatar">?</div>
+              <div><div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700" id="profile-name">—</div><div class="muted" id="profile-email">—</div><div style="margin-top:6px" id="profile-badge"></div></div>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
+              <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">WhatsApp Number</div>
+              <div class="muted" style="font-size:.8rem;margin-bottom:10px">So your trainer can reach you on WhatsApp</div>
+              <div style="display:flex;gap:8px">
+                <input class="inp" id="profile-phone" type="tel" inputmode="tel" placeholder="91XXXXXXXXXX" style="flex:1">
+                <button class="btn btn-lime btn-sm" onclick="savePhone()">Save</button>
+              </div>
+              <div id="phone-saved-indicator" style="margin-top:6px;font-size:.78rem;color:var(--green)"></div>
+            </div>
+            <div id="trainer-link-section" style="border-top:1px solid var(--border);padding-top:16px">
+              <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">Link to Your Trainer</div>
+              <div class="muted" style="font-size:.8rem;margin-bottom:10px">Enter trainer code to send a join request</div>
+              <div id="trainer-linked-info" style="margin-bottom:8px"></div>
+              <div id="trainer-link-input-row" style="display:flex;gap:8px">
+                <input class="inp code-inp" id="profile-trainer-code" placeholder="JAY-4829" maxlength="8" style="flex:1;font-size:18px">
+                <button class="btn btn-lime btn-sm" onclick="linkTrainer()">Send Request</button>
+              </div>
+            </div>
+          </div>
+          <!-- WEIGHT LOG CARD -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem">⚖️ Body Weight Log</div>
+              <button class="btn btn-lime btn-sm" onclick="openMeasurementModal()">+ Log Weight</button>
+            </div>
+            <div id="measurements-table"></div>
+          </div>
         </div>
-        <!-- PHONE NUMBER -->
-        <div style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
-          <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">WhatsApp Number</div>
-          <div class="muted" style="font-size:.8rem;margin-bottom:10px">So your trainer can reach you on WhatsApp</div>
-          <div style="display:flex;gap:8px">
-            <input class="inp" id="profile-phone" type="tel" inputmode="tel" placeholder="91XXXXXXXXXX (with country code)" style="flex:1">
-            <button class="btn btn-lime btn-sm" onclick="savePhone()">Save</button>
-          </div>
-          <div id="phone-saved-indicator" style="margin-top:6px;font-size:.78rem;color:var(--green)"></div>
-        </div>
-        <div id="trainer-link-section" style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
-          <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">Link to Your Trainer</div>
-          <div class="muted" style="font-size:.8rem;margin-bottom:10px">Enter trainer code to send a join request</div>
-          <div id="trainer-linked-info" style="margin-bottom:8px"></div>
-          <div id="trainer-link-input-row" style="display:flex;gap:8px">
-            <input class="inp code-inp" id="profile-trainer-code" placeholder="JAY-4829" maxlength="8" style="flex:1;font-size:18px">
-            <button class="btn btn-lime btn-sm" onclick="linkTrainer()">Send Request</button>
-          </div>
-        </div>
-        <div style="border-top:1px solid var(--border);padding-top:16px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem">Body Weight Log</div>
-            <button class="btn btn-lime btn-sm" onclick="openMeasurementModal()">+ Log Weight</button>
-          </div>
-          <div id="measurements-table"></div>
-        </div>
-      </div>
-      <!-- STATS CARD -->
-      <div class="card" style="max-width:460px;margin-bottom:14px">
-        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:16px">📊 My Stats</div>
-        <div style="display:flex;flex-direction:column;gap:10px" id="client-stats-list">
-          <div class="stats-edit-row" data-key="age">
-            <div><div class="label" style="font-size:.7rem">Age</div><div class="stats-val" id="stat-age">—</div></div>
-            <button class="btn btn-ghost btn-sm" onclick="openStatEdit('age','Age','number','years')">Edit</button>
-          </div>
-          <div class="stats-edit-row" data-key="height_cm">
-            <div><div class="label" style="font-size:.7rem">Height</div><div class="stats-val" id="stat-height_cm">—</div></div>
-            <button class="btn btn-ghost btn-sm" onclick="openStatEdit('height_cm','Height','number','cm')">Edit</button>
-          </div>
-          <div class="stats-edit-row" data-key="fitness_goal">
-            <div><div class="label" style="font-size:.7rem">Fitness Goal</div><div class="stats-val" id="stat-fitness_goal">—</div></div>
-            <button class="btn btn-ghost btn-sm" onclick="openStatEdit('fitness_goal','Fitness Goal','text','e.g. Lose fat, Build muscle')">Edit</button>
-          </div>
-          <div class="stats-edit-row" data-key="experience_level">
-            <div><div class="label" style="font-size:.7rem">Experience Level</div><div class="stats-val" id="stat-experience_level">—</div></div>
-            <button class="btn btn-ghost btn-sm" onclick="openStatEdit('experience_level','Experience Level','select','')">Edit</button>
-          </div>
-          <div class="stats-edit-row" data-key="injuries">
-            <div><div class="label" style="font-size:.7rem">Injuries / Limitations</div><div class="stats-val" id="stat-injuries">—</div></div>
-            <button class="btn btn-ghost btn-sm" onclick="openStatEdit('injuries','Injuries / Limitations','text','e.g. Bad left knee')">Edit</button>
+        <!-- RIGHT COL: Stats -->
+        <div class="card" style="align-self:start">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:16px">📊 My Stats</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Age</div><div class="stats-val" id="stat-age">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('age','Age','number','e.g. 25')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Height</div><div class="stats-val" id="stat-height_cm">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('height_cm','Height (cm)','number','e.g. 175')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Fitness Goal</div><div class="stats-val" id="stat-fitness_goal">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('fitness_goal','Fitness Goal','text','e.g. Lose fat')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Experience Level</div><div class="stats-val" id="stat-experience_level">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('experience_level','Experience Level','select','')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Injuries / Limitations</div><div class="stats-val" id="stat-injuries">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('injuries','Injuries','text','e.g. Bad left knee')">Edit</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1047,7 +1052,7 @@ select.inp{cursor:pointer}
 
 <script>
 const SUPABASE_URL='https://oxpeybhsucryghtrnhmm.supabase.co';
-const SUPABASE_KEY='sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
+const SUPABASE_KEY=' sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
 
 let db,currentUser,currentProfile;
 let exercises=[],myClients=[],myPlans=[],measurements=[],logCache={};
@@ -2549,7 +2554,24 @@ async function updateCharts(){
 
 // PWA
 function registerSW(){
-  if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{});}
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js').then(reg=>{
+      // Check for updates immediately and every 60s
+      reg.update();
+      setInterval(()=>reg.update(),60000);
+      // When new SW is waiting, activate it immediately
+      reg.addEventListener('updatefound',()=>{
+        const newSW=reg.installing;
+        newSW?.addEventListener('statechange',()=>{
+          if(newSW.state==='installed'&&navigator.serviceWorker.controller){
+            newSW.postMessage({type:'SKIP_WAITING'});
+          }
+        });
+      });
+    }).catch(()=>{});
+    // Reload page when new SW takes control
+    navigator.serviceWorker.addEventListener('controllerchange',()=>window.location.reload());
+  }
 }
 
 // OFFLINE DETECTION

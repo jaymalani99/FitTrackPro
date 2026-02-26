@@ -271,6 +271,29 @@ select.inp{cursor:pointer}
 .avatar-menu-item:hover{background:var(--bg3)}
 .avatar-menu-item.danger{color:var(--red)}
 .avatar-menu-divider{height:1px;background:var(--border);margin:4px 0}
+
+/* ONBOARDING WIZARD */
+.ob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
+.ob-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;width:100%;max-width:500px;overflow:hidden;animation:fadeUp .3s ease}
+.ob-header{padding:24px 24px 0}
+.ob-steps{display:flex;gap:6px;margin-bottom:22px}
+.ob-step{flex:1;height:3px;border-radius:100px;background:var(--border);transition:background .3s}
+.ob-step.done{background:var(--lime)}
+.ob-step.active{background:var(--lime);opacity:.45}
+.ob-body{padding:0 24px 20px}
+.ob-icon{font-size:2.6rem;margin-bottom:12px;display:block}
+.ob-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:6px;line-height:1.2}
+.ob-sub{color:var(--text2);font-size:.86rem;margin-bottom:18px;line-height:1.5}
+.ob-footer{padding:14px 24px 22px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center}
+.ob-skip{background:none;border:none;color:var(--text3);font-size:.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:4px}
+.ob-skip:hover{color:var(--text2)}
+.split-chip{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:var(--r);border:2px solid var(--border);cursor:pointer;font-weight:600;font-size:.86rem;transition:all .15s;width:100%;margin-bottom:7px;background:var(--bg3);-webkit-user-select:none;user-select:none;text-align:left}
+.split-chip:hover{border-color:var(--text2)}
+.split-chip.active{border-color:var(--lime);background:rgba(212,255,0,.07);color:var(--lime)}
+.split-icon{font-size:1.2rem;flex-shrink:0}
+.split-name{font-weight:700;font-size:.86rem}
+.split-days{font-size:.7rem;color:var(--text2);font-weight:400;margin-top:1px}
+
 /* OFFLINE BANNER */
 #offline-banner{position:fixed;top:0;left:0;right:0;background:var(--orange);color:#000;text-align:center;padding:8px 16px;font-size:.82rem;font-weight:700;z-index:9999;transform:translateY(-100%);transition:transform .3s}
 #offline-banner.show{transform:translateY(0)}
@@ -560,7 +583,7 @@ select.inp{cursor:pointer}
             <div style="font-weight:600;font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="sidebar-name">—</div>
             <div class="muted" style="font-size:.72rem" id="sidebar-role">—</div>
           </div>
-          <span style="color:var(--text3);font-size:.85rem">⌃</span>
+          <span style="color:var(--text3);font-size:.75rem">▲</span>
         </div>
         <div class="avatar-menu hidden" id="sidebar-menu"></div>
       </div>
@@ -1121,6 +1144,74 @@ select.inp{cursor:pointer}
   </div>
 </div>
 
+<!-- ONBOARDING WIZARD -->
+<div class="ob-overlay hidden" id="ob-overlay">
+  <div class="ob-card">
+    <div class="ob-header">
+      <div class="ob-steps">
+        <div class="ob-step active" id="ob-s1"></div>
+        <div class="ob-step" id="ob-s2"></div>
+        <div class="ob-step" id="ob-s3"></div>
+      </div>
+    </div>
+    <!-- STEP 1 -->
+    <div class="ob-body" id="ob-step-1">
+      <span class="ob-icon">👋</span>
+      <div class="ob-title">Welcome to TrackMyReps!</div>
+      <div class="ob-sub">You're set up as a trainer. Let's get you ready in 3 quick steps — takes under 5 minutes.</div>
+      <div style="background:rgba(212,255,0,.06);border:2px dashed rgba(212,255,0,.3);border-radius:var(--r2);padding:18px;text-align:center;margin-bottom:14px">
+        <div class="label" style="margin-bottom:8px;font-size:.65rem">YOUR TRAINER CODE</div>
+        <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--lime);letter-spacing:6px" id="ob-code-display">——</div>
+        <div style="color:var(--text2);font-size:.78rem;margin-top:8px">Share this with clients so they can link to you</div>
+      </div>
+      <button class="btn btn-ghost w100" onclick="obCopyCode()">📋 Copy Code</button>
+    </div>
+    <!-- STEP 2 -->
+    <div class="ob-body hidden" id="ob-step-2">
+      <span class="ob-icon">✏️</span>
+      <div class="ob-title">Build your first plan</div>
+      <div class="ob-sub">Pick a training split and we'll pre-fill exercises. You can customise everything later.</div>
+      <div id="ob-splits">
+        <div class="split-chip" onclick="selectSplit('ppl',this)">
+          <span class="split-icon">💪</span>
+          <div><div class="split-name">Push / Pull / Legs</div><div class="split-days">6 days · Chest+Shoulders, Back+Biceps, Legs</div></div>
+        </div>
+        <div class="split-chip" onclick="selectSplit('ul',this)">
+          <span class="split-icon">⚡</span>
+          <div><div class="split-name">Upper / Lower</div><div class="split-days">4 days · Upper body + Lower body alternating</div></div>
+        </div>
+        <div class="split-chip" onclick="selectSplit('fb',this)">
+          <span class="split-icon">🏋️</span>
+          <div><div class="split-name">Full Body</div><div class="split-days">3 days · Mon, Wed, Fri</div></div>
+        </div>
+        <div class="split-chip" onclick="selectSplit('custom',this)">
+          <span class="split-icon">🎯</span>
+          <div><div class="split-name">I'll build from scratch</div><div class="split-days">Takes you to the full plan builder</div></div>
+        </div>
+      </div>
+      <div id="ob-split-preview" class="hidden" style="background:var(--bg3);border-radius:var(--r);padding:10px 12px;margin-top:4px;font-size:.78rem;color:var(--text2);line-height:1.9"></div>
+    </div>
+    <!-- STEP 3 -->
+    <div class="ob-body hidden" id="ob-step-3">
+      <span class="ob-icon">🚀</span>
+      <div class="ob-title">Invite your first client</div>
+      <div class="ob-sub">Share your invite link on WhatsApp. When they sign up with your code, you'll get a request to approve.</div>
+      <div style="background:var(--bg3);border-radius:var(--r);padding:12px 14px;font-size:.82rem;color:var(--text2);line-height:1.7;margin-bottom:12px;white-space:pre-wrap" id="ob-wa-preview"></div>
+      <a id="ob-wa-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:9px;background:#25D366;color:#fff;border:none;border-radius:100px;padding:13px 20px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;width:100%;text-decoration:none;margin-bottom:8px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Send on WhatsApp
+      </a>
+      <button class="btn btn-ghost w100" onclick="obCopyLink()">🔗 Copy Invite Link</button>
+    </div>
+    <div class="ob-footer">
+      <button class="ob-skip" onclick="closeOnboarding()">Skip for now</button>
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost btn-sm" id="ob-back-btn" onclick="obBack()" style="display:none">← Back</button>
+      <button class="btn btn-lime" id="ob-next-btn" onclick="obNext()">Next →</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SUPABASE_URL='https://oxpeybhsucryghtrnhmm.supabase.co';
 const SUPABASE_KEY='sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
@@ -1222,7 +1313,7 @@ async function signup(){
   }
   toast('Account created! Sign in now.');switchTab('login');
 }
-// AVATAR DROPDOWN
+// ── AVATAR DROPDOWN ────────────────────────────────────────────────────────
 function buildAvatarMenu(role){
   const items=(navConfig[role]||[]).map(i=>`<div class="avatar-menu-item" onclick="avatarNav('${i.page}')"><span>${i.icon}</span>${i.label}</div>`).join('');
   const html=items+`<div class="avatar-menu-divider"></div><div class="avatar-menu-item danger" onclick="logout()"><span>⏻</span>Sign Out</div>`;
@@ -1230,26 +1321,120 @@ function buildAvatarMenu(role){
 }
 function toggleAvatarMenu(menuId,e){
   e.stopPropagation();
-  // Close any other open menus first
   ['topbar-menu','sidebar-menu'].forEach(id=>{if(id!==menuId)document.getElementById(id)?.classList.add('hidden');});
   document.getElementById(menuId)?.classList.toggle('hidden');
 }
 function avatarNav(page){
   ['topbar-menu','sidebar-menu'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));
   showPage(page,null,false);
-  const role=currentProfile?.role;
-  const nav=navConfig[role]||[];
-  const idx=nav.findIndex(n=>n.page===page);
+  const idx=(navConfig[currentProfile?.role]||[]).findIndex(n=>n.page===page);
   if(idx>-1){
     document.querySelectorAll('#nav-items .nav-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
     document.querySelectorAll('#mobile-nav .mnav-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
   }
 }
-document.addEventListener('click',()=>{
-  ['topbar-menu','sidebar-menu'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));
-});
-
+document.addEventListener('click',()=>{['topbar-menu','sidebar-menu'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));});
 async function logout(){await db.auth.signOut();window.location.href='/app';}
+
+// ── TAB FOCUS REFRESH ───────────────────────────────────────────────────────
+(function(){
+  let hiddenAt=null;
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)hiddenAt=Date.now();
+    else if(hiddenAt&&(Date.now()-hiddenAt)>60000)window.location.reload();
+  });
+  window.addEventListener('focus',()=>{if(hiddenAt&&(Date.now()-hiddenAt)>60000)window.location.reload();});
+})();
+
+// ── ONBOARDING WIZARD ──────────────────────────────────────────────────────
+let obStep=1, obSplit=null;
+const OB_SPLITS={
+  ppl:{name:'Push / Pull / Legs',days:{Monday:[{n:'Bench Press',c:'Chest',s:4,r:'8-10'},{n:'Incline DB Press',c:'Chest',s:3,r:'10-12'},{n:'Shoulder Press',c:'Shoulders',s:3,r:'10-12'},{n:'Lateral Raises',c:'Shoulders',s:3,r:'12-15'},{n:'Tricep Pushdown',c:'Arms',s:3,r:'12-15'}],Tuesday:[{n:'Lat Pulldown',c:'Back',s:4,r:'10-12'},{n:'Seated Row',c:'Back',s:3,r:'10-12'},{n:'Face Pulls',c:'Shoulders',s:3,r:'15-20'},{n:'Preacher Curl',c:'Arms',s:3,r:'10-12'},{n:'Hammer Curl',c:'Arms',s:3,r:'12-15'}],Wednesday:[{n:'Hack Squat',c:'Legs',s:4,r:'8-10'},{n:'Leg Press',c:'Legs',s:3,r:'10-12'},{n:'Leg Curl',c:'Legs',s:3,r:'12-15'},{n:'Calf Raises',c:'Legs',s:4,r:'15-20'}],Thursday:[],Friday:[],Saturday:[],Sunday:[]}},
+  ul:{name:'Upper / Lower',days:{Monday:[{n:'Bench Press',c:'Chest',s:4,r:'8-10'},{n:'Lat Pulldown',c:'Back',s:4,r:'10-12'},{n:'Shoulder Press',c:'Shoulders',s:3,r:'10-12'},{n:'Preacher Curl',c:'Arms',s:3,r:'12-15'},{n:'Tricep Pushdown',c:'Arms',s:3,r:'12-15'}],Tuesday:[{n:'Hack Squat',c:'Legs',s:4,r:'8-10'},{n:'Leg Press',c:'Legs',s:3,r:'10-12'},{n:'Leg Curl',c:'Legs',s:3,r:'12-15'},{n:'Calf Raises',c:'Legs',s:4,r:'15-20'}],Wednesday:[],Thursday:[{n:'Incline DB Press',c:'Chest',s:3,r:'10-12'},{n:'Seated Row',c:'Back',s:4,r:'10-12'},{n:'Lateral Raises',c:'Shoulders',s:3,r:'12-15'},{n:'Hammer Curl',c:'Arms',s:3,r:'12-15'},{n:'Skull Crushers',c:'Arms',s:3,r:'10-12'}],Friday:[{n:'Leg Press',c:'Legs',s:4,r:'10-12'},{n:'Leg Curl',c:'Legs',s:3,r:'12-15'},{n:'Hip Thrust',c:'Legs',s:3,r:'10-12'},{n:'Calf Raises',c:'Legs',s:4,r:'15-20'}],Saturday:[],Sunday:[]}},
+  fb:{name:'Full Body',days:{Monday:[{n:'Hack Squat',c:'Legs',s:3,r:'8-10'},{n:'Bench Press',c:'Chest',s:3,r:'8-10'},{n:'Lat Pulldown',c:'Back',s:3,r:'10-12'},{n:'Shoulder Press',c:'Shoulders',s:3,r:'10-12'},{n:'Plank',c:'Core',s:3,r:'45s'}],Tuesday:[],Wednesday:[{n:'Leg Press',c:'Legs',s:3,r:'10-12'},{n:'Incline DB Press',c:'Chest',s:3,r:'10-12'},{n:'Seated Row',c:'Back',s:3,r:'10-12'},{n:'Lateral Raises',c:'Shoulders',s:3,r:'12-15'},{n:'Preacher Curl',c:'Arms',s:3,r:'12-15'}],Thursday:[],Friday:[{n:'Hack Squat',c:'Legs',s:3,r:'10-12'},{n:'Chest Fly',c:'Chest',s:3,r:'12-15'},{n:'Face Pulls',c:'Shoulders',s:3,r:'15-20'},{n:'Hyperextension',c:'Back',s:3,r:'12-15'},{n:'Tricep Pushdown',c:'Arms',s:3,r:'12-15'}],Saturday:[],Sunday:[]}}
+};
+function showOnboarding(){
+  const done=currentUser&&localStorage.getItem('ob_done_'+currentUser.id);
+  if(done)return;
+  const el=document.getElementById('ob-overlay');if(!el)return;
+  const codeEl=document.getElementById('ob-code-display');
+  if(codeEl)codeEl.textContent=currentProfile?.trainer_code||'——';
+  el.classList.remove('hidden');
+  obGoTo(1);
+}
+function closeOnboarding(){
+  document.getElementById('ob-overlay')?.classList.add('hidden');
+  if(currentUser)localStorage.setItem('ob_done_'+currentUser.id,'1');
+}
+function obGoTo(n){
+  obStep=n;
+  [1,2,3].forEach(i=>{
+    document.getElementById('ob-step-'+i)?.classList.toggle('hidden',i!==n);
+    const s=document.getElementById('ob-s'+i);
+    if(s){s.classList.toggle('done',i<n);s.classList.toggle('active',i===n);}
+  });
+  const nb=document.getElementById('ob-next-btn');
+  const bb=document.getElementById('ob-back-btn');
+  if(nb)nb.textContent=n===3?'Done ✓':'Next →';
+  if(bb)bb.style.display=n>1?'':'none';
+  if(n===3){
+    const code=currentProfile?.trainer_code||'';
+    const link=`https://trackmyreps.in/app?join=${code}`;
+    const msg=`Hey! 💪 Join my coaching on TrackMyReps.\n\nYour trainer code: *${code}*\nSign up: ${link}\n\nI'll approve your request and send you a workout plan right away!`;
+    const prev=document.getElementById('ob-wa-preview');if(prev)prev.textContent=msg;
+    const btn=document.getElementById('ob-wa-btn');if(btn)btn.href=`https://wa.me/?text=${encodeURIComponent(msg)}`;
+  }
+}
+function obNext(){
+  if(obStep===1){obGoTo(2);}
+  else if(obStep===2){
+    if(obSplit==='custom'){closeOnboarding();avatarNav('trainer-build');return;}
+    if(!obSplit){toast('Please pick a training split','error');return;}
+    obGoTo(3);
+  }
+  else if(obStep===3){
+    if(obSplit&&obSplit!=='custom')obLoadQuickPlan();
+    closeOnboarding();
+  }
+}
+function obBack(){if(obStep>1)obGoTo(obStep-1);}
+function obCopyCode(){
+  const code=currentProfile?.trainer_code||'';
+  navigator.clipboard?.writeText(code).then(()=>toast('Code copied! 📋'))||toast('Copy: '+code);
+}
+function obCopyLink(){
+  const code=currentProfile?.trainer_code||'';
+  const link=`https://trackmyreps.in/app?join=${code}`;
+  navigator.clipboard?.writeText(link).then(()=>toast('Invite link copied! 🔗'))||toast('Copied!');
+}
+function selectSplit(key,el){
+  obSplit=key;
+  document.querySelectorAll('.split-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const preview=document.getElementById('ob-split-preview');
+  if(!preview)return;
+  if(key==='custom'){preview.classList.add('hidden');return;}
+  const plan=OB_SPLITS[key];
+  const activeDays=Object.entries(plan.days).filter(([,exs])=>exs.length>0);
+  preview.classList.remove('hidden');
+  preview.innerHTML='<strong style="color:var(--text)">Preview:</strong><br>'+
+    activeDays.map(([day,exs])=>`<span style="color:var(--lime)">${day.slice(0,3)}</span>: ${exs.map(e=>e.n).join(', ')}`).join('<br>');
+}
+function obLoadQuickPlan(){
+  const plan=OB_SPLITS[obSplit];if(!plan)return;
+  // Populate builderPlan so trainer can review + send from the plan builder
+  builderPlan={};
+  Object.entries(plan.days).forEach(([day,exs])=>{
+    if(!exs.length)return;
+    builderPlan[day]=exs.map(e=>{
+      const found=exercises.find(x=>x.name.toLowerCase()===e.n.toLowerCase());
+      return found?{exercise_id:found.id,name:found.name,category:found.category,sets:e.s,reps:e.r}:null;
+    }).filter(Boolean);
+  });
+  renderBuilderStepper&&renderBuilderStepper();
+  renderTrainerExercises&&renderTrainerExercises();
+  toast(`${plan.name} loaded in Build Plan — review & send! 🎉`);
+}
 
 // BOOT
 async function bootApp(user){
@@ -1307,7 +1492,6 @@ function renderNav(role){
   buildAvatarMenu(role);
   showPage(nav[0].page,null,false);
 }
-function showPage(pageId,clickedEl,isMobile){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const page=document.getElementById('page-'+pageId);if(page)page.classList.add('active');
   if(clickedEl){
@@ -1544,6 +1728,8 @@ async function bootTrainer(){
   renderPendingRequests();renderTrainerClientsMini();renderTrainerExercises();renderTrainerClientsFull();renderTrainerPlans();
   populateReviewClients();renderBuilderStepper();
   renderTodayFeed(todayLogs||[]);
+  // Show onboarding wizard for new trainers
+  setTimeout(showOnboarding, 600);
   // Real-time: new client requests
   db.channel('trainer-requests-'+currentUser.id)
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'client_requests',filter:`trainer_id=eq.${currentUser.id}`},async(payload)=>{
@@ -2731,10 +2917,10 @@ async function saveStatEdit(){
   toast(key.replace('_',' ')+' saved ✓');
 }
 function renderHomeStats(){
-  // Current weight — sort by date desc to get truly latest
+  // Current weight — sort by date to get truly latest
   if(measurements?.length){
-    const sorted=[...measurements].sort((a,b)=>new Date(b.measured_at)-new Date(a.measured_at));
-    document.getElementById('home-weight').textContent=sorted[0].weight_kg+'kg';
+    const latest=[...measurements].sort((a,b)=>new Date(b.measured_at)-new Date(a.measured_at))[0];
+    document.getElementById('home-weight').textContent=latest.weight_kg+'kg';
   }
   // Workout streak — count consecutive days with at least one completed log
   if(allLogs?.length){
@@ -2867,19 +3053,6 @@ function setupOfflineDetection(){
   }
   window.addEventListener('online',updateOnline);
   window.addEventListener('offline',updateOnline);
-  // Reload data when user returns to tab after being away 60+ seconds
-  let hiddenAt=null;
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){hiddenAt=Date.now();}
-    else if(hiddenAt&&(Date.now()-hiddenAt)>60000){
-      // Reload the whole app to get fresh data
-      window.location.reload();
-    }
-  });
-  // Also reload on window focus if away 60+ seconds
-  window.addEventListener('focus',()=>{
-    if(hiddenAt&&(Date.now()-hiddenAt)>60000){window.location.reload();}
-  });
 }
 async function flushOfflineQueue(){
   if(!offlineQueue.length||!db)return;

@@ -2936,7 +2936,7 @@ async function saveEditWeight(){
   if(error)return toast(error.message,'error');
   measurements=measurements.map(m=>m.id===id?{...m,weight_kg:kg}:m);
   closeEditWeightModal();
-  renderClientProfile();updateCharts();renderProgressStats(measurements,[]);
+  renderClientProfile();updateCharts();renderProgressStats(measurements,allLogs);
   toast('Weight updated ✓');
 }
 function confirmDeleteWeight(){
@@ -2946,7 +2946,7 @@ function confirmDeleteWeight(){
     const {error}=await db.from('body_measurements').delete().eq('id',id);
     if(error)return toast(error.message,'error');
     measurements=measurements.filter(m=>m.id!==id);
-    renderClientProfile();updateCharts();renderProgressStats(measurements,[]);
+    renderClientProfile();updateCharts();renderProgressStats(measurements,allLogs);
     toast('Entry deleted');
   });
 }
@@ -2988,28 +2988,33 @@ async function saveStatEdit(){
   toast(key.replace('_',' ')+' saved ✓');
 }
 function renderHomeStats(){
-  // Current weight — sort by date to get truly latest
-  if(measurements?.length){
-    const latest=[...measurements].sort((a,b)=>new Date(b.measured_at)-new Date(a.measured_at))[0];
-    document.getElementById('home-weight').textContent=latest.weight_kg+'kg';
+  const wEl=document.getElementById('home-weight');
+  if(wEl){
+    if(measurements?.length){
+      const latest=[...measurements].sort((a,b)=>new Date(b.measured_at)-new Date(a.measured_at))[0];
+      wEl.textContent=latest.weight_kg+'kg';
+    }else{wEl.textContent='—';}
   }
-  // Workout streak — count consecutive days with at least one completed log
-  if(allLogs?.length){
-    const logDays=[...new Set(allLogs.filter(l=>l.completed).map(l=>l.workout_date))].sort().reverse();
-    let streak=0;const today=new Date();
-    for(let i=0;i<30;i++){
-      const d=new Date(today);d.setDate(d.getDate()-i);
-      const ds=d.toISOString().split('T')[0];
-      if(logDays.includes(ds))streak++;
-      else if(i>0)break;
-    }
-    document.getElementById('home-streak').textContent=streak+'d';
-    // This week workouts
-    const weekStart=new Date();weekStart.setDate(weekStart.getDate()-weekStart.getDay());
-    const weekWS=weekStart.toISOString().split('T')[0];
-    const weekDays=new Set(allLogs.filter(l=>l.completed&&l.workout_date>=weekWS).map(l=>l.workout_date));
-    document.getElementById('home-weekly').textContent=weekDays.size+'/7';
+  const logs=allLogs||[];
+  const logDays=[...new Set(logs.filter(l=>l.completed).map(l=>l.workout_date))].sort().reverse();
+  let streak=0;
+  const today=new Date();
+  for(let i=0;i<90;i++){
+    const d=new Date(today);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().split('T')[0];
+    if(logDays.includes(ds)){streak++;}
+    else if(streak>0){break;}
   }
+  const streakEl=document.getElementById('home-streak');
+  if(streakEl)streakEl.textContent=streak+'d';
+  const weekStart=new Date();
+  const dow=weekStart.getDay();
+  weekStart.setDate(weekStart.getDate()-(dow===0?6:dow-1));
+  const weekWS=weekStart.toISOString().split('T')[0];
+  const planActiveDays=clientPlanExercises?new Set(clientPlanExercises.map(e=>e.day_of_week)).size:7;
+  const weekDone=new Set(logs.filter(l=>l.completed&&l.workout_date>=weekWS).map(l=>l.workout_date));
+  const weekEl=document.getElementById('home-weekly');
+  if(weekEl)weekEl.textContent=weekDone.size+'/'+(planActiveDays||7);
 }
 
 function renderClientStats(){

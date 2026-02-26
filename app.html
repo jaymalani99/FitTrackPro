@@ -77,10 +77,10 @@ select.inp{cursor:pointer}
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9998}
 #auth-screen{height:100vh;height:-webkit-fill-available;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 60%,rgba(212,255,0,.08) 0%,transparent 50%),radial-gradient(ellipse at 85% 20%,rgba(68,136,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(212,255,0,.04) 0%,transparent 50%)}
-.auth-split-left{flex:1;display:flex;align-items:stretch;justify-content:center;padding:0 60px 0 40px;position:relative;z-index:1;height:100vh}
+.auth-split-left{flex:1;display:flex;align-items:stretch;justify-content:center;padding:0 60px 0 40px;position:relative;z-index:1;height:100vh;overflow-y:auto}
 .auth-split-left::after{content:'';position:absolute;right:0;top:10%;bottom:10%;width:1px;background:linear-gradient(to bottom,transparent,var(--border),transparent)}
 .auth-left-content{max-width:420px;width:100%;display:flex;flex-direction:column;justify-content:space-between;padding:60px 0}
-.auth-split-right{width:460px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:40px 40px 40px 50px;position:relative;z-index:1}
+.auth-split-right{width:460px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:40px 40px 40px 50px;position:sticky;top:0;height:100vh;z-index:1}
 .auth-card{width:100%;animation:fadeUp .3s ease}
 .auth-tabs{display:flex;background:var(--bg3);border-radius:100px;padding:4px;margin-bottom:28px;border:1px solid var(--border)}
 .auth-tab{flex:1;text-align:center;padding:11px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.88rem;transition:all .2s;color:var(--text2)}
@@ -265,7 +265,8 @@ select.inp{cursor:pointer}
 .plan-edit-row:last-child{border-bottom:none}
 /* AVATAR DROPDOWN */
 .avatar-dropdown{position:relative;flex-shrink:0}
-.avatar-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);min-width:180px;z-index:9999;box-shadow:0 16px 40px rgba(0,0,0,.7);overflow:hidden;animation:fadeUp .15s ease}
+.avatar-menu{position:absolute;bottom:calc(100% + 8px);left:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);min-width:190px;z-index:9999;box-shadow:0 16px 40px rgba(0,0,0,.7);overflow:hidden;animation:fadeUp .15s ease}
+.topbar .avatar-menu{top:calc(100% + 8px);bottom:auto;right:0;left:auto}
 .avatar-menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-size:.85rem;font-weight:500;color:var(--text);transition:background .15s;white-space:nowrap}
 .avatar-menu-item:hover{background:var(--bg3)}
 .avatar-menu-item.danger{color:var(--red)}
@@ -543,8 +544,8 @@ select.inp{cursor:pointer}
     <button class="hamburger" onclick="toggleSidebar()"><div class="ham-lines"><span></span><span></span><span></span></div></button>
     <div class="brand" style="font-size:1rem">Track<span>MyReps</span></div>
     <div class="avatar-dropdown">
-      <div class="avatar" id="top-avatar" onclick="toggleAvatarMenu(event)" style="cursor:pointer;font-size:.7rem">?</div>
-      <div class="avatar-menu hidden" id="avatar-menu"></div>
+      <div class="avatar" id="top-avatar" onclick="toggleAvatarMenu('topbar-menu',event)" style="cursor:pointer;font-size:.7rem">?</div>
+      <div class="avatar-menu hidden" id="topbar-menu"></div>
     </div>
   </div>
   <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150" onclick="toggleSidebar()"></div>
@@ -552,13 +553,16 @@ select.inp{cursor:pointer}
     <div class="sidebar-brand"><div class="brand" style="font-size:1.15rem">Track<span>MyReps</span></div></div>
     <div id="nav-items"></div>
     <div class="sidebar-footer">
-      <div class="user-chip" onclick="logout()">
-        <div class="avatar" id="sidebar-avatar" style="font-size:.7rem">?</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-weight:600;font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="sidebar-name">—</div>
-          <div class="muted" style="font-size:.72rem" id="sidebar-role">—</div>
+      <div class="avatar-dropdown" style="width:100%">
+        <div class="user-chip" onclick="toggleAvatarMenu('sidebar-menu',event)">
+          <div class="avatar" id="sidebar-avatar" style="font-size:.7rem">?</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:600;font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" id="sidebar-name">—</div>
+            <div class="muted" style="font-size:.72rem" id="sidebar-role">—</div>
+          </div>
+          <span style="color:var(--text3);font-size:.85rem">⌃</span>
         </div>
-        <span style="color:var(--text3);font-size:.85rem">⏻</span>
+        <div class="avatar-menu hidden" id="sidebar-menu"></div>
       </div>
     </div>
   </div>
@@ -712,17 +716,17 @@ select.inp{cursor:pointer}
 
       <!-- PROGRESS SUMMARY STRIP -->
       <div id="client-home-stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
-        <div class="stat-card" style="padding:12px 14px;cursor:pointer" onclick="showPage('client-progress',null,false)">
+        <div class="stat-card" style="padding:12px 14px">
           <div class="label" style="font-size:.6rem">WEIGHT</div>
           <div class="stat-num" id="home-weight" style="font-size:1.2rem">—</div>
           <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">⚖️</div>
         </div>
-        <div class="stat-card" style="padding:12px 14px;cursor:pointer" onclick="showPage('client-progress',null,false)">
+        <div class="stat-card" style="padding:12px 14px">
           <div class="label" style="font-size:.6rem">STREAK</div>
           <div class="stat-num" id="home-streak" style="font-size:1.2rem">—</div>
           <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">🔥</div>
         </div>
-        <div class="stat-card" style="padding:12px 14px;cursor:pointer" onclick="showPage('client-progress',null,false)">
+        <div class="stat-card" style="padding:12px 14px">
           <div class="label" style="font-size:.6rem">THIS WEEK</div>
           <div class="stat-num" id="home-weekly" style="font-size:1.2rem">—</div>
           <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">📅</div>
@@ -1220,42 +1224,32 @@ async function signup(){
 }
 // AVATAR DROPDOWN
 function buildAvatarMenu(role){
-  const menu=document.getElementById('avatar-menu');if(!menu)return;
-  const links={
-    admin:[{icon:'📊',label:'Overview',page:'admin-overview'},{icon:'🏋️',label:'Exercises',page:'admin-exercises'},{icon:'👥',label:'All Users',page:'admin-users'}],
-    trainer:[{icon:'📊',label:'Dashboard',page:'trainer-overview'},{icon:'✏️',label:'Build Plan',page:'trainer-build'},{icon:'👥',label:'My Clients',page:'trainer-clients'},{icon:'📋',label:'Active Plans',page:'trainer-plans'}],
-    client:[{icon:'🏃',label:'Today',page:'client-today'},{icon:'📈',label:'Progress',page:'client-progress'},{icon:'📋',label:'My Plan',page:'client-plan'},{icon:'👤',label:'Profile',page:'client-profile'}]
-  };
-  const items=links[role]||[];
-  menu.innerHTML=items.map(i=>`<div class="avatar-menu-item" onclick="avatarNav('${i.page}')"><span>${i.icon}</span>${i.label}</div>`).join('')+
-    `<div class="avatar-menu-divider"></div><div class="avatar-menu-item danger" onclick="logout()"><span>⏻</span>Sign Out</div>`;
+  const items=(navConfig[role]||[]).map(i=>`<div class="avatar-menu-item" onclick="avatarNav('${i.page}')"><span>${i.icon}</span>${i.label}</div>`).join('');
+  const html=items+`<div class="avatar-menu-divider"></div><div class="avatar-menu-item danger" onclick="logout()"><span>⏻</span>Sign Out</div>`;
+  ['topbar-menu','sidebar-menu'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=html;});
 }
-function toggleAvatarMenu(e){
+function toggleAvatarMenu(menuId,e){
   e.stopPropagation();
-  const menu=document.getElementById('avatar-menu');
-  menu.classList.toggle('hidden');
+  // Close any other open menus first
+  ['topbar-menu','sidebar-menu'].forEach(id=>{if(id!==menuId)document.getElementById(id)?.classList.add('hidden');});
+  document.getElementById(menuId)?.classList.toggle('hidden');
 }
 function avatarNav(page){
-  document.getElementById('avatar-menu').classList.add('hidden');
+  ['topbar-menu','sidebar-menu'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));
   showPage(page,null,false);
-  // Sync nav highlight
   const role=currentProfile?.role;
   const nav=navConfig[role]||[];
   const idx=nav.findIndex(n=>n.page===page);
   if(idx>-1){
-    const navItems=document.querySelectorAll('#nav-items .nav-item');
-    const mobileItems=document.querySelectorAll('#mobile-nav .mnav-item');
-    navItems.forEach((el,i)=>el.classList.toggle('active',i===idx));
-    mobileItems.forEach((el,i)=>el.classList.toggle('active',i===idx));
+    document.querySelectorAll('#nav-items .nav-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
+    document.querySelectorAll('#mobile-nav .mnav-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
   }
 }
-// Close dropdown when clicking outside
 document.addEventListener('click',()=>{
-  document.getElementById('avatar-menu')?.classList.add('hidden');
+  ['topbar-menu','sidebar-menu'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));
 });
 
 async function logout(){await db.auth.signOut();location.reload();}
-
 
 // BOOT
 async function bootApp(user){
@@ -2737,10 +2731,10 @@ async function saveStatEdit(){
   toast(key.replace('_',' ')+' saved ✓');
 }
 function renderHomeStats(){
-  // Current weight
+  // Current weight — sort by date desc to get truly latest
   if(measurements?.length){
-    const latest=measurements[measurements.length-1];
-    document.getElementById('home-weight').textContent=latest.weight_kg+'kg';
+    const sorted=[...measurements].sort((a,b)=>new Date(b.measured_at)-new Date(a.measured_at));
+    document.getElementById('home-weight').textContent=sorted[0].weight_kg+'kg';
   }
   // Workout streak — count consecutive days with at least one completed log
   if(allLogs?.length){
@@ -2873,6 +2867,19 @@ function setupOfflineDetection(){
   }
   window.addEventListener('online',updateOnline);
   window.addEventListener('offline',updateOnline);
+  // Reload data when user returns to tab after being away 60+ seconds
+  let hiddenAt=null;
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){hiddenAt=Date.now();}
+    else if(hiddenAt&&(Date.now()-hiddenAt)>60000){
+      // Reload the whole app to get fresh data
+      window.location.reload();
+    }
+  });
+  // Also reload on window focus if away 60+ seconds
+  window.addEventListener('focus',()=>{
+    if(hiddenAt&&(Date.now()-hiddenAt)>60000){window.location.reload();}
+  });
 }
 async function flushOfflineQueue(){
   if(!offlineQueue.length||!db)return;

@@ -829,7 +829,7 @@ select.inp{cursor:pointer}
       <!-- CHARTS -->
       <div class="grid2" style="margin-bottom:12px">
         <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem;display:flex;justify-content:space-between;align-items:center">Weight History <span id="weight-trend-badge"></span></div><div class="chart-wrap"><canvas id="weight-chart"></canvas></div></div>
-        <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">Weekly Volume</div><div class="chart-wrap"><canvas id="volume-chart"></canvas></div></div>
+        <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">This Week — Volume (kg lifted)</div><div class="chart-wrap"><canvas id="volume-chart"></canvas></div></div>
       </div>
       <!-- WORKOUT HEATMAP -->
       <div class="card" style="margin-bottom:12px">
@@ -3039,12 +3039,22 @@ async function updateCharts(){
   const sorted=[...measurements].sort((a,b)=>new Date(a.measured_at)-new Date(b.measured_at)).slice(-15);
   weightChart.data.labels=sorted.map(m=>new Date(m.measured_at+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric'}));
   weightChart.data.datasets[0].data=sorted.map(m=>m.weight_kg);weightChart.update();
-  const last7=Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d.toISOString().split('T')[0];});
-  const {data:logs}=await db.from('exercise_logs').select('workout_date,reps_completed').eq('client_id',currentUser.id).eq('completed',true).in('workout_date',last7);
-  const vol={};last7.forEach(d=>vol[d]=0);logs?.forEach(l=>{if(vol[l.workout_date]!==undefined)vol[l.workout_date]+=(l.reps_completed||0);});
-  volumeChart.data.labels=last7.map(d=>new Date(d+'T12:00:00').toLocaleDateString('en-IN',{month:'short',day:'numeric'}));
-  volumeChart.data.datasets[0].data=last7.map(d=>vol[d]);volumeChart.update();
-  const wDone=last7.filter(d=>vol[d]>0).length;
+  // Weekly volume — Mon to Sun of CURRENT week (not rolling 7 days)
+  const weekStartVC=new Date();const dowVC=weekStartVC.getDay();
+  weekStartVC.setDate(weekStartVC.getDate()-(dowVC===0?6:dowVC-1)); // Monday
+  const weekDays=Array.from({length:7},(_,i)=>{const d=new Date(weekStartVC);d.setDate(d.getDate()+i);return d.toISOString().split('T')[0];});
+  const {data:logs}=await db.from('exercise_logs').select('workout_date,weight_kg,reps_completed').eq('client_id',currentUser.id).eq('completed',true).in('workout_date',weekDays);
+  // Volume = weight_kg × reps_completed per set, summed per day
+  const vol={};weekDays.forEach(d=>vol[d]=0);
+  logs?.forEach(l=>{
+    const kg=parseFloat(l.weight_kg)||0;
+    const reps=parseInt(l.reps_completed)||0;
+    if(vol[l.workout_date]!==undefined)vol[l.workout_date]+=(kg*reps);
+  });
+  const dayLabels=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  volumeChart.data.labels=dayLabels;
+  volumeChart.data.datasets[0].data=weekDays.map(d=>Math.round(vol[d]));volumeChart.update();
+  const wDone=weekDays.filter(d=>vol[d]>0).length;
   const wEl=document.getElementById('workouts-done');if(wEl)wEl.textContent=wDone;
 }
 

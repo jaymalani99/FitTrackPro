@@ -1492,6 +1492,7 @@ function renderNav(role){
   buildAvatarMenu(role);
   showPage(nav[0].page,null,false);
 }
+function showPage(pageId,clickedEl,isMobile){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const page=document.getElementById('page-'+pageId);if(page)page.classList.add('active');
   if(clickedEl){

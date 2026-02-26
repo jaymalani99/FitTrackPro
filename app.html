@@ -2170,7 +2170,7 @@ async function bootClient(){
     db.from('workout_plans').select('*,plan_exercises(*,exercises(*))').eq('client_id',currentUser.id).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
     db.from('body_measurements').select('*').eq('client_id',currentUser.id).order('measured_at',{ascending:false}),
     db.from('exercise_logs').select('*').eq('client_id',currentUser.id).in('workout_date',last7),
-    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps,completed,exercises(name,category)').eq('client_id',currentUser.id).eq('completed',true).order('workout_date',{ascending:true}),
+    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps_completed,completed,exercises(name,category)').eq('client_id',currentUser.id).not('weight_kg','is',null).order('workout_date',{ascending:true}),
     db.from('trainer_notes').select('*').eq('client_id',currentUser.id).order('created_at',{ascending:false}).limit(10)
   ]);
   clientPlan=planData;clientPlanExercises=planData?.plan_exercises||[];
@@ -2237,7 +2237,7 @@ function renderProgressStats(meas,allLogs){
     awlEl.textContent=(perWeek>0?'−':'')+Math.abs(perWeek)+' kg/wk';
   }else if(awlEl)awlEl.textContent='—';
   // Total sessions (unique dates with at least 1 completed log)
-  const sessionDates=new Set(allLogs.filter(l=>l.completed).map(l=>l.workout_date));
+  const sessionDates=new Set(allLogs.filter(l=>l.weight_kg).map(l=>l.workout_date));
   const tsEl=document.getElementById('total-sessions');
   if(tsEl)tsEl.textContent=sessionDates.size;
   const ssEl=document.getElementById('sessions-sub');
@@ -2264,7 +2264,7 @@ function renderProgressStats(meas,allLogs){
 function renderWorkoutHeatmap(allLogs){
   const el=document.getElementById('workout-heatmap');if(!el)return;
   // Build set of dates with completed logs
-  const trainedDates=new Set(allLogs.filter(l=>l.completed).map(l=>l.workout_date));
+  const trainedDates=new Set(allLogs.filter(l=>l.weight_kg).map(l=>l.workout_date));
   el.innerHTML='';
   for(let i=55;i>=0;i--){
     const d=new Date();d.setDate(d.getDate()-i);
@@ -2324,7 +2324,7 @@ function renderMilestones(meas,allLogs){
   const sorted=[...meas].sort((a,b)=>new Date(a.measured_at)-new Date(b.measured_at));
   const start=sorted[0]?.weight_kg;const current=sorted[sorted.length-1]?.weight_kg;
   const lost=start&&current?(start-current):0;
-  const sessionDates=new Set(allLogs.filter(l=>l.completed).map(l=>l.workout_date));
+  const sessionDates=new Set(allLogs.filter(l=>l.weight_kg).map(l=>l.workout_date));
   const totalSessions=sessionDates.size;
   const milestones=[
     {icon:'🎯',title:'First Workout',sub:'Log your first session',done:totalSessions>=1,when:totalSessions>=1?'Done ✓':null},
@@ -2516,9 +2516,12 @@ async function openClientProgress(clientId,clientName){
     db.from('workout_plans').select('plan_exercises(day_of_week)').eq('client_id',clientId).eq('active',true).limit(1).maybeSingle()
   ]);
   // --- STATS ---
-  const completedLogs=allLogs?.filter(l=>l.completed)||[];
+  const completedLogs=allLogs?.filter(l=>l.weight_kg)||[];
   const sessionDates=new Set(completedLogs.map(l=>l.workout_date));
-  const thisWeekDates=last56.slice(-7);
+  // This week = Mon to Sun of current week
+  const _wStart=new Date();const _dow=_wStart.getDay();
+  _wStart.setDate(_wStart.getDate()-(_dow===0?6:_dow-1));
+  const thisWeekDates=Array.from({length:7},(_,i)=>{const d=new Date(_wStart);d.setDate(d.getDate()+i);return d.toISOString().split('T')[0];});
   const thisWeekSessions=thisWeekDates.filter(d=>sessionDates.has(d)).length;
   const planDays=planData?.plan_exercises?new Set(planData.plan_exercises.map(e=>e.day_of_week)).size:0;
   const weeksActive=plan?.assigned_at?Math.max(1,Math.ceil((Date.now()-new Date(plan.assigned_at))/604800000)):1;
@@ -2996,7 +2999,7 @@ function renderHomeStats(){
     }else{wEl.textContent='—';}
   }
   const logs=allLogs||[];
-  const logDays=[...new Set(logs.filter(l=>l.completed).map(l=>l.workout_date))].sort().reverse();
+  const logDays=[...new Set(logs.filter(l=>l.weight_kg).map(l=>l.workout_date))].sort().reverse();
   let streak=0;
   const today=new Date();
   for(let i=0;i<90;i++){
@@ -3012,7 +3015,7 @@ function renderHomeStats(){
   weekStart.setDate(weekStart.getDate()-(dow===0?6:dow-1));
   const weekWS=weekStart.toISOString().split('T')[0];
   const planActiveDays=clientPlanExercises?new Set(clientPlanExercises.map(e=>e.day_of_week)).size:7;
-  const weekDone=new Set(logs.filter(l=>l.completed&&l.workout_date>=weekWS).map(l=>l.workout_date));
+  const weekDone=new Set(logs.filter(l=>l.weight_kg&&l.workout_date>=weekWS).map(l=>l.workout_date));
   const weekEl=document.getElementById('home-weekly');
   if(weekEl)weekEl.textContent=weekDone.size+'/'+(planActiveDays||7);
 }
@@ -3043,7 +3046,7 @@ async function updateCharts(){
   const weekStartVC=new Date();const dowVC=weekStartVC.getDay();
   weekStartVC.setDate(weekStartVC.getDate()-(dowVC===0?6:dowVC-1)); // Monday
   const weekDays=Array.from({length:7},(_,i)=>{const d=new Date(weekStartVC);d.setDate(d.getDate()+i);return d.toISOString().split('T')[0];});
-  const {data:logs}=await db.from('exercise_logs').select('workout_date,weight_kg,reps_completed').eq('client_id',currentUser.id).eq('completed',true).in('workout_date',weekDays);
+  const {data:logs}=await db.from('exercise_logs').select('workout_date,weight_kg,reps_completed').eq('client_id',currentUser.id).not('weight_kg','is',null).in('workout_date',weekDays);
   // Volume = weight_kg × reps_completed per set, summed per day
   const vol={};weekDays.forEach(d=>vol[d]=0);
   logs?.forEach(l=>{

@@ -1334,7 +1334,7 @@ function avatarNav(page){
   }
 }
 document.addEventListener('click',()=>{['topbar-menu','sidebar-menu'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));});
-async function logout(){await db.auth.signOut();window.location.href='/app';}
+async function logout(){await db.auth.signOut();window.location.href='/';}	
 
 // ── TAB FOCUS REFRESH ───────────────────────────────────────────────────────
 (function(){
@@ -2170,7 +2170,7 @@ async function bootClient(){
     db.from('workout_plans').select('*,plan_exercises(*,exercises(*))').eq('client_id',currentUser.id).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
     db.from('body_measurements').select('*').eq('client_id',currentUser.id).order('measured_at',{ascending:false}),
     db.from('exercise_logs').select('*').eq('client_id',currentUser.id).in('workout_date',last7),
-    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,completed,exercises(name,category)').eq('client_id',currentUser.id).in('workout_date',last56).eq('completed',true),
+    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps,completed,exercises(name,category)').eq('client_id',currentUser.id).eq('completed',true).order('workout_date',{ascending:true}),
     db.from('trainer_notes').select('*').eq('client_id',currentUser.id).order('created_at',{ascending:false}).limit(10)
   ]);
   clientPlan=planData;clientPlanExercises=planData?.plan_exercises||[];
@@ -2279,33 +2279,44 @@ function renderWorkoutHeatmap(allLogs){
 
 function renderStrengthProgress(allLogs){
   const el=document.getElementById('strength-progress-table');if(!el)return;
-  // Find per-exercise max weight over time, split first/last 4 weeks
-  const midPoint=new Date();midPoint.setDate(midPoint.getDate()-28);
-  const midStr=midPoint.toISOString().split('T')[0];
-  const early={},recent={};
+  if(!allLogs?.length){
+    el.innerHTML='<div class="muted" style="text-align:center;padding:20px;font-size:.85rem">Log your first workout to see strength progress here 💪</div>';
+    return;
+  }
+  // Build per-exercise: first weight ever logged, best weight, last weight, log count
+  const exMap={};
   allLogs.forEach(l=>{
     if(!l.weight_kg||!l.exercises?.name)return;
     const name=l.exercises.name;
-    if(l.workout_date<=midStr){if(!early[name]||l.weight_kg>early[name])early[name]=l.weight_kg;}
-    else{if(!recent[name]||l.weight_kg>recent[name])recent[name]=l.weight_kg;}
+    if(!exMap[name])exMap[name]={first:l.weight_kg,best:l.weight_kg,last:l.weight_kg,count:1,date:l.workout_date};
+    else{
+      if(l.weight_kg>exMap[name].best)exMap[name].best=l.weight_kg;
+      exMap[name].last=l.weight_kg;
+      exMap[name].count++;
+      exMap[name].date=l.workout_date;
+    }
   });
-  const exercises=Object.keys(recent).filter(n=>early[n]);
-  if(!exercises.length){el.innerHTML='<div class="muted" style="text-align:center;padding:16px;font-size:.85rem">Keep logging weights to see strength progress here</div>';return;}
-  const rows=exercises.slice(0,8).map(name=>{
-    const s=early[name],n=recent[name];
-    const diff=(n-s).toFixed(1);
-    const pct=Math.min(100,Math.round((n/Math.max(n*1.5,n+20))*100));
+  const exList=Object.entries(exMap).sort((a,b)=>b[1].count-a[1].count).slice(0,8);
+  if(!exList.length){
+    el.innerHTML='<div class="muted" style="text-align:center;padding:20px;font-size:.85rem">Log sets with weight to see strength progress 💪</div>';
+    return;
+  }
+  // Show gain only if there are multiple sessions (first != last)
+  const rows=exList.map(([name,d])=>{
+    const hasGain=d.count>1&&d.last!==d.first;
+    const diff=hasGain?+(d.last-d.first).toFixed(1):null;
+    const pct=Math.min(100,Math.round((d.best/Math.max(d.best*1.4,d.best+20))*100));
     return `<div class="ex-prog-row">
       <div>
-        <div style="font-weight:600">${name}</div>
+        <div style="font-weight:600;font-size:.84rem">${name}</div>
         <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
+        <div style="font-size:.68rem;color:var(--text3);margin-top:2px">${d.count} set${d.count>1?'s':''} logged</div>
       </div>
-      <div style="text-align:center;color:var(--text2)">${s} kg</div>
-      <div style="text-align:center;font-weight:700">${n} kg</div>
-      <div style="text-align:center"><span class="badge badge-${diff>0?'green':'orange'}">${diff>0?'+':''}${diff} kg</span></div>
+      <div style="text-align:center;font-weight:700;color:var(--lime)">${d.best} kg<div style="font-size:.68rem;color:var(--text3);font-weight:400">best</div></div>
+      <div style="text-align:center">${hasGain?`<span class="badge badge-${diff>0?'green':'orange'}">${diff>0?'+':''}${diff} kg</span>`:`<span style="color:var(--text3);font-size:.75rem">—</span>`}</div>
     </div>`;
   }).join('');
-  el.innerHTML=`<div class="ex-prog-row ex-prog-hd"><div>Exercise</div><div style="text-align:center">Start</div><div style="text-align:center">Now</div><div style="text-align:center">Gain</div></div>${rows}`;
+  el.innerHTML=`<div class="ex-prog-row ex-prog-hd"><div>Exercise</div><div style="text-align:center">Best</div><div style="text-align:center">Change</div></div>${rows}`;
 }
 
 function renderMilestones(meas,allLogs){
@@ -2403,20 +2414,79 @@ async function openPlanEdit(planId){
   modal.classList.remove('hidden');
   const {data:exs}=await db.from('plan_exercises').select('*,exercises(name,category)').eq('plan_id',planId).order('order_index');
   editingPlanExercises=exs||[];
+  renderPlanEditBody();
+}
+function renderPlanEditBody(){
+  const body=document.getElementById('plan-edit-body');if(!body)return;
   const byDay={};
-  exs?.forEach(e=>{if(!byDay[e.day_of_week])byDay[e.day_of_week]=[];byDay[e.day_of_week].push(e);});
-  body.innerHTML=`<div class="muted" style="font-size:.8rem;margin-bottom:14px">Adjust sets and reps for each exercise. Changes save immediately.</div>`+
-    days.filter(d=>byDay[d]?.length).map(d=>`
+  editingPlanExercises.forEach(e=>{if(!byDay[e.day_of_week])byDay[e.day_of_week]=[];byDay[e.day_of_week].push(e);});
+  body.innerHTML=`<div class="muted" style="font-size:.8rem;margin-bottom:14px">Edit sets/reps or add exercises to any day.</div>`+
+    days.filter(d=>byDay[d]?.length||true).map(d=>`
     <div style="margin-bottom:14px">
-      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;margin-bottom:8px;color:var(--text2)">${d}</div>
-      ${byDay[d].map(e=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;color:var(--text2)">${d}</div>
+        <button class="btn btn-ghost btn-sm" style="font-size:.72rem;padding:3px 8px" onclick="toggleAddExDay('${d}')">+ Add</button>
+      </div>
+      <div id="add-ex-row-${d}" class="hidden" style="margin-bottom:8px;display:flex;gap:6px;align-items:center">
+        <input class="inp" id="add-ex-search-${d}" placeholder="Search exercise..." style="flex:1;font-size:.8rem;padding:7px 10px" oninput="renderAddExSuggestions('${d}')">
+      </div>
+      <div id="add-ex-suggestions-${d}" class="hidden" style="background:var(--bg3);border-radius:var(--r);margin-bottom:8px;max-height:140px;overflow-y:auto"></div>
+      ${(byDay[d]||[]).length?byDay[d].map(e=>`
         <div class="plan-edit-row">
           <div style="flex:1;font-weight:600;font-size:.83rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.exercises?.name||'?'}</div>
           <input class="set-inp" type="number" inputmode="numeric" value="${e.sets}" min="1" style="width:44px" oninput="updateEditEx('${e.id}','sets',this.value)">
           <span style="color:var(--text3);font-size:.8rem">×</span>
           <input class="set-inp" type="text" value="${e.reps}" style="width:54px" oninput="updateEditEx('${e.id}','reps',this.value)">
-        </div>`).join('')}
+          <button style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:.8rem;padding:2px 4px" onclick="removeEditEx('${e.id}','${d}')">✕</button>
+        </div>`).join('')
+      :'<div style="color:var(--text3);font-size:.78rem;padding:4px 0">Rest day</div>'}
     </div>`).join('');
+}
+function toggleAddExDay(day){
+  const row=document.getElementById('add-ex-row-'+day);
+  const sugg=document.getElementById('add-ex-suggestions-'+day);
+  if(!row)return;
+  const isHidden=row.classList.contains('hidden');
+  row.classList.toggle('hidden',!isHidden);
+  if(!isHidden){sugg.classList.add('hidden');sugg.innerHTML='';}
+  else{document.getElementById('add-ex-search-'+day)?.focus();}
+}
+function renderAddExSuggestions(day){
+  const q=(document.getElementById('add-ex-search-'+day)?.value||'').toLowerCase().trim();
+  const sugg=document.getElementById('add-ex-suggestions-'+day);if(!sugg)return;
+  if(!q){sugg.classList.add('hidden');sugg.innerHTML='';return;}
+  const existing=new Set(editingPlanExercises.filter(e=>e.day_of_week===day).map(e=>e.exercise_id));
+  const matches=exercises.filter(e=>e.name.toLowerCase().includes(q)&&!existing.has(e.id)).slice(0,6);
+  if(!matches.length){sugg.classList.remove('hidden');sugg.innerHTML='<div style="padding:10px;font-size:.8rem;color:var(--text3)">No exercises found</div>';return;}
+  sugg.classList.remove('hidden');
+  sugg.innerHTML=matches.map(e=>`
+    <div style="padding:9px 12px;cursor:pointer;font-size:.83rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)" onclick="addExToDay('${e.id}','${day}')" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background=''">
+      <span style="font-weight:600">${e.name}</span>
+      <span style="color:var(--text3);font-size:.73rem">${e.category||''}</span>
+    </div>`).join('');
+}
+async function addExToDay(exId,day){
+  if(!editingPlanId)return;
+  const ex=exercises.find(e=>e.id===exId);if(!ex)return;
+  const maxOrder=editingPlanExercises.reduce((m,e)=>Math.max(m,e.order_index||0),0);
+  const {data:newEx,error}=await db.from('plan_exercises').insert({
+    plan_id:editingPlanId,exercise_id:exId,day_of_week:day,sets:3,reps:'10-12',order_index:maxOrder+1
+  }).select('*,exercises(name,category)').single();
+  if(error){toast('Failed to add exercise','error');return;}
+  editingPlanExercises.push(newEx);
+  // Clear search
+  const inp=document.getElementById('add-ex-search-'+day);if(inp)inp.value='';
+  const sugg=document.getElementById('add-ex-suggestions-'+day);if(sugg){sugg.classList.add('hidden');sugg.innerHTML='';}
+  document.getElementById('add-ex-row-'+day)?.classList.add('hidden');
+  renderPlanEditBody();
+  toast(`${ex.name} added to ${day} ✅`);
+}
+async function removeEditEx(exId,day){
+  const {error}=await db.from('plan_exercises').delete().eq('id',exId);
+  if(error){toast('Failed to remove','error');return;}
+  editingPlanExercises=editingPlanExercises.filter(e=>e.id!==exId);
+  renderPlanEditBody();
+  toast('Exercise removed');
 }
 function updateEditEx(exId,field,val){
   const ex=editingPlanExercises.find(e=>e.id===exId);

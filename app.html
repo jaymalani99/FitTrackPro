@@ -75,12 +75,12 @@ select.inp{cursor:pointer}
 .modal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:18px}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--lime);border-radius:50%;animation:spin .7s linear infinite}
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:9998}
-#auth-screen{height:100vh;height:-webkit-fill-available;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+#auth-screen{height:100vh;height:-webkit-fill-available;display:flex;align-items:stretch;justify-content:center;position:relative;overflow:hidden}
 .auth-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 60%,rgba(212,255,0,.08) 0%,transparent 50%),radial-gradient(ellipse at 85% 20%,rgba(68,136,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(212,255,0,.04) 0%,transparent 50%)}
-.auth-split-left{flex:1;display:flex;align-items:stretch;justify-content:center;padding:0 60px 0 40px;position:relative;z-index:1;height:100vh;overflow-y:auto}
+.auth-split-left{flex:1;display:flex;align-items:stretch;justify-content:center;padding:0 60px 0 40px;position:relative;z-index:1;overflow-y:auto;height:100vh}
 .auth-split-left::after{content:'';position:absolute;right:0;top:10%;bottom:10%;width:1px;background:linear-gradient(to bottom,transparent,var(--border),transparent)}
 .auth-left-content{max-width:420px;width:100%;display:flex;flex-direction:column;justify-content:space-between;padding:60px 0}
-.auth-split-right{width:460px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:40px 40px 40px 50px;position:sticky;top:0;height:100vh;z-index:1}
+.auth-split-right{width:460px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:40px 40px 40px 50px;height:100vh;position:sticky;top:0;z-index:1;overflow-y:auto}
 .auth-card{width:100%;animation:fadeUp .3s ease}
 .auth-tabs{display:flex;background:var(--bg3);border-radius:100px;padding:4px;margin-bottom:28px;border:1px solid var(--border)}
 .auth-tab{flex:1;text-align:center;padding:11px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.88rem;transition:all .2s;color:var(--text2)}
@@ -1249,7 +1249,7 @@ document.addEventListener('click',()=>{
   ['topbar-menu','sidebar-menu'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));
 });
 
-async function logout(){await db.auth.signOut();location.reload();}
+async function logout(){await db.auth.signOut();window.location.href='/app';}
 
 // BOOT
 async function bootApp(user){

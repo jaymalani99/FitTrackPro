@@ -263,6 +263,13 @@ select.inp{cursor:pointer}
 /* PLAN EDIT */
 .plan-edit-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.82rem}
 .plan-edit-row:last-child{border-bottom:none}
+/* AVATAR DROPDOWN */
+.avatar-dropdown{position:relative;flex-shrink:0}
+.avatar-menu{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);min-width:180px;z-index:9999;box-shadow:0 16px 40px rgba(0,0,0,.7);overflow:hidden;animation:fadeUp .15s ease}
+.avatar-menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-size:.85rem;font-weight:500;color:var(--text);transition:background .15s;white-space:nowrap}
+.avatar-menu-item:hover{background:var(--bg3)}
+.avatar-menu-item.danger{color:var(--red)}
+.avatar-menu-divider{height:1px;background:var(--border);margin:4px 0}
 /* OFFLINE BANNER */
 #offline-banner{position:fixed;top:0;left:0;right:0;background:var(--orange);color:#000;text-align:center;padding:8px 16px;font-size:.82rem;font-weight:700;z-index:9999;transform:translateY(-100%);transition:transform .3s}
 #offline-banner.show{transform:translateY(0)}
@@ -535,7 +542,10 @@ select.inp{cursor:pointer}
   <div class="topbar">
     <button class="hamburger" onclick="toggleSidebar()"><div class="ham-lines"><span></span><span></span><span></span></div></button>
     <div class="brand" style="font-size:1rem">Track<span>MyReps</span></div>
-    <div class="avatar" id="top-avatar" onclick="logout()" style="cursor:pointer;font-size:.7rem">?</div>
+    <div class="avatar-dropdown">
+      <div class="avatar" id="top-avatar" onclick="toggleAvatarMenu(event)" style="cursor:pointer;font-size:.7rem">?</div>
+      <div class="avatar-menu hidden" id="avatar-menu"></div>
+    </div>
   </div>
   <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150" onclick="toggleSidebar()"></div>
   <div class="sidebar" id="sidebar">
@@ -1208,7 +1218,44 @@ async function signup(){
   }
   toast('Account created! Sign in now.');switchTab('login');
 }
+// AVATAR DROPDOWN
+function buildAvatarMenu(role){
+  const menu=document.getElementById('avatar-menu');if(!menu)return;
+  const links={
+    admin:[{icon:'📊',label:'Overview',page:'admin-overview'},{icon:'🏋️',label:'Exercises',page:'admin-exercises'},{icon:'👥',label:'All Users',page:'admin-users'}],
+    trainer:[{icon:'📊',label:'Dashboard',page:'trainer-overview'},{icon:'✏️',label:'Build Plan',page:'trainer-build'},{icon:'👥',label:'My Clients',page:'trainer-clients'},{icon:'📋',label:'Active Plans',page:'trainer-plans'}],
+    client:[{icon:'🏃',label:'Today',page:'client-today'},{icon:'📈',label:'Progress',page:'client-progress'},{icon:'📋',label:'My Plan',page:'client-plan'},{icon:'👤',label:'Profile',page:'client-profile'}]
+  };
+  const items=links[role]||[];
+  menu.innerHTML=items.map(i=>`<div class="avatar-menu-item" onclick="avatarNav('${i.page}')"><span>${i.icon}</span>${i.label}</div>`).join('')+
+    `<div class="avatar-menu-divider"></div><div class="avatar-menu-item danger" onclick="logout()"><span>⏻</span>Sign Out</div>`;
+}
+function toggleAvatarMenu(e){
+  e.stopPropagation();
+  const menu=document.getElementById('avatar-menu');
+  menu.classList.toggle('hidden');
+}
+function avatarNav(page){
+  document.getElementById('avatar-menu').classList.add('hidden');
+  showPage(page,null,false);
+  // Sync nav highlight
+  const role=currentProfile?.role;
+  const nav=navConfig[role]||[];
+  const idx=nav.findIndex(n=>n.page===page);
+  if(idx>-1){
+    const navItems=document.querySelectorAll('#nav-items .nav-item');
+    const mobileItems=document.querySelectorAll('#mobile-nav .mnav-item');
+    navItems.forEach((el,i)=>el.classList.toggle('active',i===idx));
+    mobileItems.forEach((el,i)=>el.classList.toggle('active',i===idx));
+  }
+}
+// Close dropdown when clicking outside
+document.addEventListener('click',()=>{
+  document.getElementById('avatar-menu')?.classList.add('hidden');
+});
+
 async function logout(){await db.auth.signOut();location.reload();}
+
 
 // BOOT
 async function bootApp(user){
@@ -1263,6 +1310,7 @@ function renderNav(role){
     mi.innerHTML=`<span>${item.icon}</span><span>${item.label.split(' ')[0]}</span>`;
     mi.onclick=()=>showPage(item.page,mi,true);document.getElementById('mobile-nav').appendChild(mi);
   });
+  buildAvatarMenu(role);
   showPage(nav[0].page,null,false);
 }
 function showPage(pageId,clickedEl,isMobile){

@@ -1,7 +1,5 @@
 <!-- TrackMyReps v2.8 — build 20260225 -->
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -153,180 +151,181 @@ select.inp{cursor:pointer}
 .cat-chip{padding:7px 12px;border-radius:100px;background:var(--bg3);border:1px solid var(--border);cursor:pointer;font-size:.78rem;font-weight:600;color:var(--text2);transition:all .15s;white-space:nowrap;-webkit-user-select:none;user-select:none}
 .cat-chip.active{background:var(--lime);color:#000;border-color:transparent}
 
+
+
 /* BUILDER TWO-COLUMN LAYOUT */
 .builder-layout{display:grid;grid-template-columns:1fr 0px;gap:0;align-items:start;transition:grid-template-columns .3s ease}
 .builder-layout.has-selection{grid-template-columns:1fr 290px;gap:16px}
 .builder-left{min-width:0}
-.builder-right{background:var(–bg2);border:1px solid var(–border);border-radius:var(–r2);display:flex;flex-direction:column;position:sticky;top:70px;max-height:calc(100vh - 120px);overflow:hidden;opacity:0;transform:translateX(20px);transition:opacity .25s ease,transform .25s ease;pointer-events:none}
+.builder-right{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);display:flex;flex-direction:column;position:sticky;top:70px;max-height:calc(100vh - 120px);overflow:hidden;opacity:0;transform:translateX(20px);transition:opacity .25s ease,transform .25s ease;pointer-events:none}
 .builder-layout.has-selection .builder-right{opacity:1;transform:translateX(0);pointer-events:all}
 .builder-right-inner{flex:1;overflow-y:auto;padding:14px;-webkit-overflow-scrolling:touch}
 .builder-right-day{margin-bottom:12px}
-.builder-right-day-title{font-family:‘Syne’,sans-serif;font-weight:700;font-size:.78rem;color:var(–text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;justify-content:space-between}
-.builder-right-ex{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(–border);font-size:.82rem}
+.builder-right-day-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;justify-content:space-between}
+.builder-right-ex{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem}
 .builder-right-ex:last-child{border-bottom:none}
 
 /* MOBILE BUILDER SUMMARY BAR */
-.builder-mobile-bar{display:none;position:fixed;bottom:calc(56px + var(–safe-bottom));left:0;right:0;background:var(–bg2);border-top:1px solid var(–border);padding:10px 14px;z-index:90;align-items:center;gap:10px}
-.builder-mobile-info{flex:1;font-size:.8rem;color:var(–text2)}
-.builder-mobile-info strong{color:var(–lime)}
+.builder-mobile-bar{display:none;position:fixed;bottom:calc(56px + var(--safe-bottom));left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);padding:10px 14px;z-index:90;align-items:center;gap:10px}
+.builder-mobile-info{flex:1;font-size:.8rem;color:var(--text2)}
+.builder-mobile-info strong{color:var(--lime)}
 .builder-days-inline{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .builder-days-inline::-webkit-scrollbar{display:none}
-.bday-inline{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 14px;border-radius:12px;border:2px solid var(–border);cursor:pointer;transition:all .15s;flex-shrink:0;min-width:58px;-webkit-user-select:none;user-select:none;position:relative}
-.bday-inline.active{border-color:var(–lime);background:rgba(212,255,0,.08)}
-.bday-inline.has-ex{border-color:var(–blue)}
-.bday-inline.active.has-ex{border-color:var(–lime);background:rgba(212,255,0,.08)}
-.bday-inline-name{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(–text2)}
-.bday-inline.active .bday-inline-name{color:var(–lime)}
-.bday-inline-count{font-family:‘Syne’,sans-serif;font-weight:800;font-size:1rem;color:var(–text3);line-height:1}
-.bday-inline.has-ex .bday-inline-count{color:var(–blue)}
-.bday-inline.active .bday-inline-count,.bday-inline.active.has-ex .bday-inline-count{color:var(–lime)}
+.bday-inline{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 14px;border-radius:12px;border:2px solid var(--border);cursor:pointer;transition:all .15s;flex-shrink:0;min-width:58px;-webkit-user-select:none;user-select:none;position:relative}
+.bday-inline.active{border-color:var(--lime);background:rgba(212,255,0,.08)}
+.bday-inline.has-ex{border-color:var(--blue)}
+.bday-inline.active.has-ex{border-color:var(--lime);background:rgba(212,255,0,.08)}
+.bday-inline-name{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2)}
+.bday-inline.active .bday-inline-name{color:var(--lime)}
+.bday-inline-count{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text3);line-height:1}
+.bday-inline.has-ex .bday-inline-count{color:var(--blue)}
+.bday-inline.active .bday-inline-count,.bday-inline.active.has-ex .bday-inline-count{color:var(--lime)}
 /* selected chip in preview */
 .sel-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:100px;font-size:.76rem;font-weight:600;cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s}
 
 /* CLIENT WORKOUT */
-.day-tabs{display:flex;gap:0;overflow-x:auto;margin-bottom:18px;-ms-overflow-style:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;background:var(–bg3);border-radius:var(–r);padding:4px;position:sticky;top:0;z-index:10}
+.day-tabs{display:flex;gap:0;overflow-x:auto;margin-bottom:18px;-ms-overflow-style:none;scrollbar-width:none;-webkit-overflow-scrolling:touch;background:var(--bg3);border-radius:var(--r);padding:4px;position:sticky;top:0;z-index:10}
 .day-tabs::-webkit-scrollbar{display:none}
-.day-tab{padding:9px 14px;border-radius:10px;border:none;background:transparent;color:var(–text2);cursor:pointer;font-size:.8rem;font-weight:600;white-space:nowrap;transition:all .15s;flex:1;min-width:40px;text-align:center;-webkit-user-select:none;user-select:none}
-.day-tab.active{background:var(–lime);color:#000}
-.workout-ex{background:var(–card);border:1px solid var(–border);border-radius:var(–r2);padding:16px;margin-bottom:10px;transition:all .3s ease}
-.workout-ex.done{border-color:var(–green);opacity:.6;position:relative}
-.workout-ex.done::after{content:‘✓ Done’;position:absolute;top:12px;right:52px;background:rgba(0,230,118,.12);color:var(–green);border:1px solid rgba(0,230,118,.25);border-radius:100px;padding:3px 10px;font-size:.72rem;font-weight:700;pointer-events:none}
+.day-tab{padding:9px 14px;border-radius:10px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.8rem;font-weight:600;white-space:nowrap;transition:all .15s;flex:1;min-width:40px;text-align:center;-webkit-user-select:none;user-select:none}
+.day-tab.active{background:var(--lime);color:#000}
+.workout-ex{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:10px;transition:all .3s ease}
+.workout-ex.done{border-color:var(--green);opacity:.6;position:relative}
+.workout-ex.done::after{content:'✓ Done';position:absolute;top:12px;right:52px;background:rgba(0,230,118,.12);color:var(--green);border:1px solid rgba(0,230,118,.25);border-radius:100px;padding:3px 10px;font-size:.72rem;font-weight:700;pointer-events:none}
 .workout-ex.done .ex-icon{filter:grayscale(.5)}
 .workout-ex.done input{opacity:.4;pointer-events:none}
 .set-row{display:grid;grid-template-columns:32px 1fr 1fr 36px;gap:6px;align-items:center;margin-top:8px}
-.set-num{background:var(–bg3);border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(–text2)}
-.set-inp{background:var(–bg3);border:1px solid var(–border);border-radius:9px;padding:8px 4px;color:var(–text);font-size:16px;text-align:center;outline:none;width:100%;-webkit-appearance:none}
-.set-inp:focus{border-color:var(–lime)}
-.check-btn{width:40px;height:40px;border-radius:12px;border:2px solid var(–text3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:1.1rem;flex-shrink:0;color:transparent}
-.check-btn:hover{border-color:var(–lime)}
-.check-btn.checked{background:var(–green);border-color:var(–green);color:#000}
+.set-num{background:var(--bg3);border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--text2)}
+.set-inp{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:8px 4px;color:var(--text);font-size:16px;text-align:center;outline:none;width:100%;-webkit-appearance:none}
+.set-inp:focus{border-color:var(--lime)}
+.check-btn{width:40px;height:40px;border-radius:12px;border:2px solid var(--text3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:1.1rem;flex-shrink:0;color:transparent}
+.check-btn:hover{border-color:var(--lime)}
+.check-btn.checked{background:var(--green);border-color:var(--green);color:#000}
 .chart-wrap{position:relative;height:180px}
-.card{background:var(–card);border:1px solid var(–border);border-radius:var(–r2);padding:16px}
-.client-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(–card);border:1px solid var(–border);border-radius:var(–r);margin-bottom:7px}
-.code-display{background:rgba(212,255,0,.05);border:2px dashed rgba(212,255,0,.25);border-radius:var(–r2);padding:20px;text-align:center;margin-bottom:20px}
-.code-big{font-family:‘Syne’,sans-serif;font-size:2.2rem;font-weight:800;color:var(–lime);letter-spacing:6px}
-.empty{text-align:center;padding:40px 20px;color:var(–text2)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
+.client-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:7px}
+.code-display{background:rgba(212,255,0,.05);border:2px dashed rgba(212,255,0,.25);border-radius:var(--r2);padding:20px;text-align:center;margin-bottom:20px}
+.code-big{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--lime);letter-spacing:6px}
+.empty{text-align:center;padding:40px 20px;color:var(--text2)}
 .empty-icon{font-size:2.2rem;margin-bottom:10px;opacity:.4}
-.empty h3{font-family:‘Syne’,sans-serif;margin-bottom:6px;color:var(–text);font-size:1rem}
+.empty h3{font-family:'Syne',sans-serif;margin-bottom:6px;color:var(--text);font-size:1rem}
 .empty p{font-size:.85rem}
 
 /* CLIENT PROGRESS VIEW */
-.client-progress-card{background:var(–card);border:1px solid var(–border);border-radius:var(–r);padding:12px 14px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
-.client-progress-card:active{border-color:var(–lime)}
-.client-log-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(–border);font-size:.83rem}
+.client-progress-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
+.client-progress-card:active{border-color:var(--lime)}
+.client-log-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:.83rem}
 
 /* VIDEO MODAL */
-.video-container{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(–r);margin-bottom:14px}
-.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:var(–r)}
+.video-container{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--r);margin-bottom:14px}
+.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:var(--r)}
 
 /* WHATSAPP SHARE */
-.whatsapp-btn{background:#25D366;color:#fff;border:none;border-radius:100px;padding:14px 20px;font-family:‘DM Sans’,sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:10px;transition:all .15s}
+.whatsapp-btn{background:#25D366;color:#fff;border:none;border-radius:100px;padding:14px 20px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.92rem;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:10px;transition:all .15s}
 .whatsapp-btn:active{background:#1da851;transform:scale(.97)}
 
 /* PLAN REVIEW */
-.review-day{background:var(–bg3);border-radius:var(–r);padding:12px;margin-bottom:8px}
-.review-day-title{font-family:‘Syne’,sans-serif;font-weight:700;font-size:.88rem;margin-bottom:8px;display:flex;justify-content:space-between}
-.review-ex-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.82rem;border-bottom:1px solid var(–border)}
+.review-day{background:var(--bg3);border-radius:var(--r);padding:12px;margin-bottom:8px}
+.review-day-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:8px;display:flex;justify-content:space-between}
+.review-ex-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.82rem;border-bottom:1px solid var(--border)}
 
 /* PROGRESS PAGE ENHANCEMENTS */
 .stat-delta{font-size:.76rem;display:flex;align-items:center;gap:4px;margin-top:2px}
-.stat-delta.pos{color:var(–green)}.stat-delta.neg{color:var(–red)}
+.stat-delta.pos{color:var(--green)}.stat-delta.neg{color:var(--red)}
 .stat-card.green-hl{border-color:rgba(0,230,118,.2);background:rgba(0,230,118,.03)}
 .stat-card.lime-hl{border-color:rgba(212,255,0,.2);background:rgba(212,255,0,.03)}
 /* HEATMAP */
 .heatmap-grid{display:grid;grid-template-columns:repeat(56,1fr);gap:3px;margin-top:8px}
-.hm-cell{aspect-ratio:1;border-radius:2px;background:var(–bg3);cursor:default}
+.hm-cell{aspect-ratio:1;border-radius:2px;background:var(--bg3);cursor:default}
 /* STRENGTH TABLE */
-.ex-prog-row{display:grid;grid-template-columns:1fr 64px 64px 80px;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(–border);font-size:.83rem}
+.ex-prog-row{display:grid;grid-template-columns:1fr 64px 64px 80px;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:.83rem}
 .ex-prog-row:last-child{border-bottom:none}
-.ex-prog-hd{color:var(–text2);font-size:.62rem;text-transform:uppercase;letter-spacing:.5px;padding-bottom:4px}
-.prog-bar-wrap{height:3px;background:var(–bg3);border-radius:100px;margin-top:4px}
-.prog-bar{height:100%;border-radius:100px;background:var(–lime)}
+.ex-prog-hd{color:var(--text2);font-size:.62rem;text-transform:uppercase;letter-spacing:.5px;padding-bottom:4px}
+.prog-bar-wrap{height:3px;background:var(--bg3);border-radius:100px;margin-top:4px}
+.prog-bar{height:100%;border-radius:100px;background:var(--lime)}
 /* MILESTONES */
-.milestone{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(–bg3);border-radius:var(–r);margin-bottom:6px}
+.milestone{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--bg3);border-radius:var(--r);margin-bottom:6px}
 .ms-icon{font-size:1.3rem;flex-shrink:0;width:32px;text-align:center}
 .ms-title{font-weight:700;font-size:.85rem;line-height:1.2}
-.ms-sub{font-size:.72rem;color:var(–text2);margin-top:2px}
+.ms-sub{font-size:.72rem;color:var(--text2);margin-top:2px}
 /* ACTIVITY FEED */
-.act-item{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(–border);font-size:.83rem}
+.act-item{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.83rem}
 .act-item:last-child{border-bottom:none}
 .act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.act-dot.green{background:var(–green)}.act-dot.lime{background:var(–lime)}
-.act-dot.orange{background:var(–orange)}.act-dot.blue{background:var(–blue)}.act-dot.red{background:var(–red)}
-.act-meta{font-size:.72rem;color:var(–text2);margin-top:2px}
+.act-dot.green{background:var(--green)}.act-dot.lime{background:var(--lime)}
+.act-dot.orange{background:var(--orange)}.act-dot.blue{background:var(--blue)}.act-dot.red{background:var(--red)}
+.act-meta{font-size:.72rem;color:var(--text2);margin-top:2px}
 /* TRAINER NOTES */
-.note-card{background:var(–bg3);border-left:3px solid var(–lime);border-radius:0 var(–r) var(–r) 0;padding:12px 14px;margin-bottom:8px;font-size:.83rem;line-height:1.6}
-.note-date{font-size:.7rem;color:var(–text2);margin-top:5px}
+.note-card{background:var(--bg3);border-left:3px solid var(--lime);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;margin-bottom:8px;font-size:.83rem;line-height:1.6}
+.note-date{font-size:.7rem;color:var(--text2);margin-top:5px}
 /* SECTION DIVIDER */
-.section-divider{font-family:‘Syne’,sans-serif;font-weight:700;font-size:.9rem;margin:20px 0 12px;display:flex;align-items:center;gap:10px;color:var(–text2)}
-.section-divider::after{content:’’;flex:1;height:1px;background:var(–border)}
+.section-divider{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin:20px 0 12px;display:flex;align-items:center;gap:10px;color:var(--text2)}
+.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 /* PLAN EDIT */
-.plan-edit-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(–border);font-size:.82rem}
+.plan-edit-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.82rem}
 .plan-edit-row:last-child{border-bottom:none}
 /* AVATAR DROPDOWN */
 .avatar-dropdown{position:relative;flex-shrink:0}
-.avatar-menu{position:absolute;bottom:calc(100% + 8px);left:0;background:var(–bg2);border:1px solid var(–border);border-radius:var(–r);min-width:190px;z-index:9999;box-shadow:0 16px 40px rgba(0,0,0,.7);overflow:hidden;animation:fadeUp .15s ease}
+.avatar-menu{position:absolute;bottom:calc(100% + 8px);left:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);min-width:190px;z-index:9999;box-shadow:0 16px 40px rgba(0,0,0,.7);overflow:hidden;animation:fadeUp .15s ease}
 .topbar .avatar-menu{top:calc(100% + 8px);bottom:auto;right:0;left:auto}
-.avatar-menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-size:.85rem;font-weight:500;color:var(–text);transition:background .15s;white-space:nowrap}
-.avatar-menu-item:hover{background:var(–bg3)}
-.avatar-menu-item.danger{color:var(–red)}
-.avatar-menu-divider{height:1px;background:var(–border);margin:4px 0}
+.avatar-menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-size:.85rem;font-weight:500;color:var(--text);transition:background .15s;white-space:nowrap}
+.avatar-menu-item:hover{background:var(--bg3)}
+.avatar-menu-item.danger{color:var(--red)}
+.avatar-menu-divider{height:1px;background:var(--border);margin:4px 0}
 
 /* ONBOARDING WIZARD */
 .ob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
-.ob-card{background:var(–bg2);border:1px solid var(–border);border-radius:24px;width:100%;max-width:500px;overflow:hidden;animation:fadeUp .3s ease}
+.ob-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;width:100%;max-width:500px;overflow:hidden;animation:fadeUp .3s ease}
 .ob-header{padding:24px 24px 0}
 .ob-steps{display:flex;gap:6px;margin-bottom:22px}
-.ob-step{flex:1;height:3px;border-radius:100px;background:var(–border);transition:background .3s}
-.ob-step.done{background:var(–lime)}
-.ob-step.active{background:var(–lime);opacity:.45}
+.ob-step{flex:1;height:3px;border-radius:100px;background:var(--border);transition:background .3s}
+.ob-step.done{background:var(--lime)}
+.ob-step.active{background:var(--lime);opacity:.45}
 .ob-body{padding:0 24px 20px}
 .ob-icon{font-size:2.6rem;margin-bottom:12px;display:block}
-.ob-title{font-family:‘Syne’,sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:6px;line-height:1.2}
-.ob-sub{color:var(–text2);font-size:.86rem;margin-bottom:18px;line-height:1.5}
-.ob-footer{padding:14px 24px 22px;border-top:1px solid var(–border);display:flex;gap:10px;align-items:center}
-.ob-skip{background:none;border:none;color:var(–text3);font-size:.8rem;cursor:pointer;font-family:‘DM Sans’,sans-serif;padding:4px}
-.ob-skip:hover{color:var(–text2)}
-.split-chip{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:var(–r);border:2px solid var(–border);cursor:pointer;font-weight:600;font-size:.86rem;transition:all .15s;width:100%;margin-bottom:7px;background:var(–bg3);-webkit-user-select:none;user-select:none;text-align:left}
-.split-chip:hover{border-color:var(–text2)}
-.split-chip.active{border-color:var(–lime);background:rgba(212,255,0,.07);color:var(–lime)}
+.ob-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;margin-bottom:6px;line-height:1.2}
+.ob-sub{color:var(--text2);font-size:.86rem;margin-bottom:18px;line-height:1.5}
+.ob-footer{padding:14px 24px 22px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center}
+.ob-skip{background:none;border:none;color:var(--text3);font-size:.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:4px}
+.ob-skip:hover{color:var(--text2)}
+.split-chip{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:var(--r);border:2px solid var(--border);cursor:pointer;font-weight:600;font-size:.86rem;transition:all .15s;width:100%;margin-bottom:7px;background:var(--bg3);-webkit-user-select:none;user-select:none;text-align:left}
+.split-chip:hover{border-color:var(--text2)}
+.split-chip.active{border-color:var(--lime);background:rgba(212,255,0,.07);color:var(--lime)}
 .split-icon{font-size:1.2rem;flex-shrink:0}
 .split-name{font-weight:700;font-size:.86rem}
-.split-days{font-size:.7rem;color:var(–text2);font-weight:400;margin-top:1px}
+.split-days{font-size:.7rem;color:var(--text2);font-weight:400;margin-top:1px}
 
 /* OFFLINE BANNER */
-#offline-banner{position:fixed;top:0;left:0;right:0;background:var(–orange);color:#000;text-align:center;padding:8px 16px;font-size:.82rem;font-weight:700;z-index:9999;transform:translateY(-100%);transition:transform .3s}
+#offline-banner{position:fixed;top:0;left:0;right:0;background:var(--orange);color:#000;text-align:center;padding:8px 16px;font-size:.82rem;font-weight:700;z-index:9999;transform:translateY(-100%);transition:transform .3s}
 #offline-banner.show{transform:translateY(0)}
 @media(max-width:1100px){.ex-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
 @media(max-width:768px){
-#app{display:block}
-.sidebar{transform:translateX(-100%);z-index:200;position:fixed}
-.sidebar.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.7)}
-.main-content{margin-left:0!important;margin-right:0!important;width:100%;padding:16px 14px calc(72px + var(–safe-bottom))}
-.mobile-nav{display:flex}
-.topbar{display:flex}
-.hamburger{display:flex}
-.grid2{grid-template-columns:1fr 1fr}
-.grid3{grid-template-columns:1fr 1fr}
-.page-title{font-size:1.4rem}
-.inp-row{grid-template-columns:1fr}
-.ex-grid{grid-template-columns:1fr 1fr}
-.page-header{flex-direction:column;align-items:flex-start}
-#toast{bottom:calc(72px + var(–safe-bottom));right:12px;left:12px;max-width:none}
-/* Builder: hide right panel, use full width */
-.builder-layout{display:block}
-.builder-right{display:none}
-#page-trainer-build .builder-mobile-bar{display:flex!important}
+  #app{display:block}
+  .sidebar{transform:translateX(-100%);z-index:200;position:fixed}
+  .sidebar.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.7)}
+  .main-content{margin-left:0!important;margin-right:0!important;width:100%;padding:16px 14px calc(72px + var(--safe-bottom))}
+  .mobile-nav{display:flex}
+  .topbar{display:flex}
+  .hamburger{display:flex}
+  .grid2{grid-template-columns:1fr 1fr}
+  .grid3{grid-template-columns:1fr 1fr}
+  .page-title{font-size:1.4rem}
+  .inp-row{grid-template-columns:1fr}
+  .ex-grid{grid-template-columns:1fr 1fr}
+  .page-header{flex-direction:column;align-items:flex-start}
+  #toast{bottom:calc(72px + var(--safe-bottom));right:12px;left:12px;max-width:none}
+  /* Builder: hide right panel, use full width */
+  .builder-layout{display:block}
+  .builder-right{display:none}
+  #page-trainer-build .builder-mobile-bar{display:flex!important}
 }
 @media(max-width:420px){
-.grid2,.grid3,.ex-grid{grid-template-columns:1fr}
-.day-tab{padding:7px 10px;font-size:.76rem}
-.set-row{grid-template-columns:28px 1fr 1fr 32px;gap:4px}
-.code-big{font-size:1.7rem;letter-spacing:4px}
-.bday{min-width:44px;padding:7px 8px}
+  .grid2,.grid3,.ex-grid{grid-template-columns:1fr}
+  .day-tab{padding:7px 10px;font-size:.76rem}
+  .set-row{grid-template-columns:28px 1fr 1fr 32px;gap:4px}
+  .code-big{font-size:1.7rem;letter-spacing:4px}
+  .bday{min-width:44px;padding:7px 8px}
 }
 </style>
-
 </head>
 <body>
 
@@ -338,7 +337,6 @@ select.inp{cursor:pointer}
 <div id="offline-banner">📡 You're offline — workout data will sync when you reconnect</div>
 
 <!-- AUTH -->
-
 <div id="auth-screen" class="hidden">
   <div class="auth-bg"></div>
   <div style="display:flex;width:100%;max-width:1080px;margin:0 auto;position:relative;z-index:1;padding:24px">
@@ -350,152 +348,149 @@ select.inp{cursor:pointer}
         <div class="brand" style="font-size:1.5rem">Track<span>MyReps</span></div>
       </div>
 
-```
-  <!-- MIDDLE: Carousel -->
-  <div>
-    <div id="auth-carousel" style="position:relative;min-height:340px">
+      <!-- MIDDLE: Carousel -->
+      <div>
+        <div id="auth-carousel" style="position:relative;min-height:340px">
 
-    <!-- Slide 1: Today's Workout -->
-    <div class="carousel-slide active" id="slide-0">
-      <div style="margin-bottom:16px">
-        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">For Clients</div>
-        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Log workouts<br>in seconds.</div>
-        <div style="color:var(--text2);font-size:.85rem">Your trainer's plan, ready every day. Just tap, log, done.</div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div>
-            <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3)">Today's Workout</div>
-            <div style="font-family:'Syne',sans-serif;font-weight:800">Wednesday · Back & Tri</div>
+        <!-- Slide 1: Today's Workout -->
+        <div class="carousel-slide active" id="slide-0">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">For Clients</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Log workouts<br>in seconds.</div>
+            <div style="color:var(--text2);font-size:.85rem">Your trainer's plan, ready every day. Just tap, log, done.</div>
           </div>
-          <div style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:100px;padding:4px 10px;font-size:.7rem;color:var(--lime)">2/5 done</div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div>
+                <div style="font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3)">Today's Workout</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:800">Wednesday · Back & Tri</div>
+              </div>
+              <div style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:100px;padding:4px 10px;font-size:.7rem;color:var(--lime)">2/5 done</div>
+            </div>
+            <div style="height:4px;background:var(--bg3);border-radius:100px;margin-bottom:12px;overflow:hidden"><div style="width:40%;height:100%;background:var(--lime);border-radius:100px"></div></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;font-size:.8rem"><span>Lat Pulldown · 23kg</span><span style="color:var(--green);font-weight:800">✓</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;font-size:.8rem"><span>Seated Rows · 30kg</span><span style="color:var(--green);font-weight:800">✓</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:10px;font-size:.8rem;color:var(--text2)"><span>Hyperextension</span><span style="color:var(--text3)">○</span></div>
+            </div>
+          </div>
         </div>
-        <div style="height:4px;background:var(--bg3);border-radius:100px;margin-bottom:12px;overflow:hidden"><div style="width:40%;height:100%;background:var(--lime);border-radius:100px"></div></div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;font-size:.8rem"><span>Lat Pulldown · 23kg</span><span style="color:var(--green);font-weight:800">✓</span></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;font-size:.8rem"><span>Seated Rows · 30kg</span><span style="color:var(--green);font-weight:800">✓</span></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:10px;font-size:.8rem;color:var(--text2)"><span>Hyperextension</span><span style="color:var(--text3)">○</span></div>
+
+        <!-- Slide 2: Exercise Repository -->
+        <div class="carousel-slide" id="slide-1">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Exercise Library</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">35+ exercises<br>with tutorials.</div>
+            <div style="color:var(--text2);font-size:.85rem">Every exercise has a YouTube tutorial. Tap to watch form guides instantly.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:flex;gap:8px;margin-bottom:10px">
+              <div style="padding:5px 12px;background:var(--lime);color:#000;border-radius:100px;font-size:.72rem;font-weight:700">All</div>
+              <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">🦵 Legs</div>
+              <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">💪 Arms</div>
+              <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">🏋️ Back</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">🦵 Hack Squat</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
+              <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">🏋️ Lat Pulldown</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
+              <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">💪 Preacher Curl</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
+              <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">🎯 Plank</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
+            </div>
+          </div>
         </div>
+
+        <!-- Slide 3: Progress Charts -->
+        <div class="carousel-slide" id="slide-2">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Progress Tracking</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">See every gain,<br>every week.</div>
+            <div style="color:var(--text2);font-size:.85rem">Weight history, strength trends, heatmaps. Know exactly what's working.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
+              <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">WEIGHT</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">72.4kg</div></div>
+              <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">SESSIONS</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">24</div></div>
+              <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">ADHERENCE</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">87%</div></div>
+            </div>
+            <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px"><span style="font-weight:600">Lat Pulldown</span><span class="badge" style="background:rgba(0,230,118,.15);color:var(--green);padding:2px 7px;border-radius:100px;font-size:.68rem">+12 kg</span></div><div style="height:5px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:78%;height:100%;background:var(--lime);border-radius:100px"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px"><span style="font-weight:600">Hack Squat</span><span class="badge" style="background:rgba(0,230,118,.15);color:var(--green);padding:2px 7px;border-radius:100px;font-size:.68rem">+20 kg</span></div><div style="height:5px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:65%;height:100%;background:var(--lime);border-radius:100px"></div></div></div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Trainer Dashboard -->
+        <div class="carousel-slide" id="slide-3">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">For Trainers</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Manage all your<br>clients in one place.</div>
+            <div style="color:var(--text2);font-size:.85rem">Send plans, track progress, WhatsApp clients — all from one dashboard.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+              <div style="background:var(--bg3);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:var(--text3);margin-bottom:4px">MY CLIENTS</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--lime)">8</div></div>
+              <div style="background:var(--bg3);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:var(--text3);margin-bottom:4px">PLANS SENT</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--lime)">12</div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lime);color:#000;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center">R</div><span style="font-size:.8rem;font-weight:600">Rahul M.</span></div>
+              <span style="font-size:.7rem;color:var(--green)">Trained today</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lime);color:#000;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center">P</div><span style="font-size:.8rem;font-weight:600">Priya K.</span></div>
+              <span style="font-size:.7rem;color:var(--lime)">Yesterday</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0">
+              <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lime);color:#000;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center">A</div><span style="font-size:.8rem;font-weight:600">Aakash S.</span></div>
+              <span style="font-size:.7rem;color:var(--text3)">2 days ago</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Build Plan -->
+        <div class="carousel-slide" id="slide-4">
+          <div style="margin-bottom:16px">
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Plan Builder</div>
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Build 7-day plans<br>in minutes.</div>
+            <div style="color:var(--text2);font-size:.85rem">Pick exercises by day, set reps and sets, review and send. Client gets it instantly.</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
+            <div style="display:flex;gap:6px;margin-bottom:12px;overflow:hidden">
+              <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--lime);color:#000">Mon<div style="font-size:.7rem;margin-top:2px">4</div></div>
+              <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:rgba(68,136,255,.15);color:var(--blue)">Tue<div style="font-size:.7rem;margin-top:2px">3</div></div>
+              <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:rgba(68,136,255,.15);color:var(--blue)">Wed<div style="font-size:.7rem;margin-top:2px">3</div></div>
+              <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Thu<div style="font-size:.7rem;margin-top:2px">-</div></div>
+              <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Fri<div style="font-size:.7rem;margin-top:2px">-</div></div>
+              <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Sat<div style="font-size:.7rem;margin-top:2px">-</div></div>
+              <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Sun<div style="font-size:.7rem;margin-top:2px">-</div></div>
+            </div>
+            <div style="font-size:.72rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Monday — Legs</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(212,255,0,.06);border:1px solid rgba(212,255,0,.15);border-radius:8px;font-size:.76rem"><span style="color:var(--lime)">✓</span>Hack Squat</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(212,255,0,.06);border:1px solid rgba(212,255,0,.15);border-radius:8px;font-size:.76rem"><span style="color:var(--lime)">✓</span>Leg Press</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(212,255,0,.06);border:1px solid rgba(212,255,0,.15);border-radius:8px;font-size:.76rem"><span style="color:var(--lime)">✓</span>Leg Curl</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end carousel -->
+
+      <!-- Dots -->
+      <div style="display:flex;gap:6px;margin-top:20px;align-items:center">
+        <div class="carousel-dot active" id="dot-0" onclick="goToSlide(0)" style="cursor:pointer"></div>
+        <div class="carousel-dot" id="dot-1" onclick="goToSlide(1)" style="cursor:pointer"></div>
+        <div class="carousel-dot" id="dot-2" onclick="goToSlide(2)" style="cursor:pointer"></div>
+        <div class="carousel-dot" id="dot-3" onclick="goToSlide(3)" style="cursor:pointer"></div>
+        <div class="carousel-dot" id="dot-4" onclick="goToSlide(4)" style="cursor:pointer"></div>
+        <div style="flex:1"></div>
+        <button onclick="prevSlide()" style="background:var(--bg3);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--text2);font-size:.9rem">‹</button>
+        <button onclick="nextSlide()" style="background:var(--bg3);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--text2);font-size:.9rem">›</button>
+      </div>
+      </div><!-- end middle -->
+
+      <!-- BOTTOM: Pricing pill -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:8px 16px;font-size:.8rem;color:var(--lime)">₹99 / client / month</div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:.8rem;color:var(--text2)">10× cheaper than alternatives</div>
       </div>
     </div>
-
-    <!-- Slide 2: Exercise Repository -->
-    <div class="carousel-slide" id="slide-1">
-      <div style="margin-bottom:16px">
-        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Exercise Library</div>
-        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">35+ exercises<br>with tutorials.</div>
-        <div style="color:var(--text2);font-size:.85rem">Every exercise has a YouTube tutorial. Tap to watch form guides instantly.</div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
-        <div style="display:flex;gap:8px;margin-bottom:10px">
-          <div style="padding:5px 12px;background:var(--lime);color:#000;border-radius:100px;font-size:.72rem;font-weight:700">All</div>
-          <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">🦵 Legs</div>
-          <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">💪 Arms</div>
-          <div style="padding:5px 12px;background:var(--bg3);border-radius:100px;font-size:.72rem;color:var(--text2)">🏋️ Back</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">🦵 Hack Squat</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
-          <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">🏋️ Lat Pulldown</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
-          <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">💪 Preacher Curl</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
-          <div style="padding:10px;background:var(--bg3);border-radius:10px"><div style="font-size:.78rem;font-weight:600;margin-bottom:4px">🎯 Plank</div><div style="font-size:.65rem;color:var(--lime)">▶ Tutorial</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 3: Progress Charts -->
-    <div class="carousel-slide" id="slide-2">
-      <div style="margin-bottom:16px">
-        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Progress Tracking</div>
-        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">See every gain,<br>every week.</div>
-        <div style="color:var(--text2);font-size:.85rem">Weight history, strength trends, heatmaps. Know exactly what's working.</div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-          <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">WEIGHT</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">72.4kg</div></div>
-          <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">SESSIONS</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">24</div></div>
-          <div style="background:var(--bg3);border-radius:10px;padding:10px;text-align:center"><div style="font-size:.58rem;color:var(--text3);margin-bottom:4px">ADHERENCE</div><div style="font-family:'Syne',sans-serif;font-weight:800;color:var(--lime)">87%</div></div>
-        </div>
-        <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px"><span style="font-weight:600">Lat Pulldown</span><span class="badge" style="background:rgba(0,230,118,.15);color:var(--green);padding:2px 7px;border-radius:100px;font-size:.68rem">+12 kg</span></div><div style="height:5px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:78%;height:100%;background:var(--lime);border-radius:100px"></div></div></div>
-        <div><div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:4px"><span style="font-weight:600">Hack Squat</span><span class="badge" style="background:rgba(0,230,118,.15);color:var(--green);padding:2px 7px;border-radius:100px;font-size:.68rem">+20 kg</span></div><div style="height:5px;background:var(--bg3);border-radius:100px;overflow:hidden"><div style="width:65%;height:100%;background:var(--lime);border-radius:100px"></div></div></div>
-      </div>
-    </div>
-
-    <!-- Slide 4: Trainer Dashboard -->
-    <div class="carousel-slide" id="slide-3">
-      <div style="margin-bottom:16px">
-        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">For Trainers</div>
-        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Manage all your<br>clients in one place.</div>
-        <div style="color:var(--text2);font-size:.85rem">Send plans, track progress, WhatsApp clients — all from one dashboard.</div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-          <div style="background:var(--bg3);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:var(--text3);margin-bottom:4px">MY CLIENTS</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--lime)">8</div></div>
-          <div style="background:var(--bg3);border-radius:10px;padding:12px"><div style="font-size:.6rem;color:var(--text3);margin-bottom:4px">PLANS SENT</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--lime)">12</div></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lime);color:#000;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center">R</div><span style="font-size:.8rem;font-weight:600">Rahul M.</span></div>
-          <span style="font-size:.7rem;color:var(--green)">Trained today</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
-          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lime);color:#000;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center">P</div><span style="font-size:.8rem;font-weight:600">Priya K.</span></div>
-          <span style="font-size:.7rem;color:var(--lime)">Yesterday</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0">
-          <div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:var(--lime);color:#000;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center">A</div><span style="font-size:.8rem;font-weight:600">Aakash S.</span></div>
-          <span style="font-size:.7rem;color:var(--text3)">2 days ago</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 5: Build Plan -->
-    <div class="carousel-slide" id="slide-4">
-      <div style="margin-bottom:16px">
-        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--lime);font-weight:700;margin-bottom:6px">Plan Builder</div>
-        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;line-height:1.2;margin-bottom:8px">Build 7-day plans<br>in minutes.</div>
-        <div style="color:var(--text2);font-size:.85rem">Pick exercises by day, set reps and sets, review and send. Client gets it instantly.</div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px">
-        <div style="display:flex;gap:6px;margin-bottom:12px;overflow:hidden">
-          <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--lime);color:#000">Mon<div style="font-size:.7rem;margin-top:2px">4</div></div>
-          <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:rgba(68,136,255,.15);color:var(--blue)">Tue<div style="font-size:.7rem;margin-top:2px">3</div></div>
-          <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:rgba(68,136,255,.15);color:var(--blue)">Wed<div style="font-size:.7rem;margin-top:2px">3</div></div>
-          <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Thu<div style="font-size:.7rem;margin-top:2px">-</div></div>
-          <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Fri<div style="font-size:.7rem;margin-top:2px">-</div></div>
-          <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Sat<div style="font-size:.7rem;margin-top:2px">-</div></div>
-          <div style="flex:1;text-align:center;padding:7px 4px;border-radius:8px;font-size:.65rem;font-weight:700;background:var(--bg3);color:var(--text3)">Sun<div style="font-size:.7rem;margin-top:2px">-</div></div>
-        </div>
-        <div style="font-size:.72rem;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Monday — Legs</div>
-        <div style="display:flex;flex-direction:column;gap:5px">
-          <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(212,255,0,.06);border:1px solid rgba(212,255,0,.15);border-radius:8px;font-size:.76rem"><span style="color:var(--lime)">✓</span>Hack Squat</div>
-          <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(212,255,0,.06);border:1px solid rgba(212,255,0,.15);border-radius:8px;font-size:.76rem"><span style="color:var(--lime)">✓</span>Leg Press</div>
-          <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(212,255,0,.06);border:1px solid rgba(212,255,0,.15);border-radius:8px;font-size:.76rem"><span style="color:var(--lime)">✓</span>Leg Curl</div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- end carousel -->
-
-  <!-- Dots -->
-  <div style="display:flex;gap:6px;margin-top:20px;align-items:center">
-    <div class="carousel-dot active" id="dot-0" onclick="goToSlide(0)" style="cursor:pointer"></div>
-    <div class="carousel-dot" id="dot-1" onclick="goToSlide(1)" style="cursor:pointer"></div>
-    <div class="carousel-dot" id="dot-2" onclick="goToSlide(2)" style="cursor:pointer"></div>
-    <div class="carousel-dot" id="dot-3" onclick="goToSlide(3)" style="cursor:pointer"></div>
-    <div class="carousel-dot" id="dot-4" onclick="goToSlide(4)" style="cursor:pointer"></div>
-    <div style="flex:1"></div>
-    <button onclick="prevSlide()" style="background:var(--bg3);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--text2);font-size:.9rem">‹</button>
-    <button onclick="nextSlide()" style="background:var(--bg3);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--text2);font-size:.9rem">›</button>
-  </div>
-  </div><!-- end middle -->
-
-  <!-- BOTTOM: Pricing pill -->
-  <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <div style="background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:8px 16px;font-size:.8rem;color:var(--lime)">₹99 / client / month</div>
-    <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:.8rem;color:var(--text2)">10× cheaper than alternatives</div>
-  </div>
-</div>
-```
-
   </div>
   <!-- RIGHT SIDE: form -->
   <div class="auth-split-right">
@@ -567,7 +562,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- APP -->
-
 <div id="app" class="hidden">
   <div class="topbar">
     <button class="hamburger" onclick="toggleSidebar()"><div class="ham-lines"><span></span><span></span><span></span></div></button>
@@ -598,362 +592,360 @@ select.inp{cursor:pointer}
   <div class="mobile-nav" id="mobile-nav"></div>
 
   <!-- MOBILE BUILDER BAR (fixed, shows on mobile when on build page) -->
-
   <div class="builder-mobile-bar" id="builder-mobile-bar">
     <div class="builder-mobile-info" id="builder-mobile-info">Pick a day, then tap exercises</div>
     <button class="btn btn-lime btn-sm" onclick="openReviewModal()">Review →</button>
   </div>
 
+
+
   <div class="main-content" id="main-content">
 
-```
-<!-- ADMIN PAGES -->
-<div class="page" id="page-admin-overview">
-  <div class="page-header"><div><div class="label">Admin</div><h1 class="page-title">Overview</h1></div>
-    <button class="btn btn-ghost btn-sm" onclick="bootAdmin()">↻ Refresh</button>
-  </div>
-  <div class="grid3" style="margin-bottom:18px">
-    <div class="stat-card lime-hl"><div class="label">Exercises</div><div class="stat-num" id="stat-ex">—</div><div class="muted" style="font-size:.8rem">In library</div><div class="stat-accent">🏋️</div></div>
-    <div class="stat-card"><div class="label">Trainers</div><div class="stat-num" id="stat-tr">—</div><div class="muted" style="font-size:.8rem">Active</div><div class="stat-accent">👤</div></div>
-    <div class="stat-card"><div class="label">Clients</div><div class="stat-num" id="stat-cl">—</div><div class="muted" style="font-size:.8rem">Registered</div><div class="stat-accent">💪</div></div>
-  </div>
-  <!-- ANALYTICS ROW -->
-  <div class="grid3" style="margin-bottom:18px">
-    <div class="stat-card"><div class="label">Total Plans Sent</div><div class="stat-num" id="stat-plans-total">—</div><div class="muted" style="font-size:.8rem">All time</div><div class="stat-accent">📋</div></div>
-    <div class="stat-card"><div class="label">Active Plans</div><div class="stat-num" id="stat-plans-active">—</div><div class="muted" style="font-size:.8rem">Currently active</div><div class="stat-accent">✅</div></div>
-    <div class="stat-card"><div class="label">Logs This Week</div><div class="stat-num" id="stat-logs-week">—</div><div class="muted" style="font-size:.8rem">Workout entries</div><div class="stat-accent">📊</div></div>
-  </div>
-  <!-- TRAINER ACTIVITY TABLE -->
-  <div class="card" style="margin-bottom:14px">
-    <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem;display:flex;align-items:center;justify-content:space-between">
-      Trainer Activity
-      <span class="badge badge-lime" id="admin-trainer-count">0 trainers</span>
-    </div>
-    <div id="admin-trainer-activity"></div>
-  </div>
-  <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem">All Users</div><div id="admin-users-list"></div></div>
-</div>
-
-<div class="page" id="page-admin-exercises">
-  <div class="page-header"><div><div class="label">Repository</div><h1 class="page-title">Exercises</h1></div><button class="btn btn-lime btn-sm" onclick="openExModal()">+ Add</button></div>
-  <div class="search-bar"><span class="search-icon">🔍</span><input class="inp" id="admin-search" placeholder="Search exercises..." oninput="renderAdminExercises()"></div>
-  <div class="cat-filters" id="admin-cat-filters">
-    <div class="cat-chip active" onclick="filterAdminEx('All',this)">All</div>
-    <div class="cat-chip" onclick="filterAdminEx('Legs',this)">🦵 Legs</div>
-    <div class="cat-chip" onclick="filterAdminEx('Chest',this)">💪 Chest</div>
-    <div class="cat-chip" onclick="filterAdminEx('Back',this)">🏋️ Back</div>
-    <div class="cat-chip" onclick="filterAdminEx('Shoulders',this)">⬆️ Shoulders</div>
-    <div class="cat-chip" onclick="filterAdminEx('Arms',this)">💪 Arms</div>
-    <div class="cat-chip" onclick="filterAdminEx('Core',this)">🎯 Core</div>
-    <div class="cat-chip" onclick="filterAdminEx('Cardio',this)">🏃 Cardio</div>
-  </div>
-  <div id="admin-ex-list" class="ex-grid"></div>
-</div>
-
-<div class="page" id="page-admin-users">
-  <div class="page-header"><div><div class="label">Manage</div><h1 class="page-title">All Users</h1></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-lime btn-sm" onclick="openAddUserModal()">+ Add User</button>
-      <button class="btn btn-ghost btn-sm" onclick="loadAllUsers()">↻ Refresh</button>
-    </div>
-  </div>
-  <div id="admin-users-full"></div>
-</div>
-
-<!-- TRAINER PAGES -->
-<div class="page" id="page-trainer-overview">
-  <div class="page-header"><div><div class="label">Trainer</div><h1 class="page-title">Dashboard</h1></div></div>
-  <div id="pending-requests-section" class="hidden" style="margin-bottom:16px">
-    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:10px;display:flex;align-items:center;gap:8px">
-      🔔 Pending Requests <span class="badge badge-lime" id="pending-count">0</span>
-    </div>
-    <div id="pending-requests-list"></div>
-  </div>
-  <div class="code-display">
-    <div class="label" style="margin-bottom:8px">Your Trainer Code — share with clients</div>
-    <div class="code-big" id="trainer-code-display">——</div>
-    <div style="display:flex;gap:8px;margin-top:12px;justify-content:center;flex-wrap:wrap">
-      <button class="btn btn-ghost btn-sm" onclick="copyCode()">📋 Copy Code</button>
-      <button class="btn btn-lime btn-sm" onclick="copyInviteLink()">🔗 Copy Invite Link</button>
-      <button class="btn btn-ghost btn-sm" onclick="showQRCode()">📱 Show QR</button>
-    </div>
-  </div>
-  <div class="grid2" style="margin-bottom:18px">
-    <div class="stat-card"><div class="label">My Clients</div><div class="stat-num" id="t-stat-clients">—</div><div class="muted" style="font-size:.8rem">Linked to you</div><div class="stat-accent">👥</div></div>
-    <div class="stat-card"><div class="label">Plans Sent</div><div class="stat-num" id="t-stat-plans">—</div><div class="muted" style="font-size:.8rem">Total assigned</div><div class="stat-accent">📋</div></div>
-  </div>
-  <div class="card" style="margin-bottom:14px"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem;display:flex;align-items:center;justify-content:space-between">Today's Activity <span class="badge badge-lime" id="trained-today-count">0</span></div><div id="trainer-today-feed"></div></div>
-  <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem">My Clients</div><div id="trainer-clients-mini"></div></div>
-</div>
-
-<div class="page" id="page-trainer-build">
-  <div class="page-header"><div><div class="label">Build Plan</div><h1 class="page-title">Create Plan</h1></div></div>
-
-  <!-- TWO COLUMN: left = exercise browser, right = selected panel -->
-  <div class="builder-layout">
-    <div class="builder-left">
-      <div class="label" style="margin-bottom:8px">Tap exercises to add to the selected day →</div>
-      <!-- SEARCH FIRST -->
-      <div class="search-bar"><span class="search-icon">🔍</span><input class="inp" id="trainer-search" placeholder="Search exercises..." oninput="renderTrainerExercises()"></div>
-      <!-- DAY TABS SECOND -->
-      <div style="margin-bottom:10px">
-        <div class="builder-days-inline" id="builder-days-inline"></div>
+    <!-- ADMIN PAGES -->
+    <div class="page" id="page-admin-overview">
+      <div class="page-header"><div><div class="label">Admin</div><h1 class="page-title">Overview</h1></div>
+        <button class="btn btn-ghost btn-sm" onclick="bootAdmin()">↻ Refresh</button>
       </div>
-      <!-- CATEGORY CHIPS THIRD -->
-      <div class="cat-filters" id="trainer-cat-filters">
-        <div class="cat-chip active" onclick="filterTrainerEx('All',this)">All</div>
-        <div class="cat-chip" onclick="filterTrainerEx('Legs',this)">🦵 Legs</div>
-        <div class="cat-chip" onclick="filterTrainerEx('Chest',this)">💪 Chest</div>
-        <div class="cat-chip" onclick="filterTrainerEx('Back',this)">🏋️ Back</div>
-        <div class="cat-chip" onclick="filterTrainerEx('Shoulders',this)">⬆️ Shoulders</div>
-        <div class="cat-chip" onclick="filterTrainerEx('Arms',this)">💪 Arms</div>
-        <div class="cat-chip" onclick="filterTrainerEx('Core',this)">🎯 Core</div>
-        <div class="cat-chip" onclick="filterTrainerEx('Cardio',this)">🏃 Cardio</div>
+      <div class="grid3" style="margin-bottom:18px">
+        <div class="stat-card lime-hl"><div class="label">Exercises</div><div class="stat-num" id="stat-ex">—</div><div class="muted" style="font-size:.8rem">In library</div><div class="stat-accent">🏋️</div></div>
+        <div class="stat-card"><div class="label">Trainers</div><div class="stat-num" id="stat-tr">—</div><div class="muted" style="font-size:.8rem">Active</div><div class="stat-accent">👤</div></div>
+        <div class="stat-card"><div class="label">Clients</div><div class="stat-num" id="stat-cl">—</div><div class="muted" style="font-size:.8rem">Registered</div><div class="stat-accent">💪</div></div>
       </div>
-      <div id="trainer-ex-grid" class="ex-grid" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))"></div>
-    </div>
-
-    <!-- RIGHT PANEL: live preview of selected exercises -->
-    <div class="builder-right">
-      <div class="builder-right-inner" id="builder-right-panel">
-        <div class="label" style="margin-bottom:12px">Selected Exercises</div>
-        <div id="builder-selected-days"></div>
-        <div id="builder-empty-msg" style="color:var(--text3);font-size:.82rem;text-align:center;padding:24px 0;line-height:1.6">Nothing added yet.<br>Pick a day above,<br>then tap exercises.</div>
+      <!-- ANALYTICS ROW -->
+      <div class="grid3" style="margin-bottom:18px">
+        <div class="stat-card"><div class="label">Total Plans Sent</div><div class="stat-num" id="stat-plans-total">—</div><div class="muted" style="font-size:.8rem">All time</div><div class="stat-accent">📋</div></div>
+        <div class="stat-card"><div class="label">Active Plans</div><div class="stat-num" id="stat-plans-active">—</div><div class="muted" style="font-size:.8rem">Currently active</div><div class="stat-accent">✅</div></div>
+        <div class="stat-card"><div class="label">Logs This Week</div><div class="stat-num" id="stat-logs-week">—</div><div class="muted" style="font-size:.8rem">Workout entries</div><div class="stat-accent">📊</div></div>
       </div>
-      <div style="padding:12px 14px;border-top:1px solid var(--border)">
-        <div id="builder-info" style="font-size:.78rem;color:var(--text2);margin-bottom:10px;text-align:center"></div>
-        <button class="btn btn-lime w100" onclick="openReviewModal()">Review & Send →</button>
-        <button class="btn btn-ghost w100" style="margin-top:8px;font-size:.8rem" onclick="clearBuilder()">Clear All</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="page" id="page-trainer-clients">
-  <div class="page-header"><div><div class="label">Manage</div><h1 class="page-title">My Clients</h1></div></div>
-  <div id="trainer-clients-full"></div>
-</div>
-
-<div class="page" id="page-trainer-plans">
-  <div class="page-header"><div><div class="label">Sent Plans</div><h1 class="page-title">Active Plans</h1></div></div>
-  <div id="trainer-plans-list"></div>
-</div>
-
-<!-- CLIENT PAGES -->
-<div class="page" id="page-client-today">
-  <div class="page-header"><div><div class="label">Today's Workout</div><h1 class="page-title">Workout</h1></div></div>
-
-  <!-- PROGRESS SUMMARY STRIP -->
-  <div id="client-home-stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
-    <div class="stat-card" style="padding:12px 14px">
-      <div class="label" style="font-size:.6rem">WEIGHT</div>
-      <div class="stat-num" id="home-weight" style="font-size:1.2rem">—</div>
-      <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">⚖️</div>
-    </div>
-    <div class="stat-card" style="padding:12px 14px">
-      <div class="label" style="font-size:.6rem">STREAK</div>
-      <div class="stat-num" id="home-streak" style="font-size:1.2rem">—</div>
-      <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">🔥</div>
-    </div>
-    <div class="stat-card" style="padding:12px 14px">
-      <div class="label" style="font-size:.6rem">THIS WEEK</div>
-      <div class="stat-num" id="home-weekly" style="font-size:1.2rem">—</div>
-      <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">📅</div>
-    </div>
-  </div>
-  <div id="new-plan-banner" class="hidden" style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:var(--r);padding:12px 14px;margin-bottom:14px;font-size:.85rem;color:var(--lime);font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:10px">
-    <span id="new-plan-banner-text"></span>
-    <button onclick="document.getElementById('new-plan-banner').classList.add('hidden')" style="background:none;border:none;color:var(--lime);cursor:pointer;font-size:1rem;flex-shrink:0">✕</button>
-  </div>
-  <!-- DAY PROGRESS BAR -->
-  <div id="day-progress-bar" class="hidden" style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
-    <div style="flex:1">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-size:.8rem;font-weight:600;color:var(--text2)">Today's Progress</span>
-        <span id="day-progress-text" style="font-size:.8rem;font-weight:700;color:var(--lime)">0 / 0</span>
-      </div>
-      <div style="height:6px;background:var(--bg3);border-radius:100px;overflow:hidden">
-        <div id="day-progress-fill" style="height:100%;background:var(--lime);border-radius:100px;transition:width .4s ease;width:0%"></div>
-      </div>
-    </div>
-    <div id="day-progress-emoji" style="font-size:1.4rem">💪</div>
-  </div>
-  <div id="client-day-tabs" class="day-tabs"></div>
-  <div id="client-workout-list"></div>
-  <div id="finish-workout-bar" class="hidden" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px">
-    <div id="finish-workout-summary" style="font-size:.84rem;color:var(--text2)"></div>
-    <button class="btn btn-lime" onclick="finishWorkout()" id="finish-workout-btn">🏁 Finish Workout</button>
-  </div>
-</div>
-
-<div class="page" id="page-client-progress">
-  <div class="page-header">
-    <div><div class="label">Analytics</div><h1 class="page-title">My Progress</h1></div>
-    <button class="btn btn-lime btn-sm" onclick="openMeasurementModal()">+ Weight</button>
-  </div>
-  <!-- STAT ROW 1 -->
-  <div class="grid3" style="margin-bottom:12px" id="progress-stat-row1">
-    <div class="stat-card green-hl">
-      <div class="label">Current Weight</div>
-      <div class="stat-num" id="current-weight">—</div>
-      <div id="weight-delta" class="stat-delta pos"></div>
-      <div class="stat-accent">⚖️</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Starting Weight</div>
-      <div class="stat-num" id="starting-weight">—</div>
-      <div id="starting-weight-date" class="muted" style="font-size:.76rem"></div>
-      <div class="stat-accent">📌</div>
-    </div>
-    <div class="stat-card lime-hl">
-      <div class="label">Avg Weekly Loss</div>
-      <div class="stat-num" id="avg-weekly-loss">—</div>
-      <div class="stat-accent">📉</div>
-    </div>
-  </div>
-  <!-- STAT ROW 2 -->
-  <div class="grid3" style="margin-bottom:14px" id="progress-stat-row2">
-    <div class="stat-card">
-      <div class="label">Total Sessions</div>
-      <div class="stat-num" id="total-sessions">—</div>
-      <div id="sessions-sub" class="muted" style="font-size:.76rem"></div>
-      <div class="stat-accent">🔥</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">This Week</div>
-      <div class="stat-num" id="workouts-done">—</div>
-      <div class="muted" style="font-size:.76rem">sessions</div>
-      <div class="stat-accent">📅</div>
-    </div>
-    <div class="stat-card">
-      <div class="label">Adherence</div>
-      <div class="stat-num" id="adherence-pct">—</div>
-      <div class="muted" style="font-size:.76rem">of scheduled sessions</div>
-      <div class="stat-accent">⚡</div>
-    </div>
-  </div>
-  <!-- CHARTS -->
-  <div class="grid2" style="margin-bottom:12px">
-    <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem;display:flex;justify-content:space-between;align-items:center">Weight History <span id="weight-trend-badge"></span></div><div class="chart-wrap"><canvas id="weight-chart"></canvas></div></div>
-    <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">This Week — Volume (kg lifted)</div><div class="chart-wrap"><canvas id="volume-chart"></canvas></div></div>
-  </div>
-  <!-- WORKOUT HEATMAP -->
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;font-size:.92rem;display:flex;justify-content:space-between;align-items:center">
-      Workout Heatmap
-      <span style="font-size:.72rem;color:var(--text2);font-weight:400">Last 8 weeks</span>
-    </div>
-    <div id="workout-heatmap" class="heatmap-grid"></div>
-    <div style="display:flex;align-items:center;gap:5px;margin-top:8px;justify-content:flex-end">
-      <span style="font-size:.68rem;color:var(--text3)">Less</span>
-      <div style="width:9px;height:9px;border-radius:2px;background:var(--bg3)"></div>
-      <div style="width:9px;height:9px;border-radius:2px;background:rgba(212,255,0,.25)"></div>
-      <div style="width:9px;height:9px;border-radius:2px;background:rgba(212,255,0,.6)"></div>
-      <div style="width:9px;height:9px;border-radius:2px;background:var(--lime)"></div>
-      <span style="font-size:.68rem;color:var(--text3)">More</span>
-    </div>
-  </div>
-  <!-- STRENGTH PROGRESS -->
-  <div class="card" style="margin-bottom:12px">
-    <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">💪 Strength Progress</div>
-    <div id="strength-progress-table"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">Log workouts to see strength gains</div></div>
-  </div>
-  <!-- MILESTONES + ACTIVITY 2-col -->
-  <div class="grid2" style="margin-bottom:12px">
-    <div class="card">
-      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">🏆 Milestones</div>
-      <div id="milestones-list"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">Keep training to unlock milestones!</div></div>
-    </div>
-    <div class="card">
-      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">Recent Activity</div>
-      <div id="client-activity-feed"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">No activity yet</div></div>
-    </div>
-  </div>
-  <!-- TRAINER NOTES -->
-  <div class="card" style="margin-bottom:12px" id="trainer-notes-section">
-    <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">📝 Trainer Notes</div>
-    <div id="trainer-notes-list"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">No notes from your trainer yet</div></div>
-  </div>
-</div>
-
-<div class="page" id="page-client-plan">
-  <div class="page-header"><div><div class="label">Your Program</div><h1 class="page-title">My Plan</h1></div></div>
-  <div id="client-plan-view"></div>
-</div>
-
-<div class="page" id="page-client-profile">
-  <div class="page-header"><div><div class="label">Account</div><h1 class="page-title">Profile</h1></div><button class="btn btn-ghost btn-sm" onclick="logout()">Sign Out</button></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:960px">
-    <!-- LEFT COL: Account info + weight -->
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div class="card">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-          <div class="avatar avatar-lg" id="profile-avatar">?</div>
-          <div><div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700" id="profile-name">—</div><div class="muted" id="profile-email">—</div><div style="margin-top:6px" id="profile-badge"></div></div>
+      <!-- TRAINER ACTIVITY TABLE -->
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem;display:flex;align-items:center;justify-content:space-between">
+          Trainer Activity
+          <span class="badge badge-lime" id="admin-trainer-count">0 trainers</span>
         </div>
-        <div style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
-          <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">WhatsApp Number</div>
-          <div class="muted" style="font-size:.8rem;margin-bottom:10px">So your trainer can reach you on WhatsApp</div>
-          <div style="display:flex;gap:8px">
-            <input class="inp" id="profile-phone" type="tel" inputmode="tel" placeholder="91XXXXXXXXXX" style="flex:1">
-            <button class="btn btn-lime btn-sm" onclick="savePhone()">Save</button>
+        <div id="admin-trainer-activity"></div>
+      </div>
+      <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem">All Users</div><div id="admin-users-list"></div></div>
+    </div>
+
+    <div class="page" id="page-admin-exercises">
+      <div class="page-header"><div><div class="label">Repository</div><h1 class="page-title">Exercises</h1></div><button class="btn btn-lime btn-sm" onclick="openExModal()">+ Add</button></div>
+      <div class="search-bar"><span class="search-icon">🔍</span><input class="inp" id="admin-search" placeholder="Search exercises..." oninput="renderAdminExercises()"></div>
+      <div class="cat-filters" id="admin-cat-filters">
+        <div class="cat-chip active" onclick="filterAdminEx('All',this)">All</div>
+        <div class="cat-chip" onclick="filterAdminEx('Legs',this)">🦵 Legs</div>
+        <div class="cat-chip" onclick="filterAdminEx('Chest',this)">💪 Chest</div>
+        <div class="cat-chip" onclick="filterAdminEx('Back',this)">🏋️ Back</div>
+        <div class="cat-chip" onclick="filterAdminEx('Shoulders',this)">⬆️ Shoulders</div>
+        <div class="cat-chip" onclick="filterAdminEx('Arms',this)">💪 Arms</div>
+        <div class="cat-chip" onclick="filterAdminEx('Core',this)">🎯 Core</div>
+        <div class="cat-chip" onclick="filterAdminEx('Cardio',this)">🏃 Cardio</div>
+      </div>
+      <div id="admin-ex-list" class="ex-grid"></div>
+    </div>
+
+    <div class="page" id="page-admin-users">
+      <div class="page-header"><div><div class="label">Manage</div><h1 class="page-title">All Users</h1></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-lime btn-sm" onclick="openAddUserModal()">+ Add User</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadAllUsers()">↻ Refresh</button>
+        </div>
+      </div>
+      <div id="admin-users-full"></div>
+    </div>
+
+    <!-- TRAINER PAGES -->
+    <div class="page" id="page-trainer-overview">
+      <div class="page-header"><div><div class="label">Trainer</div><h1 class="page-title">Dashboard</h1></div></div>
+      <div id="pending-requests-section" class="hidden" style="margin-bottom:16px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          🔔 Pending Requests <span class="badge badge-lime" id="pending-count">0</span>
+        </div>
+        <div id="pending-requests-list"></div>
+      </div>
+      <div class="code-display">
+        <div class="label" style="margin-bottom:8px">Your Trainer Code — share with clients</div>
+        <div class="code-big" id="trainer-code-display">——</div>
+        <div style="display:flex;gap:8px;margin-top:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="copyCode()">📋 Copy Code</button>
+          <button class="btn btn-lime btn-sm" onclick="copyInviteLink()">🔗 Copy Invite Link</button>
+          <button class="btn btn-ghost btn-sm" onclick="showQRCode()">📱 Show QR</button>
+        </div>
+      </div>
+      <div class="grid2" style="margin-bottom:18px">
+        <div class="stat-card"><div class="label">My Clients</div><div class="stat-num" id="t-stat-clients">—</div><div class="muted" style="font-size:.8rem">Linked to you</div><div class="stat-accent">👥</div></div>
+        <div class="stat-card"><div class="label">Plans Sent</div><div class="stat-num" id="t-stat-plans">—</div><div class="muted" style="font-size:.8rem">Total assigned</div><div class="stat-accent">📋</div></div>
+      </div>
+      <div class="card" style="margin-bottom:14px"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem;display:flex;align-items:center;justify-content:space-between">Today's Activity <span class="badge badge-lime" id="trained-today-count">0</span></div><div id="trainer-today-feed"></div></div>
+      <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:14px;font-size:1rem">My Clients</div><div id="trainer-clients-mini"></div></div>
+    </div>
+
+    <div class="page" id="page-trainer-build">
+      <div class="page-header"><div><div class="label">Build Plan</div><h1 class="page-title">Create Plan</h1></div></div>
+
+      <!-- TWO COLUMN: left = exercise browser, right = selected panel -->
+      <div class="builder-layout">
+        <div class="builder-left">
+          <div class="label" style="margin-bottom:8px">Tap exercises to add to the selected day →</div>
+          <!-- SEARCH FIRST -->
+          <div class="search-bar"><span class="search-icon">🔍</span><input class="inp" id="trainer-search" placeholder="Search exercises..." oninput="renderTrainerExercises()"></div>
+          <!-- DAY TABS SECOND -->
+          <div style="margin-bottom:10px">
+            <div class="builder-days-inline" id="builder-days-inline"></div>
           </div>
-          <div id="phone-saved-indicator" style="margin-top:6px;font-size:.78rem;color:var(--green)"></div>
+          <!-- CATEGORY CHIPS THIRD -->
+          <div class="cat-filters" id="trainer-cat-filters">
+            <div class="cat-chip active" onclick="filterTrainerEx('All',this)">All</div>
+            <div class="cat-chip" onclick="filterTrainerEx('Legs',this)">🦵 Legs</div>
+            <div class="cat-chip" onclick="filterTrainerEx('Chest',this)">💪 Chest</div>
+            <div class="cat-chip" onclick="filterTrainerEx('Back',this)">🏋️ Back</div>
+            <div class="cat-chip" onclick="filterTrainerEx('Shoulders',this)">⬆️ Shoulders</div>
+            <div class="cat-chip" onclick="filterTrainerEx('Arms',this)">💪 Arms</div>
+            <div class="cat-chip" onclick="filterTrainerEx('Core',this)">🎯 Core</div>
+            <div class="cat-chip" onclick="filterTrainerEx('Cardio',this)">🏃 Cardio</div>
+          </div>
+          <div id="trainer-ex-grid" class="ex-grid" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))"></div>
         </div>
-        <div id="trainer-link-section" style="border-top:1px solid var(--border);padding-top:16px">
-          <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">Link to Your Trainer</div>
-          <div class="muted" style="font-size:.8rem;margin-bottom:10px">Enter trainer code to send a join request</div>
-          <div id="trainer-linked-info" style="margin-bottom:8px"></div>
-          <div id="trainer-link-input-row" style="display:flex;gap:8px">
-            <input class="inp code-inp" id="profile-trainer-code" placeholder="JAY-4829" maxlength="8" style="flex:1;font-size:18px">
-            <button class="btn btn-lime btn-sm" onclick="linkTrainer()">Send Request</button>
+
+        <!-- RIGHT PANEL: live preview of selected exercises -->
+        <div class="builder-right">
+          <div class="builder-right-inner" id="builder-right-panel">
+            <div class="label" style="margin-bottom:12px">Selected Exercises</div>
+            <div id="builder-selected-days"></div>
+            <div id="builder-empty-msg" style="color:var(--text3);font-size:.82rem;text-align:center;padding:24px 0;line-height:1.6">Nothing added yet.<br>Pick a day above,<br>then tap exercises.</div>
+          </div>
+          <div style="padding:12px 14px;border-top:1px solid var(--border)">
+            <div id="builder-info" style="font-size:.78rem;color:var(--text2);margin-bottom:10px;text-align:center"></div>
+            <button class="btn btn-lime w100" onclick="openReviewModal()">Review & Send →</button>
+            <button class="btn btn-ghost w100" style="margin-top:8px;font-size:.8rem" onclick="clearBuilder()">Clear All</button>
           </div>
         </div>
       </div>
-      <!-- WEIGHT LOG CARD -->
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem">⚖️ Body Weight Log</div>
-          <button class="btn btn-lime btn-sm" onclick="openMeasurementModal()">+ Log Weight</button>
+    </div>
+
+    <div class="page" id="page-trainer-clients">
+      <div class="page-header"><div><div class="label">Manage</div><h1 class="page-title">My Clients</h1></div></div>
+      <div id="trainer-clients-full"></div>
+    </div>
+
+    <div class="page" id="page-trainer-plans">
+      <div class="page-header"><div><div class="label">Sent Plans</div><h1 class="page-title">Active Plans</h1></div></div>
+      <div id="trainer-plans-list"></div>
+    </div>
+
+    <!-- CLIENT PAGES -->
+    <div class="page" id="page-client-today">
+      <div class="page-header"><div><div class="label">Today's Workout</div><h1 class="page-title">Workout</h1></div></div>
+
+      <!-- PROGRESS SUMMARY STRIP -->
+      <div id="client-home-stats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+        <div class="stat-card" style="padding:12px 14px">
+          <div class="label" style="font-size:.6rem">WEIGHT</div>
+          <div class="stat-num" id="home-weight" style="font-size:1.2rem">—</div>
+          <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">⚖️</div>
         </div>
-        <div id="measurements-table"></div>
+        <div class="stat-card" style="padding:12px 14px">
+          <div class="label" style="font-size:.6rem">STREAK</div>
+          <div class="stat-num" id="home-streak" style="font-size:1.2rem">—</div>
+          <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">🔥</div>
+        </div>
+        <div class="stat-card" style="padding:12px 14px">
+          <div class="label" style="font-size:.6rem">THIS WEEK</div>
+          <div class="stat-num" id="home-weekly" style="font-size:1.2rem">—</div>
+          <div class="stat-accent" style="font-size:1rem;top:10px;right:12px">📅</div>
+        </div>
+      </div>
+      <div id="new-plan-banner" class="hidden" style="background:rgba(212,255,0,.1);border:1px solid rgba(212,255,0,.3);border-radius:var(--r);padding:12px 14px;margin-bottom:14px;font-size:.85rem;color:var(--lime);font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <span id="new-plan-banner-text"></span>
+        <button onclick="document.getElementById('new-plan-banner').classList.add('hidden')" style="background:none;border:none;color:var(--lime);cursor:pointer;font-size:1rem;flex-shrink:0">✕</button>
+      </div>
+      <!-- DAY PROGRESS BAR -->
+      <div id="day-progress-bar" class="hidden" style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:.8rem;font-weight:600;color:var(--text2)">Today's Progress</span>
+            <span id="day-progress-text" style="font-size:.8rem;font-weight:700;color:var(--lime)">0 / 0</span>
+          </div>
+          <div style="height:6px;background:var(--bg3);border-radius:100px;overflow:hidden">
+            <div id="day-progress-fill" style="height:100%;background:var(--lime);border-radius:100px;transition:width .4s ease;width:0%"></div>
+          </div>
+        </div>
+        <div id="day-progress-emoji" style="font-size:1.4rem">💪</div>
+      </div>
+      <div id="client-day-tabs" class="day-tabs"></div>
+      <div id="client-workout-list"></div>
+      <div id="finish-workout-bar" class="hidden" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div id="finish-workout-summary" style="font-size:.84rem;color:var(--text2)"></div>
+        <button class="btn btn-lime" onclick="finishWorkout()" id="finish-workout-btn">🏁 Finish Workout</button>
       </div>
     </div>
-    <!-- RIGHT COL: Stats -->
-    <div class="card" style="align-self:start">
-      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:16px">📊 My Stats</div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div class="stats-edit-row">
-          <div><div class="label" style="font-size:.7rem">Age</div><div class="stats-val" id="stat-age">Not set</div></div>
-          <button class="btn btn-ghost btn-sm" onclick="openStatEdit('age','Age','number','e.g. 25')">Edit</button>
+
+    <div class="page" id="page-client-progress">
+      <div class="page-header">
+        <div><div class="label">Analytics</div><h1 class="page-title">My Progress</h1></div>
+        <button class="btn btn-lime btn-sm" onclick="openMeasurementModal()">+ Weight</button>
+      </div>
+      <!-- STAT ROW 1 -->
+      <div class="grid3" style="margin-bottom:12px" id="progress-stat-row1">
+        <div class="stat-card green-hl">
+          <div class="label">Current Weight</div>
+          <div class="stat-num" id="current-weight">—</div>
+          <div id="weight-delta" class="stat-delta pos"></div>
+          <div class="stat-accent">⚖️</div>
         </div>
-        <div class="stats-edit-row">
-          <div><div class="label" style="font-size:.7rem">Height</div><div class="stats-val" id="stat-height_cm">Not set</div></div>
-          <button class="btn btn-ghost btn-sm" onclick="openStatEdit('height_cm','Height (cm)','number','e.g. 175')">Edit</button>
+        <div class="stat-card">
+          <div class="label">Starting Weight</div>
+          <div class="stat-num" id="starting-weight">—</div>
+          <div id="starting-weight-date" class="muted" style="font-size:.76rem"></div>
+          <div class="stat-accent">📌</div>
         </div>
-        <div class="stats-edit-row">
-          <div><div class="label" style="font-size:.7rem">Fitness Goal</div><div class="stats-val" id="stat-fitness_goal">Not set</div></div>
-          <button class="btn btn-ghost btn-sm" onclick="openStatEdit('fitness_goal','Fitness Goal','text','e.g. Lose fat')">Edit</button>
+        <div class="stat-card lime-hl">
+          <div class="label">Avg Weekly Loss</div>
+          <div class="stat-num" id="avg-weekly-loss">—</div>
+          <div class="stat-accent">📉</div>
         </div>
-        <div class="stats-edit-row">
-          <div><div class="label" style="font-size:.7rem">Experience Level</div><div class="stats-val" id="stat-experience_level">Not set</div></div>
-          <button class="btn btn-ghost btn-sm" onclick="openStatEdit('experience_level','Experience Level','select','')">Edit</button>
+      </div>
+      <!-- STAT ROW 2 -->
+      <div class="grid3" style="margin-bottom:14px" id="progress-stat-row2">
+        <div class="stat-card">
+          <div class="label">Total Sessions</div>
+          <div class="stat-num" id="total-sessions">—</div>
+          <div id="sessions-sub" class="muted" style="font-size:.76rem"></div>
+          <div class="stat-accent">🔥</div>
         </div>
-        <div class="stats-edit-row">
-          <div><div class="label" style="font-size:.7rem">Injuries / Limitations</div><div class="stats-val" id="stat-injuries">Not set</div></div>
-          <button class="btn btn-ghost btn-sm" onclick="openStatEdit('injuries','Injuries','text','e.g. Bad left knee')">Edit</button>
+        <div class="stat-card">
+          <div class="label">This Week</div>
+          <div class="stat-num" id="workouts-done">—</div>
+          <div class="muted" style="font-size:.76rem">sessions</div>
+          <div class="stat-accent">📅</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Adherence</div>
+          <div class="stat-num" id="adherence-pct">—</div>
+          <div class="muted" style="font-size:.76rem">of scheduled sessions</div>
+          <div class="stat-accent">⚡</div>
+        </div>
+      </div>
+      <!-- CHARTS -->
+      <div class="grid2" style="margin-bottom:12px">
+        <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem;display:flex;justify-content:space-between;align-items:center">Weight History <span id="weight-trend-badge"></span></div><div class="chart-wrap"><canvas id="weight-chart"></canvas></div></div>
+        <div class="card"><div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">This Week — Volume (kg lifted)</div><div class="chart-wrap"><canvas id="volume-chart"></canvas></div></div>
+      </div>
+      <!-- WORKOUT HEATMAP -->
+      <div class="card" style="margin-bottom:12px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;font-size:.92rem;display:flex;justify-content:space-between;align-items:center">
+          Workout Heatmap
+          <span style="font-size:.72rem;color:var(--text2);font-weight:400">Last 8 weeks</span>
+        </div>
+        <div id="workout-heatmap" class="heatmap-grid"></div>
+        <div style="display:flex;align-items:center;gap:5px;margin-top:8px;justify-content:flex-end">
+          <span style="font-size:.68rem;color:var(--text3)">Less</span>
+          <div style="width:9px;height:9px;border-radius:2px;background:var(--bg3)"></div>
+          <div style="width:9px;height:9px;border-radius:2px;background:rgba(212,255,0,.25)"></div>
+          <div style="width:9px;height:9px;border-radius:2px;background:rgba(212,255,0,.6)"></div>
+          <div style="width:9px;height:9px;border-radius:2px;background:var(--lime)"></div>
+          <span style="font-size:.68rem;color:var(--text3)">More</span>
+        </div>
+      </div>
+      <!-- STRENGTH PROGRESS -->
+      <div class="card" style="margin-bottom:12px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">💪 Strength Progress</div>
+        <div id="strength-progress-table"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">Log workouts to see strength gains</div></div>
+      </div>
+      <!-- MILESTONES + ACTIVITY 2-col -->
+      <div class="grid2" style="margin-bottom:12px">
+        <div class="card">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">🏆 Milestones</div>
+          <div id="milestones-list"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">Keep training to unlock milestones!</div></div>
+        </div>
+        <div class="card">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">Recent Activity</div>
+          <div id="client-activity-feed"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">No activity yet</div></div>
+        </div>
+      </div>
+      <!-- TRAINER NOTES -->
+      <div class="card" style="margin-bottom:12px" id="trainer-notes-section">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;font-size:.92rem">📝 Trainer Notes</div>
+        <div id="trainer-notes-list"><div class="muted" style="text-align:center;padding:16px;font-size:.85rem">No notes from your trainer yet</div></div>
+      </div>
+    </div>
+
+    <div class="page" id="page-client-plan">
+      <div class="page-header"><div><div class="label">Your Program</div><h1 class="page-title">My Plan</h1></div></div>
+      <div id="client-plan-view"></div>
+    </div>
+
+    <div class="page" id="page-client-profile">
+      <div class="page-header"><div><div class="label">Account</div><h1 class="page-title">Profile</h1></div><button class="btn btn-ghost btn-sm" onclick="logout()">Sign Out</button></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:960px">
+        <!-- LEFT COL: Account info + weight -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+              <div class="avatar avatar-lg" id="profile-avatar">?</div>
+              <div><div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700" id="profile-name">—</div><div class="muted" id="profile-email">—</div><div style="margin-top:6px" id="profile-badge"></div></div>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px">
+              <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">WhatsApp Number</div>
+              <div class="muted" style="font-size:.8rem;margin-bottom:10px">So your trainer can reach you on WhatsApp</div>
+              <div style="display:flex;gap:8px">
+                <input class="inp" id="profile-phone" type="tel" inputmode="tel" placeholder="91XXXXXXXXXX" style="flex:1">
+                <button class="btn btn-lime btn-sm" onclick="savePhone()">Save</button>
+              </div>
+              <div id="phone-saved-indicator" style="margin-top:6px;font-size:.78rem;color:var(--green)"></div>
+            </div>
+            <div id="trainer-link-section" style="border-top:1px solid var(--border);padding-top:16px">
+              <div style="font-weight:700;font-size:.9rem;margin-bottom:3px">Link to Your Trainer</div>
+              <div class="muted" style="font-size:.8rem;margin-bottom:10px">Enter trainer code to send a join request</div>
+              <div id="trainer-linked-info" style="margin-bottom:8px"></div>
+              <div id="trainer-link-input-row" style="display:flex;gap:8px">
+                <input class="inp code-inp" id="profile-trainer-code" placeholder="JAY-4829" maxlength="8" style="flex:1;font-size:18px">
+                <button class="btn btn-lime btn-sm" onclick="linkTrainer()">Send Request</button>
+              </div>
+            </div>
+          </div>
+          <!-- WEIGHT LOG CARD -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem">⚖️ Body Weight Log</div>
+              <button class="btn btn-lime btn-sm" onclick="openMeasurementModal()">+ Log Weight</button>
+            </div>
+            <div id="measurements-table"></div>
+          </div>
+        </div>
+        <!-- RIGHT COL: Stats -->
+        <div class="card" style="align-self:start">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:16px">📊 My Stats</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Age</div><div class="stats-val" id="stat-age">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('age','Age','number','e.g. 25')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Height</div><div class="stats-val" id="stat-height_cm">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('height_cm','Height (cm)','number','e.g. 175')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Fitness Goal</div><div class="stats-val" id="stat-fitness_goal">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('fitness_goal','Fitness Goal','text','e.g. Lose fat')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Experience Level</div><div class="stats-val" id="stat-experience_level">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('experience_level','Experience Level','select','')">Edit</button>
+            </div>
+            <div class="stats-edit-row">
+              <div><div class="label" style="font-size:.7rem">Injuries / Limitations</div><div class="stats-val" id="stat-injuries">Not set</div></div>
+              <button class="btn btn-ghost btn-sm" onclick="openStatEdit('injuries','Injuries','text','e.g. Bad left knee')">Edit</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-```
 
   </div>
 </div>
 
 <!-- MODALS -->
-
 <div class="modal-overlay hidden" id="ex-modal">
   <div class="modal">
     <div class="modal-title" id="ex-modal-title">Add Exercise</div>
@@ -1054,7 +1046,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- QR CODE MODAL -->
-
 <div class="modal-overlay hidden" id="qr-modal">
   <div class="modal" style="max-width:340px;text-align:center">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
@@ -1069,7 +1060,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- TRAINER NOTE MODAL -->
-
 <div class="modal-overlay hidden" id="note-modal">
   <div class="modal">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
@@ -1088,7 +1078,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- PLAN EDIT MODAL -->
-
 <div class="modal-overlay hidden" id="plan-edit-modal">
   <div class="modal">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
@@ -1101,7 +1090,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- PLAN REVIEW MODAL -->
-
 <div class="modal-overlay hidden" id="review-modal">
   <div class="modal">
     <div class="modal-title">Review & Send Plan</div>
@@ -1120,7 +1108,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- CLIENT PROGRESS MODAL (trainer views client logs) -->
-
 <div class="modal-overlay hidden" id="client-progress-modal">
   <div class="modal">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
@@ -1132,7 +1119,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- TUTORIAL MODAL -->
-
 <div class="modal-overlay hidden" id="tutorial-modal">
   <div class="modal">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
@@ -1145,7 +1131,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- WHATSAPP SHARE MODAL -->
-
 <div class="modal-overlay hidden" id="wa-modal">
   <div class="modal">
     <div class="modal-title">Plan Sent! 🎉</div>
@@ -1160,7 +1145,6 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- ONBOARDING WIZARD -->
-
 <div class="ob-overlay hidden" id="ob-overlay">
   <div class="ob-card">
     <div class="ob-header">
@@ -3213,6 +3197,5 @@ async function init(){
 }
 init();
 </script>
-
 </body>
 </html>

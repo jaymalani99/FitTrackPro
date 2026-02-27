@@ -1295,10 +1295,11 @@ async function login(){
     btn.disabled=false;btn.textContent='Continue →';
     return;
   }
-  // onAuthStateChange fires bootApp — show loading while it runs
+  // Directly boot — don't rely on onAuthStateChange which can fail on iOS WebKit
   if(data?.user){
     document.getElementById('loading').classList.remove('hidden');
     document.getElementById('auth-screen').classList.add('hidden');
+    await bootApp(data.user);
   }
 }
 async function signup(){
@@ -3200,7 +3201,13 @@ async function init(){
   setupOfflineDetection();
   try{
     if(!window.supabase){throw new Error('App failed to load — check connection and refresh');}
-    db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+    // iOS Safari/PWA: localStorage can be blocked. Use a memory+sessionStorage fallback.
+    const iosStorage={
+      getItem:(k)=>{try{return localStorage.getItem(k);}catch{try{return sessionStorage.getItem(k);}catch{return null;}}},
+      setItem:(k,v)=>{try{localStorage.setItem(k,v);}catch{try{sessionStorage.setItem(k,v);}catch{}}},
+      removeItem:(k)=>{try{localStorage.removeItem(k);}catch{try{sessionStorage.removeItem(k);}catch{}}}
+    };
+    db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{storage:iosStorage,persistSession:true,detectSessionInUrl:false}});
     const {data:{session}}=await db.auth.getSession();
     if(session?.user)await bootApp(session.user);
     else{document.getElementById('loading').classList.add('hidden');document.getElementById('auth-screen').classList.remove('hidden');startCarousel();}

@@ -1289,18 +1289,22 @@ async function login(){
   const pass=document.getElementById('l-pass').value;
   if(!email||!pass)return toast('Fill in all fields','error');
   const btn=document.getElementById('login-btn');btn.disabled=true;btn.textContent='Signing in...';
-  booting=false; // reset in case previous attempt got stuck
+  booting=false;
   const {data,error}=await db.auth.signInWithPassword({email,password:pass});
   if(error){
     toast(error.message,'error');
     btn.disabled=false;btn.textContent='Continue →';
     return;
   }
-  // Mobile PWA fallback: onAuthStateChange sometimes doesn't fire on installed PWAs
-  // Manually boot if we have a session and app hasn't shown yet
-  if(data?.user&&document.getElementById('app').classList.contains('hidden')){
-    document.getElementById('loading').classList.remove('hidden');
-    await bootApp(data.user);
+  // onAuthStateChange will fire and call bootApp
+  // Fallback for mobile PWA: if app still hidden after 1.5s, boot manually
+  if(data?.user){
+    setTimeout(async()=>{
+      if(document.getElementById('app').classList.contains('hidden')&&!booting){
+        document.getElementById('loading').classList.remove('hidden');
+        await bootApp(data.user);
+      }
+    },1500);
   }
 }
 async function signup(){
@@ -1452,7 +1456,8 @@ function obLoadQuickPlan(){
 async function bootApp(user){
   if(booting)return;booting=true;currentUser=user;
   try{
-    const {data:profile}=await db.from('profiles').select('*').eq('id',user.id).single();
+    const {data:profile,error:pErr}=await db.from('profiles').select('*').eq('id',user.id).single();
+    if(pErr)throw new Error('Profile fetch: '+pErr.message);
     if(!profile){
       toast('Profile not found — please try signing in again','error');
       await db.auth.signOut();
@@ -1462,7 +1467,7 @@ async function bootApp(user){
     }
     currentProfile=profile;
     renderNav(profile.role);updateUserUI(profile);
-    setTimeout(subscribeToPush, 2000); // ask push permission after UI loads
+    setTimeout(subscribeToPush, 2000);
     if(profile.role==='admin')await bootAdmin();
     else if(profile.role==='trainer')await bootTrainer();
     else await bootClient();
@@ -1472,7 +1477,9 @@ async function bootApp(user){
     registerSW();
   }catch(e){
     console.error('bootApp error:',e);
-    toast('Something went wrong — please try again','error');
+    // Show actual error on screen so mobile users can report it
+    const msg=e?.message||String(e)||'Unknown error';
+    toast('Error: '+msg,'error');
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');
     booting=false;
@@ -2184,7 +2191,7 @@ async function bootClient(){
     db.from('workout_plans').select('*,plan_exercises(*,exercises(*))').eq('client_id',currentUser.id).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
     db.from('body_measurements').select('*').eq('client_id',currentUser.id).order('measured_at',{ascending:false}),
     db.from('exercise_logs').select('*').eq('client_id',currentUser.id).in('workout_date',last7),
-    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps_completed,completed,exercises(name,category)').eq('client_id',currentUser.id).not('weight_kg','is',null).order('workout_date',{ascending:true}),
+    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps_completed,completed,exercises(name,category)').eq('client_id',currentUser.id).order('workout_date',{ascending:true}),
     db.from('trainer_notes').select('*').eq('client_id',currentUser.id).order('created_at',{ascending:false}).limit(10)
   ]);
   clientPlan=planData;clientPlanExercises=planData?.plan_exercises||[];
@@ -3210,10 +3217,11 @@ async function init(){
       }
     });
   }catch(err){
-    console.error(err);
+    console.error('init error:',err);
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');
-    toast('Connection error — check your internet','error');
+    const msg=err?.message||String(err)||'Unknown';
+    toast('Init error: '+msg,'error');
   }
 }
 init();

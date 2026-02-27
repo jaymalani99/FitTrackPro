@@ -2191,7 +2191,7 @@ async function bootClient(){
     db.from('workout_plans').select('*,plan_exercises(*,exercises(*))').eq('client_id',currentUser.id).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
     db.from('body_measurements').select('*').eq('client_id',currentUser.id).order('measured_at',{ascending:false}),
     db.from('exercise_logs').select('*').eq('client_id',currentUser.id).in('workout_date',last7),
-    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps_completed,completed,exercises(name,category)').eq('client_id',currentUser.id).order('workout_date',{ascending:true}),
+    db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps_completed,completed,exercises(name,category)').eq('client_id',currentUser.id).gte('workout_date',new Date(Date.now()-90*864e5).toISOString().split('T')[0]).order('workout_date',{ascending:true}),
     db.from('trainer_notes').select('*').eq('client_id',currentUser.id).order('created_at',{ascending:false}).limit(10)
   ]);
   clientPlan=planData;clientPlanExercises=planData?.plan_exercises||[];

@@ -1288,8 +1288,9 @@ async function login(){
   const pass=document.getElementById('l-pass').value;
   if(!email||!pass)return toast('Fill in all fields','error');
   const btn=document.getElementById('login-btn');btn.disabled=true;btn.textContent='Signing in...';
+  booting=false; // reset in case previous attempt got stuck
   const {error}=await db.auth.signInWithPassword({email,password:pass});
-  if(error){toast(error.message,'error');btn.disabled=false;btn.textContent='Sign In';}
+  if(error){toast(error.message,'error');btn.disabled=false;btn.textContent='Continue →';}
 }
 async function signup(){
   const name=document.getElementById('s-name').value.trim();
@@ -1459,9 +1460,11 @@ async function bootApp(user){
     document.getElementById('app').classList.remove('hidden');
     registerSW();
   }catch(e){
-    console.error(e);toast('Something went wrong','error');
+    console.error('bootApp error:',e);
+    toast('Something went wrong — please try again','error');
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');
+    booting=false;
   }
   booting=false;
 }

@@ -1,4 +1,4 @@
-<!-- TrackMyReps v2.8 — build 20260225 -->
+<!-- TrackMyReps v2.9 — build 20260227 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta http-equiv="Expires" content="0">
 <title>TrackMyReps</title>
 <link rel="manifest" href="/manifest.json">
@@ -1289,8 +1290,18 @@ async function login(){
   if(!email||!pass)return toast('Fill in all fields','error');
   const btn=document.getElementById('login-btn');btn.disabled=true;btn.textContent='Signing in...';
   booting=false; // reset in case previous attempt got stuck
-  const {error}=await db.auth.signInWithPassword({email,password:pass});
-  if(error){toast(error.message,'error');btn.disabled=false;btn.textContent='Continue →';}
+  const {data,error}=await db.auth.signInWithPassword({email,password:pass});
+  if(error){
+    toast(error.message,'error');
+    btn.disabled=false;btn.textContent='Continue →';
+    return;
+  }
+  // Mobile PWA fallback: onAuthStateChange sometimes doesn't fire on installed PWAs
+  // Manually boot if we have a session and app hasn't shown yet
+  if(data?.user&&document.getElementById('app').classList.contains('hidden')){
+    document.getElementById('loading').classList.remove('hidden');
+    await bootApp(data.user);
+  }
 }
 async function signup(){
   const name=document.getElementById('s-name').value.trim();
@@ -3116,24 +3127,31 @@ async function sendPushToUser(userId, title, body, url='/'){
 }
 
 function registerSW(){
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('/sw.js').then(reg=>{
-      // Check for updates immediately and every 60s
-      reg.update();
-      setInterval(()=>reg.update(),60000);
-      // When new SW is waiting, activate it immediately
-      reg.addEventListener('updatefound',()=>{
-        const newSW=reg.installing;
-        newSW?.addEventListener('statechange',()=>{
-          if(newSW.state==='installed'&&navigator.serviceWorker.controller){
-            newSW.postMessage({type:'SKIP_WAITING'});
-          }
-        });
+  if(!('serviceWorker' in navigator))return;
+  // Force-update: unregister any old SWs from other paths, then register fresh
+  navigator.serviceWorker.getRegistrations().then(regs=>{
+    regs.forEach(r=>{if(!r.scope.includes(location.origin))r.unregister();});
+  });
+  navigator.serviceWorker.register('/sw.js?v=20260227').then(reg=>{
+    reg.update();
+    setInterval(()=>reg.update(),30000);
+    reg.addEventListener('updatefound',()=>{
+      const newSW=reg.installing;
+      newSW?.addEventListener('statechange',()=>{
+        if(newSW.state==='installed'){
+          // Skip waiting immediately — don't wait for user
+          newSW.postMessage({type:'SKIP_WAITING'});
+        }
       });
-    }).catch(()=>{});
-    // Reload page when new SW takes control
-    navigator.serviceWorker.addEventListener('controllerchange',()=>window.location.reload());
-  }
+    });
+    // If a SW is already waiting, activate it now
+    if(reg.waiting){reg.waiting.postMessage({type:'SKIP_WAITING'});}
+  }).catch(e=>console.warn('SW registration failed',e));
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    // Only reload if not mid-auth to avoid disrupting login
+    if(!document.getElementById('auth-screen')?.classList.contains('hidden'))return;
+    window.location.reload();
+  });
 }
 
 // OFFLINE DETECTION

@@ -1,4 +1,4 @@
-<!-- TrackMyReps v2.9 — build 20260227 -->
+<!-- TrackMyReps v3.0 — build 20260227 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta http-equiv="Expires" content="0">
 <title>TrackMyReps</title>
 <link rel="manifest" href="/manifest.json">
@@ -20,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{
   --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--card:#161616;
@@ -1296,15 +1295,10 @@ async function login(){
     btn.disabled=false;btn.textContent='Continue →';
     return;
   }
-  // onAuthStateChange will fire and call bootApp
-  // Fallback for mobile PWA: if app still hidden after 1.5s, boot manually
+  // onAuthStateChange fires bootApp — show loading while it runs
   if(data?.user){
-    setTimeout(async()=>{
-      if(document.getElementById('app').classList.contains('hidden')&&!booting){
-        document.getElementById('loading').classList.remove('hidden');
-        await bootApp(data.user);
-      }
-    },1500);
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('auth-screen').classList.add('hidden');
   }
 }
 async function signup(){
@@ -1484,7 +1478,6 @@ async function bootApp(user){
     document.getElementById('auth-screen').classList.remove('hidden');
     booting=false;
   }
-  booting=false;
 }
 function updateUserUI(p){
   const ini=(p.full_name||p.email).split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2);
@@ -2189,8 +2182,8 @@ async function bootClient(){
   const last56=Array.from({length:56},(_,i)=>{const d=new Date();d.setDate(d.getDate()-55+i);return d.toISOString().split('T')[0];});
   const [{data:planData},{data:measData},{data:logsData},{data:allLogsData},{data:notesData}]=await Promise.all([
     db.from('workout_plans').select('*,plan_exercises(*,exercises(*))').eq('client_id',currentUser.id).eq('active',true).order('assigned_at',{ascending:false}).limit(1).maybeSingle(),
-    db.from('body_measurements').select('*').eq('client_id',currentUser.id).order('measured_at',{ascending:false}),
-    db.from('exercise_logs').select('*').eq('client_id',currentUser.id).in('workout_date',last7),
+    db.from('body_measurements').select('id,client_id,weight_kg,measured_at').eq('client_id',currentUser.id).order('measured_at',{ascending:false}).limit(60),
+    db.from('exercise_logs').select('id,workout_date,exercise_id,set_number,weight_kg,reps_completed,completed').eq('client_id',currentUser.id).in('workout_date',last7),
     db.from('exercise_logs').select('workout_date,exercise_id,weight_kg,reps_completed,completed,exercises(name,category)').eq('client_id',currentUser.id).gte('workout_date',new Date(Date.now()-90*864e5).toISOString().split('T')[0]).order('workout_date',{ascending:true}),
     db.from('trainer_notes').select('*').eq('client_id',currentUser.id).order('created_at',{ascending:false}).limit(10)
   ]);
@@ -3067,7 +3060,7 @@ async function updateCharts(){
   const weekStartVC=new Date();const dowVC=weekStartVC.getDay();
   weekStartVC.setDate(weekStartVC.getDate()-(dowVC===0?6:dowVC-1)); // Monday
   const weekDays=Array.from({length:7},(_,i)=>{const d=new Date(weekStartVC);d.setDate(d.getDate()+i);return d.toISOString().split('T')[0];});
-  const {data:logs}=await db.from('exercise_logs').select('workout_date,weight_kg,reps_completed').eq('client_id',currentUser.id).not('weight_kg','is',null).in('workout_date',weekDays);
+  const {data:logs}=await db.from('exercise_logs').select('workout_date,weight_kg,reps_completed').eq('client_id',currentUser.id).in('workout_date',weekDays);
   // Volume = weight_kg × reps_completed per set, summed per day
   const vol={};weekDays.forEach(d=>vol[d]=0);
   logs?.forEach(l=>{
@@ -3141,7 +3134,7 @@ function registerSW(){
   });
   navigator.serviceWorker.register('/sw.js?v=20260227').then(reg=>{
     reg.update();
-    setInterval(()=>reg.update(),30000);
+    setInterval(()=>reg.update(),300000); // check every 5min not 30s
     reg.addEventListener('updatefound',()=>{
       const newSW=reg.installing;
       newSW?.addEventListener('statechange',()=>{
@@ -3206,6 +3199,7 @@ async function init(){
   }
   setupOfflineDetection();
   try{
+    if(!window.supabase){throw new Error('App failed to load — check connection and refresh');}
     db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
     const {data:{session}}=await db.auth.getSession();
     if(session?.user)await bootApp(session.user);

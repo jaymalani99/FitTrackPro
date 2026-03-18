@@ -3,2007 +3,654 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Malani Doosra — Filmmaker & Cinematographer, Mumbai</title>
-<meta name="description" content="Malani Doosra — filmmaker, cinematographer, AI-native builder based in Mumbai. Travel films, documentaries, BTS and ad films.">
-<meta property="og:title" content="Malani Doosra — Filmmaker & Cinematographer">
-<meta property="og:description" content="Can't sit still. Always asking what's next. I make videos. I build with AI.">
-<meta property="og:url" content="https://malanidoosra.vercel.app">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Malani Doosra — Filmmaker">
-<meta property="og:image" content="https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:image" content="https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/og-image.png">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23060606'/><rect x='9' y='2' width='14' height='4' fill='%23cc2200'/><rect x='7' y='5' width='18' height='3' fill='%23cc2200'/><rect x='10' y='7' width='12' height='8' fill='%23f5c5a3'/><rect x='11' y='10' width='3' height='3' fill='%231a1a1a'/><rect x='18' y='10' width='3' height='3' fill='%231a1a1a'/><rect x='9' y='15' width='14' height='9' fill='%23eeeeee'/><rect x='3' y='16' width='5' height='8' fill='%23f5c5a3'/><rect x='24' y='16' width='5' height='8' fill='%23f5c5a3'/><rect x='9' y='24' width='14' height='6' fill='%231a6ab5'/><rect x='9' y='28' width='6' height='4' fill='%23111111'/><rect x='17' y='28' width='6' height='4' fill='%23111111'/></svg>">
+<title>TrackMyReps — Fitness Coaching for India</title>
+<meta name="description" content="The fitness coaching platform built for Indian personal trainers. Build plans, track clients, send workouts via WhatsApp. ₹99/client/month.">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#080808">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap');
-:root{--k:#060606;--y:#FFE500;--w:#f0f0ee;--g:#00ff41;--r:#ff3333;}
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--k);color:var(--w);cursor:none;}
-#cur{position:fixed;width:12px;height:12px;background:var(--y);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform 0.1s;}
-#cur.big{transform:translate(-50%,-50%) scale(2.5);}
-#cur2{position:fixed;width:28px;height:28px;border:1px solid rgba(255,229,0,0.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s,top 0.12s,transform 0.2s;}
-#stage{position:fixed;top:0;left:0;width:600vw;height:100vh;display:flex;transition:transform 0.9s cubic-bezier(0.77,0,0.175,1);}
-.world{width:100vw;height:100vh;position:relative;overflow:hidden;flex-shrink:0;}
-#w0{background:var(--k);}
-#w1{background:linear-gradient(180deg,#04101e 0%,#071a32 40%,#0a2240 60%,#071830 100%);}
-#w2{background:linear-gradient(180deg,#080808 0%,#0f0d0a 50%,#080808 100%);}
-#w3{background:linear-gradient(180deg,#060500 0%,#100e00 40%,#060500 100%);}
-#w4{background:linear-gradient(180deg,#03000a 0%,#07001a 50%,#020008 100%);}
-.world::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);pointer-events:none;z-index:1;}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");pointer-events:none;z-index:500;opacity:0.3;}
-#dave{position:fixed;z-index:9000;pointer-events:none;}
-.dw{image-rendering:pixelated;width:22px;height:29px;position:relative;transform-origin:bottom center;}
-.px{position:absolute;image-rendering:pixelated;}
-.dc{width:14px;height:4px;background:#cc2200;top:0;left:4px;}
-.db2{width:17px;height:2px;background:#cc2200;top:3px;left:2px;}
-.dh{width:11px;height:8px;background:#f5c5a3;top:4px;left:5px;}
-.del{width:2px;height:2px;background:#1a1a1a;top:7px;left:12px;}
-.der{width:2px;height:2px;background:#1a1a1a;top:7px;left:14px;}
-.dt{width:13px;height:9px;background:#eee;border:1px solid #aaa;top:12px;left:4px;}
-.dal{width:4px;height:7px;background:#f5c5a3;top:13px;left:17px;}
-.dar{width:4px;height:7px;background:#f5c5a3;top:13px;left:0px;}
-.dp{width:14px;height:7px;background:#1a6ab5;top:21px;left:4px;}
-.dsl{width:6px;height:3px;background:#111;bottom:0;left:3px;}
-.dsr{width:6px;height:3px;background:#111;bottom:0;left:12px;}
-@keyframes walk{
-  0%  {transform:scaleX(1) translateY(0);}
-  25% {transform:scaleX(1) translateY(-3px);}
-  50% {transform:scaleX(1) translateY(0);}
-  75% {transform:scaleX(1) translateY(-3px);}
-  100%{transform:scaleX(1) translateY(0);}
+:root {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --card: #111;
+  --lime: #D4FF00;
+  --lime2: #b8e000;
+  --border: #1e1e1e;
+  --text: #f0f0f0;
+  --text2: #777;
+  --text3: #444;
+  --green: #00E676;
+  --blue: #4488FF;
+  --r: 16px;
 }
-@keyframes legL{0%,100%{top:21px;} 50%{top:24px;}}
-@keyframes legR{0%,100%{top:24px;} 50%{top:21px;}}
-@keyframes wl{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-3px)}}
-@keyframes ib{0%,100%{transform:scaleX(1) translateY(0)}50%{transform:scaleX(1) translateY(-1px)}}
-@keyframes jmp{0%{transform:scaleX(var(--f,1)) translateY(0) rotate(0)}30%{transform:scaleX(var(--f,1)) translateY(-36px) rotate(-16deg)}65%{transform:scaleX(var(--f,1)) translateY(-19px) rotate(8deg)}100%{transform:scaleX(var(--f,1)) translateY(0) rotate(0)}}
-.dw.wr{animation:walk 0.4s steps(2) infinite;}
-.dw.wr .dsl{animation:legL 0.4s steps(2) infinite;}
-.dw.wr .dsr{animation:legR 0.4s steps(2) infinite;}
-.dw.wl{animation:wl 0.26s steps(2) infinite;}
-.dw.idle{animation:ib 1.4s steps(2) infinite;}
-.dw.jump{animation:jmp 0.52s ease-out forwards;}
-@keyframes notefly{0%{opacity:0;transform:translateY(0) scale(0.6);}20%{opacity:1;}100%{opacity:0;transform:translateY(-22px) scale(1) rotate(15deg);}}
-.dnote{position:absolute;top:-14px;font-size:8px;pointer-events:none;animation:notefly 1.2s ease-out infinite;}
-.dnote:nth-child(1){left:14px;animation-delay:0s;}
-.dnote:nth-child(2){left:20px;animation-delay:0.5s;font-size:11px;}
-#nav{position:fixed;top:0;left:0;right:0;padding:16px 36px;display:flex;justify-content:space-between;align-items:center;z-index:200;background:linear-gradient(to bottom,rgba(6,6,6,0.98),transparent);}
-.nlogo{font-family:'Press Start 2P',monospace;font-size:11px;color:var(--y);letter-spacing:1px;}
-.nright{display:flex;align-items:center;gap:24px;}
-#gnd{display:none;}
-.nemail{font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.2);text-decoration:none;letter-spacing:1px;border:1px solid rgba(255,255,255,0.08);padding:6px 10px;transition:all 0.2s;}
-.nemail:hover{color:var(--y);border-color:var(--y);}
-#sbar{position:fixed;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:16px;z-index:200;}
-.slink{font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.15);text-decoration:none;writing-mode:vertical-rl;letter-spacing:2px;transition:color 0.2s;}
-.slink:hover{color:var(--y);}
-#wct{display:none;}
-#hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,229,0,0.5);letter-spacing:3px;z-index:200;white-space:nowrap;animation:blink 2.2s steps(1) infinite;}
-#hint.small{font-size:6px;color:rgba(255,255,255,0.18);letter-spacing:2px;animation:none;}
-@keyframes blink{50%{opacity:0}}
-#flash{position:fixed;inset:0;background:var(--y);opacity:0;pointer-events:none;z-index:9990;transition:opacity 0.08s;}
-#ticker{display:none;}
-.tick-inner,.tick-item{display:none;}
-:root{--wc:255,229,0;}
-.wnav-btn{font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(var(--wc),0.5);letter-spacing:1px;border:1px solid rgba(var(--wc),0.2);padding:6px 10px;cursor:pointer;transition:color 0.3s,border-color 0.3s;background:transparent;}
-.wnav-btn:hover{color:rgba(var(--wc),0.9);border-color:rgba(var(--wc),0.5);}
-.wnav-btn.active{color:rgba(255,255,255,0.2);background:transparent;border-color:rgba(255,255,255,0.08);}
-.mute-btn{position:absolute;bottom:72px;left:56px;z-index:100;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(var(--wc),0.5);letter-spacing:2px;border:1px solid rgba(var(--wc),0.2);padding:8px 12px;transition:color 0.3s,border-color 0.3s;background:rgba(0,0,0,0.4);pointer-events:all;}
-.mute-btn:hover{color:rgba(var(--wc),1);border-color:rgba(var(--wc),0.5);}
-.mute-btn.shaking{animation:shake 0.6s ease-in-out infinite;}
-/* ── LAYOUT ── */
-#nav{position:fixed;top:0;left:0;right:0;padding:16px 36px;display:flex;justify-content:space-between;align-items:center;z-index:200;background:linear-gradient(to bottom,rgba(6,6,6,0.98),transparent);transition:opacity 0.5s;opacity:0;pointer-events:none;}
-#sbar{position:fixed;right:20px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:16px;z-index:200;transition:opacity 0.5s;}
-#hint{transition:opacity 0.5s;}
-#gnd{display:none;}
-#dave{position:fixed;bottom:48px;z-index:9000;pointer-events:none;}
-#dave.grabbable{pointer-events:all;cursor:grab;}
-#dave.grabbing{cursor:grabbing;}
-/* ── EASTER EGG coin ── */
-@keyframes coinfly{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(0.3)}}
-.cpop{position:fixed;font-family:'Press Start 2P',monospace;font-size:13px;color:var(--y);pointer-events:none;z-index:9999;animation:coinfly 0.75s ease-out forwards;}
-/* ── VIDEO WORLD LABELS ── */
-.wlabel{font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,229,0,0.35);letter-spacing:5px;margin-bottom:10px;}
-.wtit{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,7vw,104px);line-height:0.86;letter-spacing:-1px;margin-bottom:6px;}
-.wtit .wy{color:var(--y);}
-.wtit .ww{color:var(--w);}
-.wdesc{font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.2);margin-bottom:20px;line-height:1.8;letter-spacing:0.5px;}
-/* ── CAROUSEL ARROWS ── */
-#w1prev,#w1next,#w3prev,#w3next,#w4prev,#w4next{transition:border-color 0.3s,color 0.3s;}
-#w1prev:hover,#w1next:hover,#w3prev:hover,#w3next:hover,#w4prev:hover,#w4next:hover{border-color:rgba(var(--wc),0.5)!important;color:rgba(var(--wc),0.9)!important;}
-/* ── VIDEO UI ── */
-@keyframes shake{0%,100%{transform:translateX(0)}15%{transform:translateX(-4px)}30%{transform:translateX(4px)}45%{transform:translateX(-3px)}60%{transform:translateX(3px)}75%{transform:translateX(-2px)}90%{transform:translateX(2px)}}
-.vid-loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,255,255,0.15);letter-spacing:3px;z-index:5;animation:blink 1s steps(1) infinite;pointer-events:none;transition:opacity 0.5s;}
-.vid-loading.hidden{opacity:0;pointer-events:none;}
-@keyframes labelFadeOut{0%,40%{opacity:1;}100%{opacity:0;}}
-.wlabel,.wtit,.wdesc{animation:labelFadeOut 4s ease-out forwards;}
-#vibeNote{position:fixed;bottom:16px;left:56px;font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.22);letter-spacing:1px;z-index:200;transition:opacity 0.4s;pointer-events:none;}
-#vibeNote.hide{opacity:0;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;height:-webkit-fill-available}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(8,8,8,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-.5px;text-decoration:none;color:var(--text)}
+.brand span{color:var(--lime)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:.88rem;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-tab{padding:9px 20px;border-radius:100px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.84rem;cursor:pointer;transition:all .15s;border:1px solid var(--border);color:var(--text2);background:transparent;text-decoration:none}
+.nav-tab:hover{border-color:var(--text2);color:var(--text)}
+.nav-tab.active{background:var(--lime);color:#000;border-color:var(--lime)}
+
+/* ── ABOVE-FOLD: HERO + AUTH SPLIT ── */
+.above-fold{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 480px;
+  gap:0;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  padding-top:72px;
+}
+/* glow effects */
+.hero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(212,255,0,.1) 0%,transparent 65%);top:50%;left:25%;transform:translate(-50%,-55%);pointer-events:none}
+.hero-glow2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(68,136,255,.07) 0%,transparent 65%);bottom:5%;right:480px;pointer-events:none}
+
+/* LEFT: HERO */
+.hero-left{
+  padding:60px 56px 60px 64px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  z-index:1;
+}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.2);border-radius:100px;padding:7px 16px;font-size:.76rem;color:var(--lime);font-weight:600;margin-bottom:28px;letter-spacing:.5px;animation:fadeUp .5s ease both;width:fit-content}
+.hero h1{font-size:clamp(2.6rem,4.5vw,4.2rem);font-weight:800;line-height:1.0;letter-spacing:-2px;margin-bottom:22px;animation:fadeUp .5s .1s ease both}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero-sub{font-size:.96rem;color:var(--text2);line-height:1.75;margin-bottom:36px;max-width:440px;animation:fadeUp .5s .2s ease both}
+/* mini stat pills */
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;animation:fadeUp .5s .3s ease both}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;padding:7px 14px;font-size:.78rem;color:var(--text2)}
+.pill strong{color:var(--lime);font-weight:700}
+
+/* vertical divider */
+.above-fold::after{content:'';position:absolute;right:480px;top:15%;bottom:15%;width:1px;background:linear-gradient(to bottom,transparent,var(--border) 20%,var(--border) 80%,transparent)}
+
+/* RIGHT: AUTH PANEL */
+.auth-panel{
+  background:var(--bg2);
+  border-left:1px solid var(--border);
+  min-height:calc(100vh - 72px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 36px;
+  position:relative;
+  z-index:1;
+}
+.auth-inner{width:100%;max-width:380px}
+
+/* auth tabs */
+.auth-tabs{display:flex;background:var(--bg3);border-radius:100px;padding:4px;margin-bottom:28px;border:1px solid var(--border)}
+.auth-tab{flex:1;text-align:center;padding:10px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.86rem;transition:all .2s;color:var(--text2)}
+.auth-tab.active{background:var(--lime);color:#000}
+
+/* form */
+.form-stack{display:flex;flex-direction:column;gap:13px}
+.inp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:13px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;transition:border-color .2s;outline:none;-webkit-appearance:none}
+.inp:focus{border-color:var(--lime)}
+.inp::placeholder{color:var(--text3)}
+.btn-lime{display:block;width:100%;background:var(--lime);color:#000;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.95rem;padding:14px;border-radius:100px;border:none;cursor:pointer;transition:all .15s;text-align:center}
+.btn-lime:active{background:var(--lime2);transform:scale(.97)}
+.btn-lime:disabled{opacity:.5;cursor:not-allowed}
+.btn-ghost{display:block;width:100%;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;padding:12px;border-radius:100px;border:1px solid var(--border);cursor:pointer;transition:all .15s;text-align:center}
+.btn-ghost:hover{border-color:var(--text2)}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.role-card{background:var(--bg3);border:2px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;-webkit-user-select:none;user-select:none}
+.role-card.active{border-color:var(--lime);background:rgba(212,255,0,.07)}
+.code-inp{letter-spacing:3px;text-transform:uppercase;font-family:'Syne',sans-serif;font-weight:700;text-align:center}
+.auth-heading{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:4px}
+.auth-sub{color:var(--text2);font-size:.82rem;margin-bottom:6px}
+.forgot-link{text-align:center;font-size:.8rem;color:var(--text2);cursor:pointer;text-decoration:underline;text-underline-offset:3px;margin-top:4px}
+.hidden{display:none!important}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:20px;z-index:9999;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 16px;display:flex;align-items:center;gap:9px;transform:translateX(200%);transition:transform .3s;font-size:.84rem;box-shadow:0 8px 32px rgba(0,0,0,.6);max-width:320px}
+#toast.show{transform:translateX(0)}
+#toast.success{border-color:var(--green)}
+#toast.error{border-color:#FF4444}
+
+/* ── BELOW FOLD: MARKETING SECTIONS ── */
+.marketing{position:relative;z-index:1}
+
+/* HOW IT WORKS */
+section{padding:96px 24px;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--lime);font-weight:700;margin-bottom:14px}
+.section-title{font-size:clamp(2rem,3.5vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:14px}
+.section-sub{font-size:.96rem;color:var(--text2);max-width:500px;line-height:1.7}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;border:1px solid var(--border);border-radius:24px;overflow:hidden;background:var(--border)}
+.step{background:var(--bg2);padding:36px 28px;position:relative;transition:background .2s}
+.step:hover{background:var(--bg3)}
+.step-num{font-family:'Syne',sans-serif;font-weight:800;font-size:3rem;color:var(--border);line-height:1;margin-bottom:16px;transition:color .2s}
+.step:hover .step-num{color:rgba(212,255,0,.15)}
+.step-icon{font-size:1.8rem;margin-bottom:14px;display:block}
+.step h3{font-size:1rem;font-weight:700;margin-bottom:9px}
+.step p{font-size:.84rem;color:var(--text2);line-height:1.65}
+.step-accent{position:absolute;top:0;left:0;right:0;height:2px;background:var(--lime);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.step:hover .step-accent{transform:scaleX(1)}
+
+/* FEATURES */
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:56px}
+.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:28px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+.feature-card:hover{border-color:rgba(212,255,0,.25);transform:translateY(-3px)}
+.feature-card.featured{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.feature-icon{width:44px;height:44px;background:rgba(212,255,0,.08);border:1px solid rgba(212,255,0,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:18px}
+.feature-card h3{font-size:1rem;font-weight:700;margin-bottom:9px}
+.feature-card p{font-size:.84rem;color:var(--text2);line-height:1.65}
+.feature-mockup{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:18px;font-size:.78rem}
+.mockup-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.mockup-row:last-child{border-bottom:none}
+.mockup-avatar{width:30px;height:30px;border-radius:50%;background:var(--lime);color:#000;font-weight:800;font-size:.72rem;display:flex;align-items:center;justify-content:center}
+.mockup-badge{padding:3px 9px;border-radius:100px;font-size:.68rem;font-weight:700}
+.badge-green{background:rgba(0,230,118,.12);color:var(--green)}
+.badge-lime{background:rgba(212,255,0,.12);color:var(--lime)}
+.badge-gray{background:rgba(255,255,255,.06);color:var(--text2)}
+
+/* WA SECTION */
+.wa-section{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;position:relative;overflow:hidden}
+.wa-section::before{content:'';position:absolute;top:-80px;right:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(37,211,102,.07),transparent 65%);pointer-events:none}
+.wa-phone{background:var(--bg3);border:1px solid var(--border);border-radius:18px;padding:18px;max-width:300px}
+.wa-header{display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.wa-dot{width:9px;height:9px;border-radius:50%}
+.wa-bubble{background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.18);border-radius:0 12px 12px 12px;padding:12px 14px;margin-bottom:6px;font-size:.8rem;line-height:1.6;color:var(--text)}
+.wa-bubble strong{color:#25D366}
+.wa-time{font-size:.66rem;color:var(--text3);text-align:right;margin-top:5px}
+.wa-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.15);border-radius:100px;padding:5px 12px;font-size:.73rem;color:#25D366;font-weight:600;margin-bottom:14px}
+
+/* PRICING */
+.pricing-card{background:var(--bg2);border:1px solid rgba(212,255,0,.2);border-radius:24px;padding:48px;text-align:center;max-width:480px;margin:56px auto 0;position:relative;overflow:hidden}
+.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--lime)}
+.price-num{font-family:'Syne',sans-serif;font-weight:800;font-size:3.5rem;color:var(--lime);line-height:1;margin:18px 0 7px}
+.price-per{color:var(--text2);font-size:.92rem;margin-bottom:28px}
+.price-features{list-style:none;text-align:left;margin-bottom:28px}
+.price-features li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem;color:var(--text2)}
+.price-features li:last-child{border-bottom:none}
+.price-features li span{color:var(--lime)}
+.price-compare{font-size:.78rem;color:var(--text3);margin-top:14px}
+.price-compare s{color:var(--text3)}
+
+/* CTA BAND */
+.cta-band{text-align:center;padding:100px 24px;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(212,255,0,.07) 0%,transparent 65%);pointer-events:none}
+.cta-band h2{font-size:clamp(2.2rem,4vw,3.5rem);font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-bottom:18px;max-width:620px;margin-left:auto;margin-right:auto}
+.cta-band p{color:var(--text2);font-size:.98rem;margin-bottom:36px}
+.btn-cta{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#000;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1rem;padding:16px 36px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-cta:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 12px 36px rgba(212,255,0,.22)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:36px 48px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+footer p{font-size:.8rem;color:var(--text3)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.8rem;color:var(--text3);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--text2)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* SPINNER */
+.spinner{width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--lime);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* ── MOBILE ── */
-#mob{display:none;position:fixed;inset:0;background:var(--k);z-index:99999;overflow:hidden;}
-@media(max-width:768px){
-  #mob{display:block;}
-  body{overflow:hidden;}
-  /* ── MONITOR LAYOUT ── */
-  #mApp{width:100%;height:100%;display:flex;flex-direction:column;}
-  /* Button rail */
-  #mRail{display:flex;align-items:flex-end;position:relative;flex-shrink:0;height:52px;background:#060606;border-bottom:1px solid #111;}
-  /* Each channel button */
-  .mBtn{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 2px 10px;font-family:'Press Start 2P',monospace;font-size:5px;letter-spacing:0.5px;color:rgba(255,255,255,0.2);border-right:1px solid #111;cursor:pointer;position:relative;transition:color 0.2s;white-space:nowrap;}
-  .mBtn:last-child{border-right:none;}
-  .mBtn.active{color:rgba(255,255,255,0.8);}
-  .mBtn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:currentColor;}
-  /* Wire canvas behind Dave on rail */
-  #mRailWire{position:absolute;inset:0;pointer-events:none;z-index:1;}
-  /* mDave on rail */
-  #mDave{position:absolute;bottom:8px;z-index:3;pointer-events:none;}
-  #mDave .dw{transform:scale(1.8);transform-origin:bottom left;}
-  /* Display area */
-  #mDisplay{flex:1;position:relative;overflow:hidden;background:#000;}
-  /* Video in display */
-  #mDisplayVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
-  /* CRT overlay on display */
-  #mDisplay::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:2;}
-  /* Corner brackets on display */
-  .mCorner{position:absolute;width:14px;height:14px;z-index:4;pointer-events:none;}
-  .mCorner.tl{top:14px;left:14px;border-top:1px solid rgba(255,255,255,0.15);border-left:1px solid rgba(255,255,255,0.15);}
-  .mCorner.tr{top:14px;right:14px;border-top:1px solid rgba(255,255,255,0.15);border-right:1px solid rgba(255,255,255,0.15);}
-  .mCorner.bl{bottom:14px;left:14px;border-bottom:1px solid rgba(255,255,255,0.15);border-left:1px solid rgba(255,255,255,0.15);}
-  .mCorner.br{bottom:14px;right:14px;border-bottom:1px solid rgba(255,255,255,0.15);border-right:1px solid rgba(255,255,255,0.15);}
-  /* Identity card on display */
-  #mIdent{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:center;padding:28px 24px;}
-  #mIdent .mi-label{font-family:'Press Start 2P',monospace;font-size:6px;color:rgba(255,229,0,0.25);letter-spacing:3px;margin-bottom:10px;}
-  #mIdent .mi-name{font-family:'Bebas Neue',sans-serif;font-size:22vw;line-height:0.83;margin-bottom:12px;}
-  #mIdent .mi-bio{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.22);line-height:1.8;}
-  #mIdent .mi-status{display:flex;align-items:center;gap:8px;margin-top:12px;}
-  #mIdent .mi-dot{width:6px;height:6px;border-radius:50%;background:#00ff41;box-shadow:0 0 8px #00ff41;animation:pulse 2s infinite;}
-  #mIdent .mi-statuslabel{font-family:'Press Start 2P',monospace;font-size:6px;color:rgba(0,255,65,0.5);letter-spacing:2px;}
-  /* HUD on display */
-  #mHud{position:absolute;inset:0;z-index:4;pointer-events:none;padding:16px;}
-  .mHud-rec{position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:5px;}
-  .mHud-recdot{width:6px;height:6px;border-radius:50%;background:#ff3333;animation:recblink 1.4s steps(1) infinite;}
-  @keyframes recblink{50%{opacity:0;}}
-  .mHud-rectext{font-family:'Press Start 2P',monospace;font-size:5px;color:rgba(255,255,255,0.4);letter-spacing:2px;}
-  .mHud-tc{position:absolute;bottom:16px;right:16px;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.18);letter-spacing:2px;}
-  .mHud-world{position:absolute;bottom:16px;left:16px;font-family:'Press Start 2P',monospace;font-size:5px;color:rgba(255,255,255,0.2);letter-spacing:2px;line-height:2;}
-  /* World label fade in */
-  #mWorldLabel{position:absolute;top:20px;left:16px;z-index:5;pointer-events:none;opacity:0;transition:opacity 0.3s;}
-  #mWorldLabel.show{animation:labelFadeOut 4s ease-out forwards;}
-  .mwl-sub{font-family:'Press Start 2P',monospace;font-size:6px;letter-spacing:3px;margin-bottom:6px;opacity:0.6;}
-  .mwl-title{font-family:'Bebas Neue',sans-serif;font-size:12vw;line-height:0.85;}
-  /* Mute button */
-  #mMuteBtn{position:absolute;top:16px;left:16px;z-index:6;font-family:'Press Start 2P',monospace;font-size:6px;padding:7px 10px;border:1px solid;background:rgba(0,0,0,0.5);letter-spacing:1px;cursor:pointer;display:none;}
-  #mMuteBtn.shaking{animation:shake 0.6s ease-in-out infinite;}
-  /* Contact card on display */
-  #mContactCard{position:absolute;inset:0;z-index:5;display:none;flex-direction:column;justify-content:center;padding:28px 24px;background:#060606;}
-  #mContactCard .mcc-title{font-family:'Bebas Neue',sans-serif;font-size:18vw;line-height:0.85;margin-bottom:20px;}
-  #mContactCard .mcc-links{display:flex;flex-direction:column;gap:10px;}
-  #mContactCard .mcc-link{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid rgba(0,255,100,0.12);text-decoration:none;}
-  #mContactCard .mcc-icon{font-family:'Press Start 2P',monospace;font-size:9px;color:rgba(0,255,100,0.35);}
-  #mContactCard .mcc-label{font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.7);letter-spacing:1px;}
-  /* Fullscreen overlay */
-  #mFull{position:fixed;inset:0;z-index:99998;background:#000;display:none;flex-direction:column;}
-  #mFullVid{width:100%;height:100%;object-fit:contain;}
-  #mFullClose{position:absolute;top:20px;right:20px;font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);padding:8px 12px;cursor:pointer;background:rgba(0,0,0,0.6);}
-  /* Landscape */
-  @media(orientation:landscape){
-    #mApp{flex-direction:row;}
-    #mRail{flex-direction:column;width:60px;height:100%;border-bottom:none;border-right:1px solid #111;align-items:flex-end;}
-    .mBtn{width:100%;flex:1;flex-direction:column;font-size:4px;padding:6px 4px;border-right:none;border-bottom:1px solid #111;writing-mode:vertical-rl;letter-spacing:1px;}
-    .mBtn.active::after{width:2px;height:100%;bottom:0;left:auto;right:0;top:0;}
-    #mRailWire{inset:0;}
-    #mDave{bottom:auto;right:8px;}
+@media(max-width:900px){
+  nav{padding:14px 18px}
+  .nav-links{display:none}
+  .above-fold{
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto;
+    padding-top:60px;
+    min-height:unset;
   }
+  .above-fold::after{display:none}
+  .hero-glow,.hero-glow2{display:none}
+  .hero-left{padding:32px 20px 24px;text-align:center}
+  .hero-badge{margin:0 auto 22px}
+  .hero h1{font-size:clamp(2.2rem,9vw,3.2rem);letter-spacing:-1px}
+  .hero-sub{font-size:.9rem;margin:0 auto 24px}
+  .hero-pills{justify-content:center}
+  .auth-panel{
+    border-left:none;
+    border-top:1px solid var(--border);
+    min-height:unset;
+    padding:28px 20px 36px;
+  }
+  .auth-inner{max-width:100%}
+  section{padding:64px 20px}
+  .steps{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr}
+  .feature-card.featured{grid-column:span 1;grid-template-columns:1fr}
+  .wa-section{grid-template-columns:1fr;padding:36px 24px;gap:36px}
+  .wa-phone{max-width:100%}
+  .pricing-card{padding:36px 20px}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:28px 20px}
+  .footer-links{flex-wrap:wrap;justify-content:center}
+  .cta-band{padding:72px 20px}
 }
-@media(max-width:768px){
-  #dave,#wireCanvas,#cur,#cur2,#nav,#sbar,#hint,#vibeNote,#flash,#rightJack,#leftJack,#wallJack{display:none!important;}
-  #mDave{display:block;position:absolute;}
-}
-@media(min-width:769px){
-  #mDave,#mRailWire,#mob,#mFull{display:none!important;}
-}
-@keyframes sit{0%,100%{transform:scaleX(var(--f,1)) translateY(4px)}50%{transform:scaleX(var(--f,1)) translateY(5px)}}
-@keyframes headbob{0%,100%{transform:scaleX(var(--f,1)) translateY(0)}25%{transform:scaleX(var(--f,1)) translateY(-4px)}75%{transform:scaleX(var(--f,1)) translateY(-2px)}}
-.dw.sit{animation:sit 2s ease-in-out infinite;}
-.dw.bob{animation:headbob 0.3s ease-in-out 3;}
-@keyframes floatup{from{transform:translateY(0) rotate(0deg);opacity:0.6}to{transform:translateY(-110vh) rotate(180deg);opacity:0}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
 </style>
 </head>
 <body>
 
-<!-- ── MOBILE ─────────────────────────────────────────── -->
-<div id="mob">
-  <!-- Mobile Dave on rail -->
-  <div id="mDave" style="left:8px;">
-    <div class="dw idle" id="mDB">
-      <div class="px dc"></div><div class="px db2"></div>
-      <div class="px dh"></div><div class="px del"></div><div class="px der"></div>
-      <div class="px dal"></div><div class="px dar"></div>
-      <div class="px dt"></div><div class="px dp"></div>
-      <div class="px dsl"></div><div class="px dsr"></div>
+<div id="toast"><span id="toast-icon"></span><span id="toast-msg"></span></div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="brand">Track<span>MyReps</span></a>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="nav-tab" id="nav-signin" onclick="showAuthTab('login')">Sign In</button>
+    <button class="nav-tab active" id="nav-signup" onclick="showAuthTab('signup')">Sign Up Free</button>
+  </div>
+</nav>
+
+<!-- ── ABOVE FOLD: HERO + AUTH ── -->
+<div class="above-fold">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <!-- LEFT: HERO TEXT -->
+  <div class="hero-left hero">
+    <div class="hero-badge">🇮🇳 Built for Indian Personal Trainers</div>
+    <h1>Your clients.<br>Your plans.<br><em>One tap.</em></h1>
+    <p class="hero-sub">Build 7-day workout plans, track every client's progress, and send it all via WhatsApp — in seconds. The coaching platform India's trainers actually want.</p>
+    <div class="hero-pills">
+      <div class="pill">💪 <strong>35+</strong> exercises</div>
+      <div class="pill">💰 <strong>₹99</strong>/client/month</div>
+      <div class="pill">📅 <strong>7-day</strong> plan builder</div>
+      <div class="pill">📡 <strong>Live</strong> progress tracking</div>
     </div>
   </div>
 
-  <div id="mApp">
-    <!-- Button rail -->
-    <div id="mRail">
-      <canvas id="mRailWire"></canvas>
-      <div class="mBtn" id="mb0" data-idx="0" data-col="255,140,0">BTS</div>
-      <div class="mBtn" id="mb1" data-idx="1" data-col="255,140,0">BTS II</div>
-      <div class="mBtn" id="mb2" data-idx="2" data-col="220,220,220">DOCU</div>
-      <div class="mBtn" id="mb3" data-idx="3" data-col="180,100,255">W&D</div>
-      <div class="mBtn" id="mb4" data-idx="4" data-col="0,210,200">TRAVEL</div>
-      <div class="mBtn" id="mb5" data-idx="5" data-col="0,210,200">TRAVEL II</div>
-      <div class="mBtn" id="mb6" data-idx="6" data-col="0,255,100">CONTACT</div>
-    </div>
+  <!-- RIGHT: AUTH PANEL -->
+  <div class="auth-panel">
+    <div class="auth-inner">
 
-    <!-- Display -->
-    <div id="mDisplay">
-      <video id="mDisplayVid" loop playsinline muted></video>
-      <div class="mCorner tl"></div>
-      <div class="mCorner tr"></div>
-      <div class="mCorner bl"></div>
-      <div class="mCorner br"></div>
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <div class="auth-tab" id="tab-login" onclick="showAuthTab('login')">Sign In</div>
+        <div class="auth-tab active" id="tab-signup" onclick="showAuthTab('signup')">Sign Up</div>
+      </div>
 
-      <!-- Identity card — shown on load -->
-      <div id="mIdent">
-        <div class="mi-label">DIRECTOR / CINEMATOGRAPHER</div>
-        <div class="mi-name"><span style="color:var(--w);">MALANI</span><br><span style="color:var(--y);">DOOSRA</span></div>
-        <div class="mi-bio">filmmaker · cinematographer · ai-native<br>mumbai, india</div>
-        <div class="mi-status">
-          <div class="mi-dot"></div>
-          <span class="mi-statuslabel">OPEN TO WORK</span>
+      <!-- LOGIN FORM -->
+      <div id="login-form">
+        <div class="auth-heading">Welcome back 👋</div>
+        <div class="auth-sub" style="margin-bottom:20px">Sign in to your account</div>
+        <div class="form-stack">
+          <input class="inp" id="l-email" type="email" autocomplete="email" placeholder="Email address">
+          <input class="inp" id="l-pass" type="password" autocomplete="current-password" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+          <button class="btn-lime" onclick="doLogin()" id="login-btn">Continue →</button>
+          <div class="forgot-link" onclick="showForgot(true)">Forgot password?</div>
         </div>
       </div>
 
-      <!-- Contact card -->
-      <div id="mContactCard">
-        <div class="mcc-title"><span style="color:#f0f0ee;">LET'S<br></span><span style="color:#00ff64;">CONNECT.</span></div>
-        <div class="mcc-links">
-          <a href="https://wa.me/918169003694" target="_blank" class="mcc-link"><span class="mcc-icon">💬</span><span class="mcc-label">WHATSAPP</span></a>
-          <a href="mailto:contactmalanidoosra@gmail.com" class="mcc-link"><span class="mcc-icon">✉</span><span class="mcc-label">EMAIL</span></a>
-          <a href="https://www.instagram.com/malanidoosra" target="_blank" class="mcc-link"><span class="mcc-icon">◈</span><span class="mcc-label">INSTAGRAM</span></a>
-          <a href="https://www.youtube.com/@Malanidoosra" target="_blank" class="mcc-link"><span class="mcc-icon">▶</span><span class="mcc-label">YOUTUBE</span></a>
+      <!-- FORGOT PASSWORD -->
+      <div id="forgot-form" class="hidden">
+        <div class="auth-heading">Reset Password</div>
+        <div class="auth-sub" style="margin-bottom:20px">We'll email you a reset link</div>
+        <div class="form-stack">
+          <input class="inp" id="fp-email" type="email" placeholder="Email address">
+          <button class="btn-lime" onclick="sendReset()">Send Reset Link</button>
+          <button class="btn-ghost" onclick="showForgot(false)">← Back to Sign In</button>
         </div>
       </div>
 
-      <!-- World label -->
-      <div id="mWorldLabel">
-        <div class="mwl-sub" id="mwlSub"></div>
-        <div class="mwl-title" id="mwlTitle"></div>
-      </div>
-
-      <!-- HUD -->
-      <div id="mHud">
-        <div class="mHud-rec">
-          <div class="mHud-recdot"></div>
-          <span class="mHud-rectext">REC</span>
-        </div>
-        <div class="mHud-world" id="mHudWorld"></div>
-        <div class="mHud-tc" id="mHudTc">00:00:00</div>
-      </div>
-
-      <!-- Mute button -->
-      <button id="mMuteBtn">🔇 UNMUTE</button>
-    </div>
-  </div>
-
-  <!-- Fullscreen overlay -->
-  <div id="mFull">
-    <video id="mFullVid" loop playsinline></video>
-    <div id="mFullClose" onclick="mExitFull();">✕ CLOSE</div>
-  </div>
-</div>
-<div id="mob">
-
-  <!-- Mobile Dave — real pixel art, positioned in strips -->
-  <div id="mDave" style="left:40px;position:fixed;z-index:99999;pointer-events:none;cursor:pointer;">
-    <div class="dw idle" id="mDB">
-      <div class="px dc"></div><div class="px db2"></div>
-      <div class="px dh"></div><div class="px del"></div><div class="px der"></div>
-      <div class="px dal"></div><div class="px dar"></div>
-      <div class="px dt"></div><div class="px dp"></div>
-      <div class="px dsl"></div><div class="px dsr"></div>
-    </div>
-  </div>
-  <!-- Mobile wire canvas -->
-  <canvas id="mWireCanvas" style="position:absolute;inset:0;z-index:2;pointer-events:none;"></canvas>
-
-  <!-- S0: Hero -->
-  <div class="ms ms-hero" id="ms0" style="transform:translateY(0);">
-    <div class="m-nav">
-      <div class="m-logo">malanidoosra</div>
-    </div>
-    <div class="m-body">
-      <div class="m-panel">
-        <div class="m-panel-top"></div>
-        <div class="m-panel-info">
-          <div class="m-panel-cell">
-            <div class="m-panel-label">DIRECTOR</div>
-            <div class="m-panel-val">JAY MALANI</div>
+      <!-- SIGNUP FORM -->
+      <div id="signup-form">
+        <div class="auth-heading">Create account</div>
+        <div class="auth-sub" style="margin-bottom:18px">Join TrackMyReps today — free</div>
+        <div class="form-stack">
+          <div>
+            <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text2);font-weight:600;margin-bottom:8px">I am a...</div>
+            <div class="role-grid">
+              <div class="role-card" id="role-client" onclick="selectRole('client')">
+                <div style="font-size:1.4rem;margin-bottom:5px">🏃</div>
+                <div style="font-weight:700;font-size:.86rem">Client</div>
+                <div style="font-size:.68rem;color:var(--text2);margin-top:2px">I work out</div>
+              </div>
+              <div class="role-card active" id="role-trainer" onclick="selectRole('trainer')">
+                <div style="font-size:1.4rem;margin-bottom:5px">💪</div>
+                <div style="font-weight:700;font-size:.86rem">Trainer</div>
+                <div style="font-size:.68rem;color:var(--text2);margin-top:2px">I coach clients</div>
+              </div>
+            </div>
+            <input type="hidden" id="s-role" value="trainer">
           </div>
-          <div class="m-panel-cell">
-            <div class="m-panel-label">STATUS</div>
-            <div class="m-panel-val" style="color:rgba(0,255,65,0.7);">OPEN TO WORK</div>
+          <input class="inp" id="s-name" type="text" autocomplete="name" placeholder="Full name">
+          <input class="inp" id="s-email" type="email" autocomplete="email" placeholder="Email address">
+          <input class="inp" id="s-pass" type="password" autocomplete="new-password" placeholder="Password (min 6 chars)">
+          <div id="trainer-code-wrap" class="hidden">
+            <input class="inp code-inp" id="s-code" placeholder="Trainer code (optional)" maxlength="8" style="font-size:16px">
           </div>
-        </div>
-        <div class="m-panel-inner">
-          <div class="m-name"><span style="color:var(--w);">MALANI</span><br><span style="color:var(--y);">DOOSRA</span></div>
-          <div class="m-bio">filmmaker · cinematographer · ai-native<br>mumbai, india</div>
-          <div class="m-status-row">
-            <div class="m-dot"></div>
-            <div class="m-statuslabel">CURRENTLY EXPLORING</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="m-dave-strip" id="mHeroDaveStrip">
-      <div class="m-hint">SWIPE UP TO EXPLORE · DRAG DAVE TO SCRUB</div>
-    </div>
-  </div>
-
-  <!-- S1: BTS 1 -->
-  <div class="ms ms-vid" id="ms1" style="transform:translateY(100%);">
-    <video id="mv1" loop playsinline preload="none"></video>
-    <div class="ms-vid-grad"></div>
-    <div class="ms-vnav"><span class="ms-vlogo" style="color:#FF8C00;">malanidoosra</span><span class="ms-vcnt" style="color:#FF8C00;border-color:#FF8C00;">01 / 06</span></div>
-    <div class="ms-vlabel" id="mlab1">
-      <div class="ms-vlabel-sub" style="color:#FF8C00;">WORLD 01 — BTS</div>
-      <div class="ms-vlabel-title"><span style="color:#f0f0ee;">BEHIND THE </span><span style="color:#FF8C00;">SCENES</span></div>
-      <div class="ms-vlabel-desc">On set. Unscripted.<br>Where the real work happens.</div>
-    </div>
-    <div class="ms-dave-strip" id="mVidStrip1"></div>
-    <button class="ms-mute" id="mmute1" style="color:#FF8C00;border-color:#FF8C00;">🔇 UNMUTE</button>
-  </div>
-
-  <!-- S2: BTS 2 -->
-  <div class="ms ms-vid" id="ms2" style="transform:translateY(100%);">
-    <video id="mv2" loop playsinline preload="none"></video>
-    <div class="ms-vid-grad"></div>
-    <div class="ms-vnav"><span class="ms-vlogo" style="color:#FF8C00;">malanidoosra</span><span class="ms-vcnt" style="color:#FF8C00;border-color:#FF8C00;">02 / 06</span></div>
-    <div class="ms-vlabel" id="mlab2">
-      <div class="ms-vlabel-sub" style="color:#FF8C00;">WORLD 01 — BTS</div>
-      <div class="ms-vlabel-title"><span style="color:#f0f0ee;">BEHIND THE </span><span style="color:#FF8C00;">SCENES II</span></div>
-      <div class="ms-vlabel-desc">Lights. Camera. Chaos.</div>
-    </div>
-    <div class="ms-dave-strip" id="mVidStrip2"></div>
-    <button class="ms-mute" id="mmute2" style="color:#FF8C00;border-color:#FF8C00;">🔇 UNMUTE</button>
-  </div>
-
-  <!-- S3: Documentary -->
-  <div class="ms ms-vid" id="ms3" style="transform:translateY(100%);">
-    <video id="mv3" loop playsinline preload="none"></video>
-    <div class="ms-vid-grad"></div>
-    <div class="ms-vnav"><span class="ms-vlogo" style="color:#dcdcdc;">malanidoosra</span><span class="ms-vcnt" style="color:#dcdcdc;border-color:#dcdcdc;">03 / 06</span></div>
-    <div class="ms-vlabel" id="mlab3">
-      <div class="ms-vlabel-sub" style="color:#dcdcdc;">WORLD 02 — DOCUMENTARY</div>
-      <div class="ms-vlabel-title"><span style="color:#f0f0ee;">REAL </span><span style="color:#dcdcdc;">STORIES</span></div>
-      <div class="ms-vlabel-desc">No studios. Just truth + a lens.</div>
-    </div>
-    <div class="ms-dave-strip" id="mVidStrip3"></div>
-    <button class="ms-mute" id="mmute3" style="color:#dcdcdc;border-color:#dcdcdc;">🔇 UNMUTE</button>
-  </div>
-
-  <!-- S4: Written & Directed -->
-  <div class="ms ms-vid" id="ms4" style="transform:translateY(100%);">
-    <video id="mv4" loop playsinline preload="none"></video>
-    <div class="ms-vid-grad"></div>
-    <div class="ms-vnav"><span class="ms-vlogo" style="color:#b464ff;">malanidoosra</span><span class="ms-vcnt" style="color:#b464ff;border-color:#b464ff;">04 / 06</span></div>
-    <div class="ms-vlabel" id="mlab4">
-      <div class="ms-vlabel-sub" style="color:#b464ff;">WORLD 03 — WRITTEN & DIRECTED</div>
-      <div class="ms-vlabel-title"><span style="color:#f0f0ee;">WRITTEN & </span><span style="color:#b464ff;">DIRECTED</span></div>
-      <div class="ms-vlabel-desc">Every frame intentional.</div>
-    </div>
-    <div class="ms-dave-strip" id="mVidStrip4"></div>
-    <button class="ms-mute" id="mmute4" style="color:#b464ff;border-color:#b464ff;">🔇 UNMUTE</button>
-  </div>
-
-  <!-- S5: Travel 1 -->
-  <div class="ms ms-vid" id="ms5" style="transform:translateY(100%);">
-    <video id="mv5" loop playsinline preload="none"></video>
-    <div class="ms-vid-grad"></div>
-    <div class="ms-vnav"><span class="ms-vlogo" style="color:#00d2c8;">malanidoosra</span><span class="ms-vcnt" style="color:#00d2c8;border-color:#00d2c8;">05 / 06</span></div>
-    <div class="ms-vlabel" id="mlab5">
-      <div class="ms-vlabel-sub" style="color:#00d2c8;">WORLD 04 — TRAVEL</div>
-      <div class="ms-vlabel-title"><span style="color:#f0f0ee;">WANDERING </span><span style="color:#00d2c8;">ON PURPOSE</span></div>
-      <div class="ms-vlabel-desc">Solo trips. Strange places. No script.</div>
-    </div>
-    <div class="ms-dave-strip" id="mVidStrip5"></div>
-    <button class="ms-mute" id="mmute5" style="color:#00d2c8;border-color:#00d2c8;">🔇 UNMUTE</button>
-  </div>
-
-  <!-- S6: Travel 2 -->
-  <div class="ms ms-vid" id="ms6" style="transform:translateY(100%);">
-    <video id="mv6" loop playsinline preload="none"></video>
-    <div class="ms-vid-grad"></div>
-    <div class="ms-vnav"><span class="ms-vlogo" style="color:#00d2c8;">malanidoosra</span><span class="ms-vcnt" style="color:#00d2c8;border-color:#00d2c8;">06 / 06</span></div>
-    <div class="ms-vlabel" id="mlab6">
-      <div class="ms-vlabel-sub" style="color:#00d2c8;">WORLD 04 — TRAVEL</div>
-      <div class="ms-vlabel-title"><span style="color:#f0f0ee;">LIFE BY </span><span style="color:#00d2c8;">THE GANGA</span></div>
-      <div class="ms-vlabel-desc">The river. The people. The light.</div>
-    </div>
-    <div class="ms-dave-strip" id="mVidStrip6"></div>
-    <button class="ms-mute" id="mmute6" style="color:#00d2c8;border-color:#00d2c8;">🔇 UNMUTE</button>
-  </div>
-
-  <!-- S7: Contact -->
-  <div class="ms ms-contact" id="ms7" style="transform:translateY(100%);">
-    <div class="ms-cnav">
-      <span style="font-family:'Press Start 2P',monospace;font-size:7px;color:#00ff64;">malanidoosra</span>
-      <span style="font-family:'Press Start 2P',monospace;font-size:6px;color:rgba(0,255,100,0.3);">WORLD 05</span>
-    </div>
-    <div class="ms-cbody">
-      <div class="ms-ctitle"><span style="color:#f0f0ee;">LET'S<br></span><span style="color:#00ff64;">CONNECT.</span></div>
-      <div class="ms-clinks">
-        <a href="https://wa.me/918169003694" target="_blank" class="ms-clink"><span class="ms-clink-icon">💬</span><span class="ms-clink-label">WHATSAPP</span></a>
-        <a href="mailto:contactmalanidoosra@gmail.com" class="ms-clink"><span class="ms-clink-icon">✉</span><span class="ms-clink-label">EMAIL</span></a>
-        <a href="https://www.instagram.com/malanidoosra" target="_blank" class="ms-clink"><span class="ms-clink-icon">◈</span><span class="ms-clink-label">INSTAGRAM</span></a>
-        <a href="https://www.youtube.com/@Malanidoosra" target="_blank" class="ms-clink"><span class="ms-clink-icon">▶</span><span class="ms-clink-label">YOUTUBE</span></a>
-      </div>
-    </div>
-    <div class="ms-cdave" id="mContactStrip">
-      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:20px;">
-        <button onclick="mGo(0);" style="font-family:'Press Start 2P',monospace;font-size:6px;color:rgba(0,255,100,0.6);background:transparent;border:1px solid rgba(0,255,100,0.2);padding:8px 14px;letter-spacing:1px;cursor:pointer;">← HOME</button>
-        <button onclick="mGo(mCur-1);" style="font-family:'Press Start 2P',monospace;font-size:6px;color:rgba(255,255,255,0.2);background:transparent;border:1px solid rgba(255,255,255,0.08);padding:8px 14px;letter-spacing:1px;cursor:pointer;">← BACK</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Desktop link -->
-</div>
-<div id="cur"></div>
-<div id="cur2"></div>
-<div id="flash"></div>
-
-<!-- Right wall socket — mirrors left jack, sits at Dave's ground level -->
-<div id="rightJack" style="position:fixed;right:0;bottom:34px;z-index:60;pointer-events:none;opacity:0;transition:opacity 0.4s;">
-  <div style="width:20px;height:48px;background:#111;border:1px solid #2a2a2a;border-right:none;border-radius:6px 0 0 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
-    <div style="width:5px;height:5px;border-radius:50%;background:#1a1a1a;border:1px solid #333;"></div>
-    <div style="width:7px;height:7px;border-radius:50%;border:2px solid rgba(255,229,0,0.5);background:#060606;transition:border-color 0.3s;"></div>
-  </div>
-  <div style="position:absolute;left:-5px;top:50%;transform:translateY(-50%);width:5px;height:5px;background:var(--y);border-radius:50%;box-shadow:0 0 6px rgba(255,229,0,0.7);transition:background 0.3s,box-shadow 0.3s;" id="rightJackNub"></div>
-</div>
-
-<!-- Left ground socket — video worlds only, at Dave's ground level -->
-<div id="leftJack" style="position:fixed;left:0;bottom:34px;z-index:60;pointer-events:none;opacity:0;transition:opacity 0.4s;">
-  <div style="width:20px;height:48px;background:#111;border:1px solid #2a2a2a;border-left:none;border-radius:0 6px 6px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
-    <div style="width:5px;height:5px;border-radius:50%;background:#1a1a1a;border:1px solid #333;"></div>
-    <div style="width:7px;height:7px;border-radius:50%;border:2px solid rgba(255,229,0,0.5);background:#060606;transition:border-color 0.3s;"></div>
-  </div>
-  <div style="position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:5px;height:5px;background:var(--y);border-radius:50%;box-shadow:0 0 6px rgba(255,229,0,0.7);transition:background 0.3s,box-shadow 0.3s;" id="leftJackNub"></div>
-</div>
-<div id="wallJack" style="position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:60;pointer-events:none;transition:opacity 0.4s;">
-  <div style="width:24px;height:80px;background:#111;border:1px solid #2a2a2a;border-left:none;border-radius:0 6px 6px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-    <div style="width:7px;height:7px;border-radius:50%;background:#1a1a1a;border:1px solid #333;"></div>
-    <div style="width:7px;height:7px;border-radius:50%;background:#1a1a1a;border:1px solid #333;"></div>
-    <div id="jackHot" style="width:8px;height:8px;border-radius:50%;background:var(--y);box-shadow:0 0 10px rgba(255,229,0,0.6);transition:background 0.3s,box-shadow 0.3s;"></div>
-  </div>
-  <!-- Jack exit nub -->
-  <div style="position:absolute;right:-7px;top:50%;transform:translateY(-50%);width:7px;height:7px;background:var(--y);border-radius:50%;box-shadow:0 0 8px rgba(255,229,0,0.8);"></div>
-  <!-- Jack label -->
-  <div style="position:absolute;left:28px;top:50%;transform:translateY(-50%);font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.3);letter-spacing:1px;white-space:nowrap;">IN</div>
-</div>
-
-<!-- Plug tip that follows cursor on home -->
-<canvas id="wireCanvas" style="position:fixed;inset:0;z-index:55;pointer-events:none;opacity:1;transition:opacity 0.3s;"></canvas>
-<div id="dave" style="left:90px">
-  <div class="dw idle" id="DB">
-    <div class="px dc"></div><div class="px db2"></div>
-    <div class="px dh"></div><div class="px del"></div><div class="px der"></div>
-    <div class="px dal"></div><div class="px dar"></div>
-    <div class="px dt"></div><div class="px dp"></div>
-    <div class="px dsl"></div><div class="px dsr"></div>
-    <div class="dnote" id="dnote1" style="display:none;">♪</div>
-    <div class="dnote" id="dnote2" style="display:none;">♫</div>
-  </div>
-</div>
-<div id="nav">
-  <div class="nlogo">malanidoosra</div>
-  <div class="nright">
-    <div id="worldnav" style="display:flex;gap:2px;">
-      <div class="wnav-btn" data-w="0" onclick="goW(0)">HOME</div>
-      <div class="wnav-btn" data-w="1" onclick="goW(1)">BTS</div>
-      <div class="wnav-btn" data-w="2" onclick="goW(2)">DOCUMENTARY</div>
-      <div class="wnav-btn" data-w="3" onclick="goW(3)">WRITTEN & DIRECTED</div>
-      <div class="wnav-btn" data-w="4" onclick="goW(4)">TRAVEL</div>
-      <div class="wnav-btn" data-w="5" onclick="goW(5)">CONTACT</div>
-    </div>
-  </div>
-</div>
-<div id="sbar">
-  <a href="https://www.youtube.com/@Malanidoosra" target="_blank" class="slink">YOUTUBE</a>
-  <a href="https://www.instagram.com/malanidoosra/" target="_blank" class="slink">INSTAGRAM</a>
-</div>
-<div id="hint">PLUG THE WIRE INTO A SOCKET TO ENTER A WORLD</div>
-<div id="vibeNote">* vibe-coded at 2am with claude</div>
-
-<div id="stage">
-
-<div class="world" id="w0">
-  <canvas id="sparks" style="position:absolute;inset:0;z-index:2;pointer-events:none;"></canvas>
-  <div id="floaters" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;"></div>
-  <!-- Film crew canvas — background characters -->
-  <canvas id="crewCanvas" style="position:absolute;inset:0;z-index:4;pointer-events:none;"></canvas>
-
-  <!-- Centered slate panel -->
-  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:10;">
-    <div style="width:min(860px,92vw);background:#080808;border:1px solid #1a1a1a;">
-      <div style="height:3px;background:var(--y);"></div>
-
-      <!-- Info strip -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid #141414;">
-        <div style="padding:10px 16px;border-right:1px solid #141414;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.25);letter-spacing:2px;margin-bottom:5px;">DIRECTOR</div>
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.4);">JAY MALANI</div>
-        </div>
-        <div style="padding:10px 16px;border-right:1px solid #141414;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.25);letter-spacing:2px;margin-bottom:5px;">LOCATION</div>
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.4);">MUMBAI, IN</div>
-        </div>
-        <div style="padding:10px 16px;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.25);letter-spacing:2px;margin-bottom:5px;">STATUS</div>
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,255,65,0.7);white-space:nowrap;">OPEN TO WORK</div>
+          <button class="btn-lime" onclick="doSignup()" id="signup-btn">Create Account →</button>
+          <div style="text-align:center;font-size:.7rem;color:var(--text3)">By signing up you agree to our terms</div>
         </div>
       </div>
 
-      <!-- Name -->
-      <div style="padding:24px 28px 16px;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,10vw,120px);line-height:0.83;letter-spacing:-1px;">
-          <div style="color:var(--w);">MALANI</div>
-          <div style="color:var(--y);">DOOSRA</div>
-        </div>
-        <p style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.2);line-height:1.8;margin-top:14px;">filmmaker · cinematographer · ai-native<br>mumbai, india</p>
-      </div>
-
-      <!-- Divider -->
-      <div style="height:1px;background:#141414;"></div>
-
-      <!-- Patch bay label -->
-      <div style="padding:8px 16px 0;font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,255,255,0.08);letter-spacing:3px;">PATCH BAY — SELECT A WORLD</div>
-
-      <!-- Sockets -->
-      <div style="display:grid;grid-template-columns:repeat(5,1fr);">
-        <div class="psocket" data-world="1" style="padding:12px;border-right:1px solid #141414;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="phole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.2);letter-spacing:1px;margin-bottom:4px;">SC.01</div>
-          <div class="pslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.5);letter-spacing:1px;transition:color 0.2s;white-space:nowrap;">BTS</div>
-        </div>
-        <div class="psocket" data-world="2" style="padding:12px;border-right:1px solid #141414;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="phole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.2);letter-spacing:1px;margin-bottom:4px;">SC.02</div>
-          <div class="pslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.5);letter-spacing:1px;transition:color 0.2s;white-space:nowrap;">DOCUMENTARY</div>
-        </div>
-        <div class="psocket" data-world="3" style="padding:12px;border-right:1px solid #141414;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="phole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.2);letter-spacing:1px;margin-bottom:4px;">SC.03</div>
-          <div class="pslabel" style="font-family:'Press Start 2P',monospace;font-size:6px;color:rgba(255,229,0,0.5);letter-spacing:1px;transition:color 0.2s;white-space:nowrap;">WRITTEN & DIRECTED</div>
-        </div>
-        <div class="psocket" data-world="4" style="padding:12px;border-right:1px solid #141414;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="phole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.2);letter-spacing:1px;margin-bottom:4px;">SC.04</div>
-          <div class="pslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.5);letter-spacing:1px;transition:color 0.2s;white-space:nowrap;">TRAVEL</div>
-        </div>
-        <div class="psocket" data-world="5" style="padding:12px;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="phole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.2);letter-spacing:1px;margin-bottom:4px;">SC.05</div>
-          <div class="pslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,229,0,0.5);letter-spacing:1px;transition:color 0.2s;white-space:nowrap;">CONTACT</div>
-        </div>
-      </div>
-
-      <!-- Progress bar -->
-      <div style="height:2px;background:#0d0d0d;"><div id="patchProgress" style="height:100%;background:var(--y);width:0%;transition:none;"></div></div>
     </div>
   </div>
 </div>
 
-<div class="world" id="w1">
-  <!-- W1: BTS (2 videos, carousel) -->
-  <video autoplay muted loop playsinline id="w1vid" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:1;pointer-events:none;transition:opacity 0.6s;"></video>
-  <video muted loop playsinline id="w1vid2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;pointer-events:none;transition:opacity 0.6s;"></video>
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.65) 100%);z-index:1;pointer-events:none;"></div>
-  <div class="vid-loading" id="w1loading">LOADING...</div>
-  <div style="position:absolute;top:60px;left:56px;z-index:3;pointer-events:none;">
-    <div class="wlabel">WORLD 01 &mdash; BTS</div>
-    <div class="wtit" id="w1title"><span class="wy">BEHIND</span><br><span class="ww">THE SCENES</span></div>
-    <div class="wdesc" id="w1desc" style="margin-top:10px;">On set. Unscripted.<br>Where the real work happens.</div>
-  </div>
-  <div id="w1mute" class="mute-btn"><span id="w1muteico">🔇</span><span id="w1mutetxt">UNMUTE</span></div>
-  <div id="w1counter" style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,229,0,0.6);letter-spacing:3px;pointer-events:none;">01 / 02</div>
-  <div id="w1prev" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);z-index:100;cursor:pointer;padding:10px 14px;border:1px solid rgba(255,255,255,0.1);font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.2);background:rgba(0,0,0,0.4);transition:all 0.2s;pointer-events:all;letter-spacing:1px;">← PREV</div>
-  <div id="w1next" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);z-index:100;cursor:pointer;padding:10px 14px;border:1px solid rgba(255,255,255,0.1);font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.2);background:rgba(0,0,0,0.4);transition:all 0.2s;pointer-events:all;letter-spacing:1px;">NEXT →</div>
-</div>
+<!-- ── MARKETING CONTENT (below fold) ── -->
+<div class="marketing">
 
-<div class="world" id="w2" style="background:#060606;">
-  <!-- W2: Documentary (single video) -->
-  <video preload="none" loop playsinline id="w2vid" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;"></video>
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.65) 100%);z-index:1;pointer-events:none;"></div>
-  <div class="vid-loading" id="w2loading">LOADING...</div>
-  <div style="position:absolute;top:60px;left:56px;z-index:3;pointer-events:none;">
-    <div class="wlabel">WORLD 02 &mdash; DOCUMENTARY</div>
-    <div class="wtit"><span class="wy">REAL</span><br><span class="ww">STORIES</span></div>
-    <div class="wdesc" style="margin-top:10px;">Documentaries built on the streets.<br>No studios. Just truth + a lens.</div>
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="reveal">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">From sign up to<br>first plan in minutes.</h2>
+    <p class="section-sub">No onboarding calls. No complex setup. Just open the app and start coaching.</p>
   </div>
-  <div id="w2mute" class="mute-btn"><span id="w2muteico">🔇</span><span id="w2mutetxt">UNMUTE</span></div>
-</div>
-
-<div class="world" id="w3" style="background:#060606;">
-  <!-- W3: Written & Directed (single video) -->
-  <video preload="none" loop playsinline id="w3vid" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;"></video>
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.65) 100%);z-index:1;pointer-events:none;"></div>
-  <div class="vid-loading" id="w3loading">LOADING...</div>
-  <div style="position:absolute;top:60px;left:56px;z-index:3;pointer-events:none;">
-    <div class="wlabel">WORLD 03 &mdash; WRITTEN & DIRECTED</div>
-    <div class="wtit"><span class="wy">WRITTEN &</span><br><span class="ww">DIRECTED</span></div>
-    <div class="wdesc" style="margin-top:10px;">Concept to camera.<br>Every frame intentional.</div>
-  </div>
-  <div id="w3mute" class="mute-btn"><span id="w3muteico">🔇</span><span id="w3mutetxt">UNMUTE</span></div>
-</div>
-
-<div class="world" id="w4" style="background:#060606;">
-  <!-- W4: Travel (2 videos, carousel) -->
-  <video preload="none" loop playsinline id="w4vid" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:1;pointer-events:none;transition:opacity 0.6s;"></video>
-  <video preload="none" loop playsinline id="w4vid2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;pointer-events:none;transition:opacity 0.6s;"></video>
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.65) 100%);z-index:1;pointer-events:none;"></div>
-  <div class="vid-loading" id="w4loading">LOADING...</div>
-  <div style="position:absolute;top:60px;left:56px;z-index:3;pointer-events:none;">
-    <div class="wlabel">WORLD 04 &mdash; TRAVEL</div>
-    <div class="wtit" id="w4title"><span class="wy">WANDERING</span><br><span class="ww">ON PURPOSE</span></div>
-    <div class="wdesc" id="w4desc" style="margin-top:10px;">Solo trips. Strange places.<br>No script, just instinct + a camera.</div>
-  </div>
-  <div id="w4mute" class="mute-btn"><span id="w4muteico">🔇</span><span id="w4mutetxt">UNMUTE</span></div>
-  <div id="w4counter" style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);z-index:100;font-family:'Press Start 2P',monospace;font-size:11px;color:rgba(255,229,0,0.6);letter-spacing:3px;pointer-events:none;">01 / 02</div>
-  <div id="w4prev" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);z-index:100;cursor:pointer;padding:10px 14px;border:1px solid rgba(255,255,255,0.1);font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.2);background:rgba(0,0,0,0.4);transition:all 0.2s;pointer-events:all;letter-spacing:1px;">← PREV</div>
-  <div id="w4next" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);z-index:100;cursor:pointer;padding:10px 14px;border:1px solid rgba(255,255,255,0.1);font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.2);background:rgba(0,0,0,0.4);transition:all 0.2s;pointer-events:all;letter-spacing:1px;">NEXT →</div>
-</div>
-
-<!-- W5: Contact — patch bay style like home -->
-<div class="world" id="w5" style="background:#060606;">
-  <canvas id="sparks5" style="position:absolute;inset:0;z-index:2;pointer-events:none;"></canvas>
-  <div id="floaters5" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;"></div>
-  <canvas id="crewCanvas5" style="position:absolute;inset:0;z-index:4;pointer-events:none;"></canvas>
-  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:10;">
-    <div style="width:min(680px,85vw);background:#080808;border:1px solid #1a1a1a;">
-      <!-- Green top bar for contact world -->
-      <div style="height:3px;background:rgba(0,255,100,0.8);"></div>
-      <!-- Info strip -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid #141414;">
-        <div style="padding:10px 16px;border-right:1px solid #141414;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.3);letter-spacing:2px;margin-bottom:5px;">DIRECTOR</div>
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.4);">JAY MALANI</div>
-        </div>
-        <div style="padding:10px 16px;border-right:1px solid #141414;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.3);letter-spacing:2px;margin-bottom:5px;">LOCATION</div>
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.4);">MUMBAI, IN</div>
-        </div>
-        <div style="padding:10px 16px;">
-          <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.3);letter-spacing:2px;margin-bottom:5px;">STATUS</div>
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(0,255,65,0.7);white-space:nowrap;">OPEN TO WORK</div>
-        </div>
-      </div>
-      <!-- Headline -->
-      <div style="padding:24px 28px 16px;">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,9vw,110px);line-height:0.83;">
-          <div style="color:var(--w);">LET'S</div>
-          <div style="color:rgba(0,255,100,0.9);">CONNECT.</div>
-        </div>
-        <p style="font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,0.2);line-height:1.8;margin-top:14px;">plug the wire into a socket to reach out.</p>
-      </div>
-      <!-- Divider -->
-      <div style="height:1px;background:#141414;"></div>
-      <!-- Patch bay label -->
-      <div style="padding:8px 16px 0;font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(255,255,255,0.08);letter-spacing:3px;">CONTACT BAY — SELECT A CHANNEL</div>
-      <!-- Contact sockets -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);" id="contactSockets">
-        <div class="csocket" data-url="https://wa.me/918169003694" data-target="_blank" style="padding:16px;border-right:1px solid #141414;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="chole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-bottom:6px;">💬</div>
-          <div class="cslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.5);letter-spacing:1px;transition:color 0.2s;">WHATSAPP</div>
-        </div>
-        <div class="csocket" data-url="mailto:contactmalanidoosra@gmail.com" data-target="_self" style="padding:16px;border-right:1px solid #141414;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="chole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-bottom:6px;">✉</div>
-          <div class="cslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.5);letter-spacing:1px;transition:color 0.2s;">EMAIL</div>
-        </div>
-        <div class="csocket" data-url="https://www.instagram.com/malanidoosra" data-target="_blank" style="padding:16px;border-right:1px solid #141414;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="chole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-bottom:6px;">◈</div>
-          <div class="cslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.5);letter-spacing:1px;transition:color 0.2s;">INSTAGRAM</div>
-        </div>
-        <div class="csocket" data-url="https://www.youtube.com/@Malanidoosra" data-target="_blank" style="padding:16px;cursor:none;text-align:center;transition:background 0.2s;">
-          <div class="chole" style="width:16px;height:16px;border-radius:50%;border:2px solid #252525;background:#060606;margin:0 auto 8px;transition:all 0.2s;"></div>
-          <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:rgba(255,255,255,0.25);margin-bottom:6px;">▶</div>
-          <div class="cslabel" style="font-family:'Press Start 2P',monospace;font-size:7px;color:rgba(0,255,100,0.5);letter-spacing:1px;transition:color 0.2s;">YOUTUBE</div>
-        </div>
-      </div>
-      <!-- Progress bar -->
-      <div style="height:2px;background:#0d0d0d;"><div id="contactProgress" style="height:100%;background:rgba(0,255,100,0.8);width:0%;transition:none;"></div></div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-accent"></div>
+      <div class="step-num">01</div>
+      <span class="step-icon">👤</span>
+      <h3>Create your trainer profile</h3>
+      <p>Sign up as a trainer in 30 seconds. You get a unique trainer code your clients use to link to you.</p>
+    </div>
+    <div class="step">
+      <div class="step-accent"></div>
+      <div class="step-num">02</div>
+      <span class="step-icon">📋</span>
+      <h3>Build a 7-day plan</h3>
+      <p>Pick exercises from 35+ options, assign sets and reps for each day, review and send. Takes under 5 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-accent"></div>
+      <div class="step-num">03</div>
+      <span class="step-icon">💪</span>
+      <h3>Client trains, you track</h3>
+      <p>Your client logs every set in real time. You see their weight progress, strength gains, and adherence — live.</p>
     </div>
   </div>
-  <!-- Wall jack for contact world — green -->
-  <div id="contactJack" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:60;pointer-events:none;">
-    <div style="width:20px;height:68px;background:#111;border:1px solid #1a3a1a;border-left:none;border-radius:0 5px 5px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;">
-      <div style="width:6px;height:6px;border-radius:50%;background:#1a1a1a;border:1px solid #2a2a2a;"></div>
-      <div style="width:6px;height:6px;border-radius:50%;background:#1a1a1a;border:1px solid #2a2a2a;"></div>
-      <div style="width:7px;height:7px;border-radius:50%;background:rgba(0,255,100,0.8);box-shadow:0 0 8px rgba(0,255,100,0.5);"></div>
-    </div>
-    <div style="position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:5px;height:5px;background:rgba(0,255,100,0.9);border-radius:50%;box-shadow:0 0 6px rgba(0,255,100,0.7);"></div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="padding-top:0">
+  <div class="reveal">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Everything a trainer<br>actually needs.</h2>
+    <p class="section-sub">No bloat. No features you'll never use.</p>
   </div>
-  <!-- Wire canvas for contact world -->
-  <canvas id="contactWireCanvas" style="position:absolute;inset:0;z-index:55;pointer-events:none;"></canvas>
-  <!-- Right socket on contact world (decorative, matches left) -->
-  <div style="position:absolute;right:0;bottom:34px;z-index:60;pointer-events:none;">
-    <div style="width:20px;height:48px;background:#111;border:1px solid #1a3a1a;border-right:none;border-radius:6px 0 0 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
-      <div style="width:5px;height:5px;border-radius:50%;background:#1a1a1a;border:1px solid #2a2a2a;"></div>
-      <div style="width:7px;height:7px;border-radius:50%;border:2px solid rgba(0,255,100,0.4);background:#060606;"></div>
+  <div class="features reveal">
+    <!-- Featured: WhatsApp -->
+    <div class="feature-card featured">
+      <div>
+        <div class="wa-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Integration
+        </div>
+        <h3 style="font-size:1.25rem;margin-bottom:10px">Send plans. Start conversations.<br>Never leave the app.</h3>
+        <p style="font-size:.86rem;line-height:1.7">The moment you send a plan, a pre-written WhatsApp message goes straight to your client. One tap. No copy-pasting. No switching apps.</p>
+      </div>
+      <div class="wa-phone">
+        <div class="wa-header">
+          <div class="wa-dot" style="background:#25D366"></div>
+          <div class="wa-dot" style="background:#FFB800"></div>
+          <div class="wa-dot" style="background:#FF4444"></div>
+          <span style="font-size:.72rem;color:var(--text2);margin-left:8px">WhatsApp</span>
+        </div>
+        <div style="font-size:.68rem;color:var(--text3);text-align:center;margin-bottom:10px">Today 8:14 AM</div>
+        <div class="wa-bubble">
+          Hey Rahul! 💪 Your new plan <strong>"Push Pull Legs v2"</strong> is ready.<br><br>
+          Sign in: <strong>trackmyreps.in</strong><br>
+          Code: <strong>JAY-4829</strong><br><br>
+          Let's crush it! 🔥
+          <div class="wa-time">8:14 AM ✓✓</div>
+        </div>
+      </div>
     </div>
-    <div style="position:absolute;left:-5px;top:50%;transform:translateY(-50%);width:5px;height:5px;background:rgba(0,255,100,0.8);border-radius:50%;box-shadow:0 0 6px rgba(0,255,100,0.5);"></div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Live progress tracking</h3>
+      <p>See every client's weight history, strength gains, workout heatmap, and adherence score. Know exactly who needs a push before they drop off.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>35+ exercises with tutorials</h3>
+      <p>Every exercise has a YouTube tutorial your client can watch right in the app. No more "how do I do this?" messages at 10pm.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Works on any phone</h3>
+      <p>TrackMyReps is a PWA — clients install it like an app directly from the browser. No App Store. No Play Store.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>All your clients, one view</h3>
+      <div class="feature-mockup" style="margin-top:14px">
+        <div class="mockup-row">
+          <div style="display:flex;align-items:center;gap:8px"><div class="mockup-avatar">R</div><span style="font-size:.8rem;font-weight:600">Rahul M.</span></div>
+          <span class="mockup-badge badge-green">Trained today</span>
+        </div>
+        <div class="mockup-row">
+          <div style="display:flex;align-items:center;gap:8px"><div class="mockup-avatar">P</div><span style="font-size:.8rem;font-weight:600">Priya K.</span></div>
+          <span class="mockup-badge badge-lime">Yesterday</span>
+        </div>
+        <div class="mockup-row">
+          <div style="display:flex;align-items:center;gap:8px"><div class="mockup-avatar">A</div><span style="font-size:.8rem;font-weight:600">Aakash S.</span></div>
+          <span class="mockup-badge badge-gray">2 days ago</span>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="padding-top:0;text-align:center">
+  <div class="reveal">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">One simple price.<br>No surprises.</h2>
+    <p class="section-sub" style="margin:0 auto">Pay only for what you use. Scale as you grow.</p>
+  </div>
+  <div class="pricing-card reveal">
+    <div class="section-label" style="margin-bottom:6px">Trainer plan</div>
+    <div class="price-num">₹99</div>
+    <div class="price-per">per client / per month</div>
+    <ul class="price-features">
+      <li><span>✓</span> Unlimited workout plans per client</li>
+      <li><span>✓</span> Full progress tracking & charts</li>
+      <li><span>✓</span> WhatsApp plan delivery</li>
+      <li><span>✓</span> Push notifications for clients</li>
+      <li><span>✓</span> 35+ exercises with YouTube tutorials</li>
+      <li><span>✓</span> Client mobile app (PWA) included</li>
+    </ul>
+    <button class="btn-lime" onclick="showAuthTab('signup');window.scrollTo({top:0,behavior:'smooth'})">Start coaching free →</button>
+    <p class="price-compare">vs. alternatives: <s>$20–50/client/month</s> — 10× cheaper</p>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2 class="reveal">Ready to coach<br><em style="color:var(--lime);font-style:normal">smarter?</em></h2>
+  <p class="reveal">Join the trainers already using TrackMyReps in Mumbai.</p>
+  <button class="btn-cta reveal" onclick="showAuthTab('signup');window.scrollTo({top:0,behavior:'smooth'})">Create your trainer account →</button>
 </div>
 
-</div>
+</div><!-- /marketing -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="brand">Track<span>MyReps</span></div>
+  <p>© 2026 TrackMyReps. Built for Indian fitness professionals.</p>
+  <div class="footer-links">
+    <a href="#" onclick="showAuthTab('login');window.scrollTo({top:0,behavior:'smooth'});return false">Sign In</a>
+    <a href="mailto:hello@trackmyreps.in">Contact</a>
+  </div>
+</footer>
 
 <script>
-(function(){
-var cur=document.getElementById('cur');
-var cur2=document.getElementById('cur2');
-var mx=window.innerWidth/2,my=window.innerHeight/2;
-document.addEventListener('mousemove',function(e){
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-  cur2.style.left=mx+'px';cur2.style.top=my+'px';
-  if(cw===0)checkPSocketHover();
-});
-document.addEventListener('mousedown',function(){cur.classList.add('big');});
-document.addEventListener('mouseup',function(){cur.classList.remove('big');});
+const SUPABASE_URL = 'https://oxpeybhsucryghtrnhmm.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_2kifid9YD_4BFq_cDIUFLg_1wsMkG2W';
+let db;
 
-var sc=document.getElementById('sparks');
-if(sc){sc.width=window.innerWidth;sc.height=window.innerHeight;var ctx=sc.getContext('2d');for(var i=0;i<180;i++){ctx.fillStyle='rgba(255,255,255,'+(Math.random()*0.45+0.05)+')';var s=Math.random()<0.8?1:Math.random()<0.5?2:1.5;ctx.beginPath();ctx.arc(Math.random()*sc.width,Math.random()*sc.height*0.75,s/2,0,Math.PI*2);ctx.fill();}}
-
-var fl=document.getElementById('floaters');
-function mkFloat(){var d=document.createElement('div');var chars=['?','!','>','*','+','.'];d.textContent=chars[Math.floor(Math.random()*chars.length)];d.style.cssText='position:absolute;font-family:"Press Start 2P",monospace;font-size:'+(Math.random()*10+7)+'px;color:rgba(255,229,0,'+(Math.random()*0.08+0.02)+');left:'+(Math.random()*100)+'%;bottom:-20px;animation:floatup '+(Math.random()*12+8)+'s linear forwards;pointer-events:none;';fl.appendChild(d);setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},16000);}
-setInterval(mkFloat,800);
-
-var WORLDS=6,cw=0,dX=90,dY=0,dDir=1,wTO,isJ=false,isTr=false,eCool=false,rightSocketTriggered=false;
-var stage=document.getElementById('stage');
-var flash=document.getElementById('flash');
-var dave=document.getElementById('dave');
-var DB=document.getElementById('DB');
-var hint=document.getElementById('hint');
-var hintT=['PLUG THE WIRE INTO A SOCKET TO ENTER A WORLD','DRAG DAVE TO SCRUB · M TO MUTE · ESC FOR HOME','DRAG DAVE TO SCRUB · M TO MUTE · ESC FOR HOME','DRAG DAVE TO SCRUB · M TO MUTE · ESC FOR HOME','DRAG DAVE TO SCRUB · M TO MUTE · ESC FOR HOME','PLUG INTO A SOCKET TO GET IN TOUCH'];
-// All video data declared early so goW can always access them
-var w1videos=[
-  {src:'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Kareena%20Rosta%20Bts.mp4',title:'<span class="wy">BEHIND</span><br><span class="ww">THE SCENES</span>',desc:'On set. Unscripted.<br>Where the real work happens.'},
-  {src:'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Shreeleela%20Rosta%20Bts.mp4',title:'<span class="wy">BEHIND</span><br><span class="ww">THE SCENES</span>',desc:'Lights. Camera. Chaos.'}
-];
-var w4videos=[
-  {src:'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Framesfinal.mp4',title:'<span class="wy">WANDERING</span><br><span class="ww">ON PURPOSE</span>',desc:'Solo trips. Strange places.<br>No script, just instinct + a camera.'},
-  {src:'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Life%20By%20The%20Ganga%20V1.mp4',title:'<span class="wy">LIFE BY</span><br><span class="ww">THE GANGA</span>',desc:'The river. The people. The light.'}
-];
-var w1active=1,w1cur=0;
-var w4active=1,w4cur=0;
-var cPlugging=false;
-
-// Wire system vars — declared here so daveLoop can use them
-var wireCanvas=document.getElementById('wireCanvas');
-var wctx=wireCanvas?wireCanvas.getContext('2d'):null;
-var psockets=document.querySelectorAll('.psocket');
-var patchProgress=document.getElementById('patchProgress');
-var hovPsocket=null;
-var pluggedPsocket=null;
-var plugging=false;
-var plugFill=null;
-var wallJack=document.getElementById('wallJack');
-// Wire colors per world — must be declared before drawWireSystem runs
-var wireColors=['rgba(255,229,0,','rgba(255,140,0,','rgba(220,220,220,','rgba(180,100,255,','rgba(0,210,200,','rgba(0,255,100,'];
-function getWireColor(alpha){return wireColors[cw]+(alpha)+')';}
-
-var daveDragging=false;
-var daveDragOffsetX=0;
-
-// Dave drag — mousedown on dave starts scrub on video worlds
-dave.addEventListener('mousedown',function(e){
-  if(cw<1||cw>4)return;
-  e.stopPropagation();
-  daveDragging=true;
-  daveDragOffsetX=e.clientX-dX;
-  DB.className='dw idle';
-  dave.classList.add('grabbing');
-});
-document.addEventListener('mouseup',function(){
-  if(!daveDragging)return;
-  daveDragging=false;
-  dave.classList.remove('grabbing');
-  var vid=getActiveVid();
-  if(vid&&vid.duration){
-    var pct=Math.max(0,Math.min(1,dX/(window.innerWidth-56)));
-    vid.currentTime=pct*vid.duration;
+// ── INIT ────────────────────────────────────────────────────────
+(async () => {
+  // Handle invite link ?join=CODE
+  const params = new URLSearchParams(window.location.search);
+  const joinCode = params.get('join');
+  if (joinCode) {
+    sessionStorage.setItem('pendingTrainerCode', joinCode.toUpperCase());
+    window.history.replaceState({}, '', '/');
+    showAuthTab('signup');
+    selectRole('client');
+    const codeInp = document.getElementById('s-code');
+    if (codeInp) codeInp.value = joinCode.toUpperCase();
   }
-});
-document.addEventListener('mousemove',function(e){
-  if(!daveDragging)return;
-  dX=Math.max(8,Math.min(window.innerWidth-56,e.clientX-daveDragOffsetX));
-  dave.style.left=dX+'px';
-  // Live seek while dragging
-  var vid=getActiveVid();
-  if(vid&&vid.duration){
-    var pct=Math.max(0,Math.min(1,dX/(window.innerWidth-56)));
-    vid.currentTime=pct*vid.duration;
-  }
-  var nd=e.movementX>0?1:-1;
-  if(nd!==dDir){dDir=nd;DB.style.setProperty('--f',dDir);}
-  DB.className='dw '+(dDir>0?'wr':'wl');
-});
 
-function getActiveVid(){
-  if(cw===1)return w1active===1?document.getElementById('w1vid'):document.getElementById('w1vid2');
-  if(cw===2)return document.getElementById('w2vid');
-  if(cw===3)return document.getElementById('w3vid');
-  if(cw===4)return w4active===1?document.getElementById('w4vid'):document.getElementById('w4vid2');
-  return null;
-}
-
-function daveLoop(){
-  if(cw===0||cw===5){
-    // Home + Contact — Dave follows cursor
-    if(cw===0)checkPSocketHover();
-    if(!plugging&&!pluggedPsocket&&!cPlugging){
-      var tx=Math.max(8,Math.min(window.innerWidth-56,mx-22));
-      var diff=tx-dX;
-      if(Math.abs(diff)>2&&!isJ){
-        dX+=diff*0.1;
-        dave.style.left=dX+'px';
-        var nd=diff>0?1:-1;
-        if(nd!==dDir){dDir=nd;DB.style.setProperty('--f',dDir);}
-        DB.className='dw '+(dDir>0?'wr':'wl');
-        clearTimeout(wTO);
-        wTO=setTimeout(function(){if(!isJ)DB.className='dw idle';},160);
-      }
+  try {
+    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // If already logged in, redirect to app immediately
+    const { data: { session } } = await db.auth.getSession();
+    if (session?.user) {
+      window.location.href = '/app';
+      return;
     }
-    if(wireCanvas)wireCanvas.style.opacity=cw===0?'1':'0';
-  } else if(cw>=1&&cw<=4){
-    // Video worlds — Dave walks as progress bar (skip if dragging)
-    if(wireCanvas)wireCanvas.style.opacity='1';
-    if(!daveDragging){
-      var vid=getActiveVid();
-      if(vid&&vid.duration){
-        var pct=vid.currentTime/vid.duration;
-        var targetX=Math.floor(pct*(window.innerWidth-56));
-        dX+=(targetX-dX)*0.05;
-        dave.style.left=dX+'px';
-        if(dDir!==1){dDir=1;DB.style.setProperty('--f',1);}
-        DB.className='dw wr';
-      }
-    }
-  }
-  requestAnimationFrame(daveLoop);
-}
-daveLoop();
-
-function goW(i){if(isTr||i===cw)return;isTr=true;eCool=true;flash.style.opacity='0.06';setTimeout(function(){flash.style.opacity='0';},100);cw=i;stage.style.transform='translateX(-'+(cw*100)+'vw)';
-  // Update wnav active state
-  document.querySelectorAll('.wnav-btn').forEach(function(b){
-    b.classList.toggle('active',parseInt(b.dataset.w)===cw);
-  });
-  // Update cursor + ring + CSS variable to match wire color
-  var wc=wireColors[cw];
-  var rgb=wc.replace('rgba(','').split(',');
-  var r=rgb[0].trim(),g=rgb[1].trim(),b=rgb[2].trim();
-  var curColor='rgba('+r+','+g+','+b+',1)';
-  var curRingColor='rgba('+r+','+g+','+b+',0.3)';
-  cur.style.background=curColor;
-  cur2.style.borderColor=curRingColor;
-  document.documentElement.style.setProperty('--wc',r+','+g+','+b);
-  // Update all jack nubs to world color
-  ['rightJackNub','leftJackNub'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el){el.style.background=curColor;el.style.boxShadow='0 0 6px rgba('+r+','+g+','+b+',0.7)';}
-  });
-  var jh=document.getElementById('jackHot');
-  if(jh){jh.style.background=curColor;jh.style.boxShadow='0 0 10px rgba('+r+','+g+','+b+',0.6)';}
-  // Update carousel arrow colors
-  ['w1prev','w1next','w3prev','w3next','w4prev','w4next'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el){el.style.borderColor='rgba('+r+','+g+','+b+',0.15)';el.style.color='rgba('+r+','+g+','+b+',0.25)';}
-  });
-  hint.textContent=hintT[cw];
-  hint.classList.toggle('small', cw>=1&&cw<=4);
-  // Restart world label fadeout animation
-  ['wlabel','wtit','wdesc'].forEach(function(cls){
-    document.querySelectorAll('.'+cls).forEach(function(el){
-      el.style.animation='none';
-      void el.offsetWidth;
-      el.style.animation='';
-    });
-  });
-  var onVideo=cw>=1&&cw<=4;
-  var onContent=cw>=1&&cw<=5;
-  // Hide nav entirely on home (jack handles navigation), show on video worlds
-  document.getElementById('nav').style.opacity=onContent?'1':'0';
-  document.getElementById('nav').style.pointerEvents=onContent?'all':'none';
-  document.getElementById('sbar').style.opacity=onContent?'0':'1';
-  document.getElementById('hint').style.opacity=onContent?'0':'1';
-  setWireVisible(cw===0);
-  if(wallJack)wallJack.style.opacity=cw===0?'1':'0';
-  var rj=document.getElementById('rightJack');
-  if(rj)rj.style.opacity=onVideo?'1':'0';
-  var lj=document.getElementById('leftJack');
-  if(lj)lj.style.opacity=onVideo?'1':'0';
-  // Dave is grabbable on video worlds
-  if(onVideo){dave.classList.add('grabbable');}else{dave.classList.remove('grabbable');}
-  var vn=document.getElementById('vibeNote');
-  if(vn)vn.classList.toggle('hide',onContent);
-  var mVids=['w2vid','w3vid','w4vid','w4vid2'];
-  mVids.forEach(function(id){var v=document.getElementById(id);if(v)v.muted=globalMuted;});
-  if(onVideo)syncMuteButtons();
-  ['w1loading','w2loading','w3loading','w4loading'].forEach(function(id,idx){
-    var el=document.getElementById(id);
-    if(!el)return;
-    if(cw===idx+1){el.classList.remove('hidden');}
-    else{el.classList.add('hidden');}
-  });
-  // W1: BTS carousel
-  var _w1v1=document.getElementById('w1vid');
-  var _w1v2=document.getElementById('w1vid2');
-  var w1vid=w1active===1?_w1v1:_w1v2;
-  if(w1vid){if(cw===1)w1vid.play();else w1vid.pause();}
-  // W2: Documentary
-  var w2vid=document.getElementById('w2vid');
-  if(w2vid){
-    if(cw===2){
-      if(!w2vid.src){w2vid.src='https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Puneshow%20Final.mp4';w2vid.load();}
-      w2vid.play();
-    } else w2vid.pause();
-  }
-  // W3: Written & Directed
-  var w3vid=document.getElementById('w3vid');
-  if(w3vid){
-    if(cw===3){
-      if(!w3vid.src){w3vid.src='https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Blinkit%20Final%20Ad.mp4';w3vid.load();}
-      w3vid.play();
-    } else w3vid.pause();
-  }
-  // W4: Travel carousel
-  var _w4v1=document.getElementById('w4vid');
-  var _w4v2=document.getElementById('w4vid2');
-  var w4curVid=w4active===1?_w4v1:_w4v2;
-  if(w4curVid){if(cw===4){if(!_w4v1.src){_w4v1.src=w4videos[0].src;_w4v1.load();}w4curVid.play();}else w4curVid.pause();}
-  if(cw<1||cw>4){dX=Math.max(8,Math.min(window.innerWidth-56,mx-22));setDaveNotes(false);}
-  else{dX=8;}
-  if(cw===0){pluggedPsocket=null;plugging=false;if(patchProgress)patchProgress.style.width='0%';}
-  if(cw!==5){cPlugging=false;hovCsocket=null;if(contactProgress)contactProgress.style.width='0%';}
-  rightSocketTriggered=false;
-  setTimeout(function(){isTr=false;},1000);setTimeout(function(){eCool=false;},1400);
-  updateBgMusic();
-}
-window.goW=goW;
-
-function spawnCoin(x,y){var c=document.createElement('div');c.className='cpop';c.textContent='*';c.style.left=x+'px';c.style.top=y+'px';document.body.appendChild(c);setTimeout(function(){if(c.parentNode)c.parentNode.removeChild(c);},800);}
-
-function jumpDave(tx){if(isJ)return;isJ=true;var dir=tx>dX?1:-1;dDir=dir;DB.style.setProperty('--f',dir);DB.className='dw jump';spawnCoin(dX+10,window.innerHeight-155);setTimeout(function(){isJ=false;DB.className='dw idle';},520);}
-
-document.addEventListener('click',function(e){
-  if(e.target.closest('#w1mute')||e.target.closest('#w1prev')||e.target.closest('#w1next')||
-     e.target.closest('#w2mute')||e.target.closest('#w3mute')||
-     e.target.closest('#w4mute')||e.target.closest('#w4prev')||e.target.closest('#w4next')||
-     e.target.closest('.psocket')||e.target.closest('.wnav-btn'))return;
-  jumpDave(mx);
-});
-
-// ── WIRE / PATCH BAY SYSTEM ──────────────────────────────
-
-function resizeWireCanvas(){
-  if(!wireCanvas)return;
-  wireCanvas.width=window.innerWidth;
-  wireCanvas.height=window.innerHeight;
-  // Update Dave's ground position
-  dY=window.innerHeight-48-29;
-  dave.style.top=(dY)+'px';
-  // Resize contact wire canvas too
-  var cwc=document.getElementById('contactWireCanvas');
-  if(cwc){cwc.width=window.innerWidth;cwc.height=window.innerHeight;}
-  // Resize crew canvases
-  if(crewCanvas){crewCanvas.width=window.innerWidth;crewCanvas.height=window.innerHeight;}
-  if(crewCanvas5){crewCanvas5.width=window.innerWidth;crewCanvas5.height=window.innerHeight;}
-  initCrew();
-}
-resizeWireCanvas();
-window.addEventListener('resize',resizeWireCanvas);
-
-// Show/hide wire system based on world
-function setWireVisible(v){
-  if(wireCanvas)wireCanvas.style.opacity=v?'1':'0';
-  if(wallJack)wallJack.style.opacity=(cw===0)?'1':'0';
-}
-
-// Get wall jack exit point (fixed coords)
-function getJackPoint(){
-  if(!wallJack)return{x:20,y:window.innerHeight/2};
-  var r=wallJack.getBoundingClientRect();
-  return{x:r.right-2,y:r.top+r.height/2};
-}
-
-// Get socket hole center (fixed coords)
-function getPSocketCenter(el){
-  var hole=el.querySelector('.phole');
-  var r=hole.getBoundingClientRect();
-  return{x:r.left+r.width/2,y:r.top+r.height/2};
-}
-
-// Dave hand position — reads live from element
-function getDaveHandPos(){
-  var r=dave.getBoundingClientRect();
-  return{x:r.left+r.width*0.75,y:r.top+r.height*0.45};
-}
-
-function drawPlug(x,y,size,alpha){
-  var wc=getWireColor(alpha);
-  wctx.beginPath();wctx.arc(x,y,size,0,Math.PI*2);wctx.fillStyle=wc;wctx.fill();
-  wctx.beginPath();wctx.rect(x+size-1,y-1.5,size+1,3);wctx.fillStyle=wc;wctx.fill();
-  wctx.beginPath();wctx.arc(x,y,size+3,0,Math.PI*2);wctx.fillStyle=getWireColor(alpha*0.15);wctx.fill();
-}
-
-function drawJackConnector(x,y){
-  wctx.beginPath();wctx.arc(x,y,6,0,Math.PI*2);wctx.strokeStyle=getWireColor('0.6');wctx.lineWidth=1.5;wctx.stroke();
-  wctx.beginPath();wctx.arc(x,y,3,0,Math.PI*2);wctx.fillStyle=getWireColor('0.9');wctx.fill();
-}
-
-function drawWireSystem(){
-  if(!wctx){requestAnimationFrame(drawWireSystem);return;}
-  wctx.clearRect(0,0,wireCanvas.width,wireCanvas.height);
-
-  if(cw===0){
-    // Home — wire from jack to Dave hand, then loose to cursor
-    var jack=getJackPoint();
-    var hand=getDaveHandPos();
-    drawWireSegment(jack,hand,true);
-    drawJackConnector(jack.x,jack.y);
-    if(pluggedPsocket){
-      var sp=getPSocketCenter(pluggedPsocket);
-      drawWireSegment(hand,sp,true);
-      drawPlug(sp.x,sp.y,5,1.0);
-      drawPlug(hand.x,hand.y,4,0.9);
-    } else {
-      // Magnetic pull — wire tip curves toward nearest socket when within 140px
-      var tipX=mx,tipY=my;
-      var nearest=null,nearDist=140;
-      psockets.forEach(function(s){
-        var p=getPSocketCenter(s);
-        var d=Math.sqrt((mx-p.x)*(mx-p.x)+(my-p.y)*(my-p.y));
-        if(d<nearDist){nearest=s;nearDist=d;}
-      });
-      if(nearest){
-        var sp=getPSocketCenter(nearest);
-        var pull=(1-(nearDist/140))*0.65;
-        tipX=mx+(sp.x-mx)*pull;
-        tipY=my+(sp.y-my)*pull;
-      }
-      drawWireSegment(hand,{x:tipX,y:tipY},false);
-      drawPlug(hand.x,hand.y,4,0.85);
-      drawPlug(tipX,tipY,nearest?5:4,nearest?0.9:0.6);
-    }
-  } else if(cw>=1&&cw<=4){
-    // Video worlds — wire trails from left ground socket to Dave's hand
-    var ljEl=document.getElementById('leftJack');
-    var ljRect=ljEl?ljEl.getBoundingClientRect():null;
-    var leftSocket=ljRect?{x:ljRect.right,y:ljRect.top+ljRect.height/2}:{x:20,y:dY+14};
-    var hand=getDaveHandPos();
-    // Left anchor socket
-    wctx.beginPath();wctx.arc(leftSocket.x,leftSocket.y,5,0,Math.PI*2);wctx.fillStyle=getWireColor('0.5');wctx.fill();
-    wctx.beginPath();wctx.arc(leftSocket.x,leftSocket.y,8,0,Math.PI*2);wctx.strokeStyle=getWireColor('0.15');wctx.lineWidth=1.5;wctx.stroke();
-    // Wire trailing from left to Dave
-    drawWireSegment(leftSocket,hand,true);
-    // Plug in Dave's hand
-    drawPlug(hand.x,hand.y,4,0.9);
-  }
-
-  requestAnimationFrame(drawWireSystem);
-}
-drawWireSystem();
-
-function drawWireSegment(a,b,solid){
-  var dx=b.x-a.x, dy=b.y-a.y;
-  var len=Math.sqrt(dx*dx+dy*dy);
-  var sag=Math.min(len*0.22,55);
-  var cx=(a.x+b.x)/2;
-  var cy=(a.y+b.y)/2+sag;
-
-  if(solid){
-    wctx.beginPath();wctx.moveTo(a.x,a.y);wctx.quadraticCurveTo(cx,cy,b.x,b.y);
-    wctx.strokeStyle=getWireColor('0.08');wctx.lineWidth=8;wctx.lineCap='round';wctx.setLineDash([]);wctx.stroke();
-    wctx.beginPath();wctx.moveTo(a.x,a.y);wctx.quadraticCurveTo(cx,cy,b.x,b.y);
-    wctx.strokeStyle=getWireColor('0.8');wctx.lineWidth=2;wctx.stroke();
-  } else {
-    wctx.beginPath();wctx.moveTo(a.x,a.y);wctx.quadraticCurveTo(cx,cy,b.x,b.y);
-    wctx.setLineDash([5,4]);wctx.strokeStyle=getWireColor('0.3');wctx.lineWidth=1.5;wctx.lineCap='round';wctx.stroke();
-    wctx.setLineDash([]);
-  }
-}
-
-// Patch socket hover detection
-function checkPSocketHover(){
-  if(cw!==0||pluggedPsocket)return;
-  var nearest=null,nearDist=50;
-  psockets.forEach(function(s){
-    var p=getPSocketCenter(s);
-    var d=Math.sqrt((mx-p.x)*(mx-p.x)+(my-p.y)*(my-p.y));
-    if(d<nearDist){nearest=s;nearDist=d;}
-  });
-  if(nearest!==hovPsocket){
-    if(hovPsocket){
-      hovPsocket.querySelector('.phole').style.borderColor='#252525';
-      hovPsocket.querySelector('.phole').style.boxShadow='none';
-      hovPsocket.querySelector('.pslabel').style.color='rgba(255,255,255,0.18)';
-      hovPsocket.style.background='transparent';
-    }
-    hovPsocket=nearest;
-    if(hovPsocket){
-      var wRGB=wireColors[cw].replace('rgba(','').split(',');
-      var wR=wRGB[0].trim(),wG=wRGB[1].trim(),wB=wRGB[2].trim();
-      hovPsocket.querySelector('.phole').style.borderColor='rgba('+wR+','+wG+','+wB+',0.8)';
-      hovPsocket.querySelector('.phole').style.boxShadow='0 0 8px rgba('+wR+','+wG+','+wB+',0.4)';
-      hovPsocket.querySelector('.pslabel').style.color='rgba('+wR+','+wG+','+wB+',0.8)';
-      hovPsocket.style.background='rgba('+wR+','+wG+','+wB+',0.03)';
-    }
-  }
-}
-
-// Click to plug in
-document.addEventListener('click',function(e){
-  if(cw!==0||pluggedPsocket||plugging)return;
-  if(e.target.closest('.psocket')||hovPsocket){
-    var target=e.target.closest('.psocket')||hovPsocket;
-    plugInSocket(target);
-  }
-});
-
-function plugInSocket(socket){
-  plugging=true;
-  pluggedPsocket=socket;
-  var wRGB=wireColors[0].replace('rgba(','').split(',');
-  socket.querySelector('.phole').style.background='rgba('+wRGB[0].trim()+','+wRGB[1].trim()+','+wRGB[2].trim()+',1)';
-  socket.querySelector('.phole').style.boxShadow='0 0 12px rgba('+wRGB[0].trim()+','+wRGB[1].trim()+','+wRGB[2].trim()+',0.6)';
-  // Walk dave toward socket
-  var sp=getPSocketCenter(socket);
-  daveWalkTo(sp.x-11,function(){
-    // Flash
-    flash.style.opacity='0.05';
-    setTimeout(function(){flash.style.opacity='0';},80);
-    // Fill progress then navigate
-    var pct=0;
-    plugFill=setInterval(function(){
-      pct+=2;
-      patchProgress.style.width=pct+'%';
-      if(pct>=100){
-        clearInterval(plugFill);
-        setTimeout(function(){
-          patchProgress.style.width='0%';
-          var world=parseInt(socket.dataset.world);
-          pluggedPsocket=null;
-          plugging=false;
-          socket.querySelector('.phole').style.background='#060606';
-          socket.querySelector('.phole').style.boxShadow='none';
-          goW(world);
-        },200);
-      }
-    },14);
-  });
-}
-
-function daveWalkTo(tx,cb){
-  var interval=setInterval(function(){
-    var diff=tx-dX;
-    if(Math.abs(diff)>3){
-      dX+=diff*0.1;
-      dave.style.left=Math.round(dX)+'px';
-      var nd=diff>0?1:-1;
-      if(nd!==dDir){dDir=nd;DB.style.setProperty('--f',dDir);}
-      if(dDir<0)DB.className='dw wl';else DB.className='dw wr';
-    } else {
-      clearInterval(interval);
-      DB.className='dw idle';
-      if(cb)cb();
-    }
-  },16);
-}
-// ── END WIRE SYSTEM ──────────────────────────────────────
-
-// ── CONTACT SOCKET SYSTEM ────────────────────────────────
-var csockets=document.querySelectorAll('.csocket');
-var hovCsocket=null;
-var cPlugging=false;
-var contactProgress=document.getElementById('contactProgress');
-var contactWireCanvas=document.getElementById('contactWireCanvas');
-var cWctx=contactWireCanvas?contactWireCanvas.getContext('2d'):null;
-if(contactWireCanvas){contactWireCanvas.width=window.innerWidth;contactWireCanvas.height=window.innerHeight;}
-
-function getContactJackPoint(){
-  var j=document.getElementById('contactJack');
-  if(!j)return{x:20,y:window.innerHeight/2};
-  var r=j.getBoundingClientRect();
-  return{x:r.right,y:r.top+r.height/2};
-}
-function getCSocketCenter(el){
-  var hole=el.querySelector('.chole');
-  var r=hole.getBoundingClientRect();
-  return{x:r.left+r.width/2,y:r.top+r.height/2};
-}
-
-function drawContactWire(){
-  if(!cWctx||cw!==5){if(contactWireCanvas)contactWireCanvas.style.opacity='0';requestAnimationFrame(drawContactWire);return;}
-  contactWireCanvas.style.opacity='1';
-  cWctx.clearRect(0,0,contactWireCanvas.width,contactWireCanvas.height);
-  var jack=getContactJackPoint();
-  var hand={x:dX+24,y:dY+14};
-  // Jack → Dave (solid green)
-  var dx1=hand.x-jack.x,dy1=hand.y-jack.y;
-  var sag1=Math.min(Math.sqrt(dx1*dx1+dy1*dy1)*0.22,55);
-  var cx1=(jack.x+hand.x)/2,cy1=(jack.y+hand.y)/2+sag1;
-  cWctx.beginPath();cWctx.moveTo(jack.x,jack.y);cWctx.quadraticCurveTo(cx1,cy1,hand.x,hand.y);
-  cWctx.strokeStyle='rgba(0,255,100,0.08)';cWctx.lineWidth=8;cWctx.lineCap='round';cWctx.setLineDash([]);cWctx.stroke();
-  cWctx.beginPath();cWctx.moveTo(jack.x,jack.y);cWctx.quadraticCurveTo(cx1,cy1,hand.x,hand.y);
-  cWctx.strokeStyle='rgba(0,255,100,0.8)';cWctx.lineWidth=2;cWctx.stroke();
-  // Jack connector dot
-  cWctx.beginPath();cWctx.arc(jack.x,jack.y,6,0,Math.PI*2);cWctx.strokeStyle='rgba(0,255,100,0.6)';cWctx.lineWidth=1.5;cWctx.stroke();
-  cWctx.beginPath();cWctx.arc(jack.x,jack.y,3,0,Math.PI*2);cWctx.fillStyle='rgba(0,255,100,0.9)';cWctx.fill();
-  // Dave → cursor (dashed, magnetic)
-  var tipX=mx,tipY=my;
-  var nearest=null,nearDist=140;
-  csockets.forEach(function(s){
-    var p=getCSocketCenter(s);
-    var d=Math.sqrt((mx-p.x)*(mx-p.x)+(my-p.y)*(my-p.y));
-    if(d<nearDist){nearest=s;nearDist=d;}
-  });
-  if(nearest){var sp=getCSocketCenter(nearest);var pull=(1-(nearDist/140))*0.65;tipX=mx+(sp.x-mx)*pull;tipY=my+(sp.y-my)*pull;}
-  var dx2=tipX-hand.x,dy2=tipY-hand.y;
-  var sag2=Math.min(Math.sqrt(dx2*dx2+dy2*dy2)*0.22,55);
-  var cx2=(hand.x+tipX)/2,cy2=(hand.y+tipY)/2+sag2;
-  cWctx.beginPath();cWctx.moveTo(hand.x,hand.y);cWctx.quadraticCurveTo(cx2,cy2,tipX,tipY);
-  cWctx.setLineDash([5,4]);cWctx.strokeStyle='rgba(0,255,100,0.3)';cWctx.lineWidth=1.5;cWctx.stroke();cWctx.setLineDash([]);
-  // Plug dots
-  cWctx.beginPath();cWctx.arc(hand.x,hand.y,4,0,Math.PI*2);cWctx.fillStyle='rgba(0,255,100,0.85)';cWctx.fill();
-  cWctx.beginPath();cWctx.arc(tipX,tipY,nearest?5:4,0,Math.PI*2);cWctx.fillStyle='rgba(0,255,100,'+(nearest?0.9:0.6)+')';cWctx.fill();
-  requestAnimationFrame(drawContactWire);
-}
-drawContactWire();
-
-// Contact socket hover
-document.addEventListener('mousemove',function(){
-  if(cw!==5||cPlugging)return;
-  var nearest=null,nearDist=50;
-  csockets.forEach(function(s){
-    var p=getCSocketCenter(s);
-    var d=Math.sqrt((mx-p.x)*(mx-p.x)+(my-p.y)*(my-p.y));
-    if(d<nearDist){nearest=s;nearDist=d;}
-  });
-  if(nearest!==hovCsocket){
-    if(hovCsocket){
-      hovCsocket.querySelector('.chole').style.borderColor='#252525';
-      hovCsocket.querySelector('.chole').style.boxShadow='none';
-      hovCsocket.querySelector('.cslabel').style.color='rgba(0,255,100,0.5)';
-      hovCsocket.style.background='transparent';
-    }
-    hovCsocket=nearest;
-    if(hovCsocket){
-      hovCsocket.querySelector('.chole').style.borderColor='rgba(0,255,100,0.8)';
-      hovCsocket.querySelector('.chole').style.boxShadow='0 0 8px rgba(0,255,100,0.4)';
-      hovCsocket.querySelector('.cslabel').style.color='rgba(0,255,100,1)';
-      hovCsocket.style.background='rgba(0,255,100,0.03)';
-    }
-  }
-});
-
-// Contact socket click
-document.addEventListener('click',function(e){
-  if(cw!==5||cPlugging)return;
-  var target=e.target.closest('.csocket')||hovCsocket;
-  if(!target)return;
-  cPlugging=true;
-  target.querySelector('.chole').style.background='rgba(0,255,100,0.8)';
-  target.querySelector('.chole').style.boxShadow='0 0 12px rgba(0,255,100,0.6)';
-  // Walk Dave to socket then open link
-  var sp=getCSocketCenter(target);
-  daveWalkTo(sp.x-11,function(){
-    flash.style.opacity='0.04';setTimeout(function(){flash.style.opacity='0';},80);
-    var pct=0;
-    var fill=setInterval(function(){
-      pct+=2;if(contactProgress)contactProgress.style.width=pct+'%';
-      if(pct>=100){
-        clearInterval(fill);
-        setTimeout(function(){
-          if(contactProgress)contactProgress.style.width='0%';
-          target.querySelector('.chole').style.background='#060606';
-          target.querySelector('.chole').style.boxShadow='none';
-          cPlugging=false;
-          var url=target.dataset.url;
-          var tgt=target.dataset.target||'_blank';
-          if(tgt==='_self')window.location.href=url;
-          else window.open(url,tgt);
-        },200);
-      }
-    },14);
-  });
-});
-
-// Wire color per world — home=yellow, BTS=orange, Docu=white, W&D=purple, Travel=cyan, Contact=green
-// Dave idle — sit/sleep after 30s of no movement
-
-// Dave idle — sit/sleep after 30s of no movement
-var idleTimer=null;
-var daveIdle=false;
-// Init W5 sparks
-var sc5=document.getElementById('sparks5');
-if(sc5){sc5.width=window.innerWidth;sc5.height=window.innerHeight;var ctx5=sc5.getContext('2d');for(var i5=0;i5<120;i5++){ctx5.fillStyle='rgba(255,255,255,'+(Math.random()*0.3+0.03)+')';ctx5.beginPath();ctx5.arc(Math.random()*sc5.width,Math.random()*sc5.height,0.6,0,Math.PI*2);ctx5.fill();}}
-var daveIdle=false;
-function resetIdleTimer(){
-  if(idleTimer)clearTimeout(idleTimer);
-  daveIdle=false;
-  if(cw===0&&!isJ&&!plugging){DB.classList.remove('sit');}
-  idleTimer=setTimeout(function(){
-    if(cw===0&&!isJ&&!plugging){daveIdle=true;DB.className='dw sit';}
-  },30000);
-}
-document.addEventListener('mousemove',resetIdleTimer);
-document.addEventListener('click',resetIdleTimer);
-resetIdleTimer();
-
-// Film titles on socket hover — show film names in patch bay tooltip
-var socketTitles={
-  1:'Kareena Rosta · Shreeleela Rosta',
-  2:'The Pune Show',
-  3:'Blinkit Ad',
-  4:'Wandering on Purpose · Life by the Ganga',
-  5:'Get in Touch'
-};
-var pTooltip=document.createElement('div');
-pTooltip.style.cssText='position:fixed;bottom:120px;left:50%;transform:translateX(-50%);font-family:"Press Start 2P",monospace;font-size:8px;color:rgba(255,229,0,0.7);letter-spacing:1px;pointer-events:none;opacity:0;transition:opacity 0.2s;z-index:300;white-space:nowrap;';
-document.body.appendChild(pTooltip);
-psockets.forEach(function(s){
-  s.addEventListener('mouseenter',function(){
-    var w=parseInt(this.dataset.world);
-    pTooltip.textContent=socketTitles[w]||'';
-    pTooltip.style.opacity='1';
-  });
-  s.addEventListener('mouseleave',function(){pTooltip.style.opacity='0';});
-});
-// Global mute state — starts muted (browser autoplay policy)
-var globalMuted=true;
-function setDaveNotes(on){document.getElementById('dnote1').style.display=on?'block':'none';document.getElementById('dnote2').style.display=on?'block':'none';}
-
-// ── W1: BTS CAROUSEL ─────────────────────────────────────
-
-function w1Load(idx,autoplay){
-  var data=w1videos[idx];
-  var w1v1=document.getElementById('w1vid');
-  var w1v2=document.getElementById('w1vid2');
-  var next=w1active===1?w1v2:w1v1;
-  var curr=w1active===1?w1v1:w1v2;
-  if(next.src!==data.src){next.src=data.src;next.muted=globalMuted;next.load();}
-  next.oncanplay=function(){
-    if(autoplay)next.play();
-    next.style.opacity='1';curr.style.opacity='0';
-    setTimeout(function(){curr.pause();curr.src='';},650);
-    w1active=w1active===1?2:1;
-  };
-  document.getElementById('w1title').innerHTML=data.title;
-  document.getElementById('w1desc').innerHTML=data.desc;
-  document.getElementById('w1counter').textContent=String(idx+1).padStart(2,'0')+' / '+String(w1videos.length).padStart(2,'0');
-}
-function w1Next(){w1cur=(w1cur+1)%w1videos.length;snapDaveToStart();w1Load(w1cur,true);}
-function w1Prev(){w1cur=(w1cur-1+w1videos.length)%w1videos.length;snapDaveToStart();w1Load(w1cur,true);}
-function daveBob(){DB.className="dw bob";setTimeout(function(){DB.className="dw idle";},900);}
-function toggleW1Mute(){globalMuted=!globalMuted;document.getElementById("w1vid").muted=globalMuted;document.getElementById("w1vid2").muted=globalMuted;syncMuteButtons();if(!globalMuted)daveBob();}
-
-// ── W4: TRAVEL CAROUSEL ───────────────────────────────────
-
-function w4Load(idx,autoplay){
-  var data=w4videos[idx];
-  var w4v1=document.getElementById('w4vid');
-  var w4v2=document.getElementById('w4vid2');
-  var next=w4active===1?w4v2:w4v1;
-  var curr=w4active===1?w4v1:w4v2;
-  if(next.src!==data.src){next.src=data.src;next.muted=globalMuted;next.load();}
-  next.oncanplay=function(){
-    if(autoplay)next.play();
-    next.style.opacity='1';curr.style.opacity='0';
-    setTimeout(function(){curr.pause();curr.src='';},650);
-    w4active=w4active===1?2:1;
-  };
-  document.getElementById('w4title').innerHTML=data.title;
-  document.getElementById('w4desc').innerHTML=data.desc;
-  document.getElementById('w4counter').textContent=String(idx+1).padStart(2,'0')+' / '+String(w4videos.length).padStart(2,'0');
-}
-function w4Next(){w4cur=(w4cur+1)%w4videos.length;snapDaveToStart();w4Load(w4cur,true);}
-function w4Prev(){w4cur=(w4cur-1+w4videos.length)%w4videos.length;snapDaveToStart();w4Load(w4cur,true);}
-function toggleW4Mute(){globalMuted=!globalMuted;document.getElementById("w4vid").muted=globalMuted;document.getElementById("w4vid2").muted=globalMuted;syncMuteButtons();if(!globalMuted)daveBob();}
-function toggleWMute(vidId){globalMuted=!globalMuted;document.getElementById(vidId).muted=globalMuted;syncMuteButtons();if(!globalMuted)daveBob();}
-
-// ── FILM CREW BACKGROUND SYSTEM ─────────────────────────
-var crewCanvas=document.getElementById('crewCanvas');
-var crewCanvas5=document.getElementById('crewCanvas5');
-var crc=crewCanvas?crewCanvas.getContext('2d'):null;
-var crc5=crewCanvas5?crewCanvas5.getContext('2d'):null;
-if(crewCanvas){crewCanvas.width=window.innerWidth;crewCanvas.height=window.innerHeight;}
-if(crewCanvas5){crewCanvas5.width=window.innerWidth;crewCanvas5.height=window.innerHeight;}
-// Each crew member: type, fixed x zone, y, animation state
-var crew=[];
-var crewT=0;
-
-function initCrew(){
-  var W=window.innerWidth,H=window.innerHeight;
-  var ground=H-60;
-  crew=[
-    // Camera operator — far left, peering through camera
-    {type:'camera',x:W*0.06,y:ground,phase:0,speed:0.018,facing:1},
-    // Clapper loader — left of panel, ready to clap
-    {type:'clapper',x:W*0.18,y:ground,phase:1.2,speed:0.025,facing:1},
-    // Boom mic operator — top left area, holding mic high
-    {type:'boom',x:W*0.08,y:ground-30,phase:0.5,speed:0.012,facing:1},
-    // Director — far right, sitting, gesturing
-    {type:'director',x:W*0.88,y:ground,phase:0.8,speed:0.02,facing:-1},
-    // Actor — right of panel, dramatic pose
-    {type:'actor',x:W*0.78,y:ground,phase:2.1,speed:0.03,facing:-1},
-    // Lighting guy — top right, adjusting light
-    {type:'light',x:W*0.92,y:ground-20,phase:1.5,speed:0.015,facing:-1},
-    // Script supervisor — bottom left, looking at script
-    {type:'script',x:W*0.14,y:ground,phase:3.0,speed:0.022,facing:1},
-  ];
-}
-initCrew();
-
-// Pixel drawing helpers — all crew at 3x scale, muted palette
-var S=3; // pixel scale
-function px(ctx,x,y,w,h,col){ctx.fillStyle=col;ctx.fillRect(Math.round(x),Math.round(y),w*S,h*S);}
-
-function drawCamera(ctx,x,y,t,facing){
-  var s=facing<0?-1:1;
-  ctx.save();ctx.translate(x,y);if(facing<0){ctx.scale(-1,1);}
-  // Body — blue shirt
-  px(ctx,-6*S,-14*S,4,6,'rgba(50,80,140,0.7)');
-  // Head
-  px(ctx,-5*S,-20*S,3,5,'rgba(210,170,130,0.7)');
-  // Camera — extends in front, bobs slightly
-  var camBob=Math.sin(t*2)*1.5;
-  px(ctx,-2*S,-17*S+camBob,5,3,'rgba(30,30,30,0.8)');
-  px(ctx,3*S,-16*S+camBob,2,2,'rgba(80,80,80,0.7)');
-  // Lens
-  px(ctx,5*S,-17*S+camBob,2,4,'rgba(100,180,220,0.5)');
-  // Legs — slight sway
-  var legSway=Math.sin(t*1.5)*1;
-  px(ctx,-6*S,-8*S+legSway,2,8,'rgba(40,40,60,0.7)');
-  px(ctx,-4*S,-8*S-legSway,2,8,'rgba(40,40,60,0.7)');
-  // Eye at viewfinder
-  px(ctx,-4*S,-17*S+camBob,2,2,'rgba(30,30,30,0.9)');
-  ctx.restore();
-}
-
-function drawClapper(ctx,x,y,t,facing){
-  ctx.save();ctx.translate(x,y);if(facing<0){ctx.scale(-1,1);}
-  // Body
-  px(ctx,-5*S,-14*S,4,6,'rgba(140,60,60,0.7)');
-  // Head
-  px(ctx,-4*S,-20*S,3,5,'rgba(210,170,130,0.7)');
-  // Clapper board — arm raises and claps periodically
-  var clapCycle=(t*0.8)%(Math.PI*2);
-  var clapAngle=clapCycle<0.3?clapCycle*8:0;
-  ctx.save();ctx.translate(-2*S,-20*S);ctx.rotate(-clapAngle);
-  px(ctx,0,-4*S,6,4,'rgba(20,20,20,0.8)');
-  // Stripes on board
-  px(ctx,1*S,-4*S,1,4,'rgba(255,229,0,0.6)');
-  px(ctx,3*S,-4*S,1,4,'rgba(255,229,0,0.6)');
-  px(ctx,5*S,-4*S,1,4,'rgba(255,229,0,0.6)');
-  ctx.restore();
-  // Legs
-  px(ctx,-5*S,-8*S,2,8,'rgba(40,40,60,0.7)');
-  px(ctx,-3*S,-8*S,2,8,'rgba(40,40,60,0.7)');
-  ctx.restore();
-}
-
-function drawBoom(ctx,x,y,t,facing){
-  ctx.save();ctx.translate(x,y);if(facing<0){ctx.scale(-1,1);}
-  // Body
-  px(ctx,-5*S,-14*S,4,6,'rgba(60,100,60,0.7)');
-  // Head
-  px(ctx,-4*S,-20*S,3,5,'rgba(210,170,130,0.7)');
-  // Pole — extends upward with slight sway
-  var sway=Math.sin(t*0.8)*3;
-  ctx.save();ctx.translate(sway,0);
-  px(ctx,-1*S,-42*S,1,28,'rgba(180,180,180,0.6)');
-  // Mic at top
-  px(ctx,-2*S,-44*S,3,4,'rgba(60,60,60,0.8)');
-  // Fuzzy windshield
-  ctx.fillStyle='rgba(80,80,80,0.5)';
-  ctx.beginPath();ctx.arc(-1*S,-44*S,5,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-  // Arms raised
-  px(ctx,-8*S,-16*S,3,2,'rgba(210,170,130,0.6)');
-  px(ctx,-5*S,-18*S,3,2,'rgba(210,170,130,0.6)');
-  // Legs
-  px(ctx,-5*S,-8*S,2,8,'rgba(40,40,60,0.7)');
-  px(ctx,-3*S,-8*S,2,8,'rgba(40,40,60,0.7)');
-  ctx.restore();
-}
-
-function drawDirector(ctx,x,y,t,facing){
-  ctx.save();ctx.translate(x,y);if(facing<0){ctx.scale(-1,1);}
-  // Chair legs
-  px(ctx,-8*S,-4*S,2,4,'rgba(100,70,40,0.6)');
-  px(ctx,2*S,-4*S,2,4,'rgba(100,70,40,0.6)');
-  // Chair seat
-  px(ctx,-8*S,-8*S,12,2,'rgba(120,50,50,0.7)');
-  // Chair back
-  px(ctx,-8*S,-16*S,2,8,'rgba(120,50,50,0.7)');
-  // Body seated
-  px(ctx,-7*S,-15*S,10,8,'rgba(20,20,20,0.8)');
-  // Head — nods
-  var nod=Math.sin(t*1.2)*1.5;
-  px(ctx,-5*S,-22*S+nod,4,6,'rgba(210,170,130,0.7)');
-  // Megaphone / hand gesturing
-  var gestureY=Math.sin(t*0.9)*3;
-  px(ctx,4*S,-16*S+gestureY,4,2,'rgba(255,180,0,0.6)');
-  px(ctx,8*S,-17*S+gestureY,3,4,'rgba(255,180,0,0.5)');
-  // Legs dangling
-  px(ctx,-6*S,-8*S,3,8,'rgba(20,20,20,0.7)');
-  px(ctx,-2*S,-8*S,3,8,'rgba(20,20,20,0.7)');
-  ctx.restore();
-}
-
-function drawActor(ctx,x,y,t,facing){
-  ctx.save();ctx.translate(x,y);if(facing<0){ctx.scale(-1,1);}
-  // Body — dramatic pose, arm extended
-  var armRaise=Math.sin(t*0.7)*8;
-  px(ctx,-5*S,-14*S,4,7,'rgba(160,120,80,0.7)');
-  // Head — tilts dramatically
-  var tilt=Math.sin(t*0.5)*2;
-  px(ctx,-4*S,-21*S+tilt,4,6,'rgba(210,170,130,0.7)');
-  // Extended arm — sweeping gesture
-  px(ctx,-1*S,-16*S-armRaise,6,2,'rgba(210,170,130,0.6)');
-  // Other arm
-  px(ctx,-8*S,-14*S,3,2,'rgba(210,170,130,0.6)');
-  // Legs — weight shift
-  var weightShift=Math.sin(t*0.6)*2;
-  px(ctx,-5*S,-7*S+weightShift,2,7,'rgba(40,40,60,0.7)');
-  px(ctx,-3*S,-7*S-weightShift,2,7,'rgba(40,40,60,0.7)');
-  ctx.restore();
-}
-
-function drawLight(ctx,x,y,t,facing){
-  ctx.save();ctx.translate(x,y);if(facing<0){ctx.scale(-1,1);}
-  // Stand pole
-  px(ctx,-1*S,-40*S,2,30,'rgba(150,150,150,0.5)');
-  // Light head — pans slowly
-  var pan=Math.sin(t*0.4)*10;
-  ctx.save();ctx.translate(pan,0);
-  px(ctx,-4*S,-44*S,8,5,'rgba(60,60,60,0.7)');
-  // Light beam
-  ctx.fillStyle='rgba(255,240,180,0.06)';
-  ctx.beginPath();ctx.moveTo(-4*S,-39*S);ctx.lineTo(-20*S,0);ctx.lineTo(12*S,0);ctx.closePath();ctx.fill();
-  // Lens glow
-  ctx.fillStyle='rgba(255,240,180,0.4)';
-  ctx.beginPath();ctx.arc(0,-42*S,4,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-  // Body of person holding it
-  px(ctx,-4*S,-14*S,4,6,'rgba(60,60,100,0.7)');
-  px(ctx,-3*S,-20*S,3,5,'rgba(210,170,130,0.7)');
-  // Arms up holding stand
-  px(ctx,-6*S,-16*S,2,4,'rgba(210,170,130,0.6)');
-  px(ctx,0,-16*S,2,4,'rgba(210,170,130,0.6)');
-  // Legs
-  px(ctx,-4*S,-8*S,2,8,'rgba(40,40,60,0.7)');
-  px(ctx,-2*S,-8*S,2,8,'rgba(40,40,60,0.7)');
-  ctx.restore();
-}
-
-function drawScript(ctx,x,y,t,facing){
-  ctx.save();ctx.translate(x,y);if(facing<0){ctx.scale(-1,1);}
-  // Body — bent forward reading
-  px(ctx,-5*S,-14*S,4,5,'rgba(100,100,60,0.7)');
-  // Head bent down
-  var readBob=Math.sin(t*1.8)*1;
-  px(ctx,-5*S,-20*S+readBob,4,5,'rgba(210,170,130,0.7)');
-  // Script pages — held out, page turn animation
-  var pageTurn=Math.abs(Math.sin(t*0.3))*3;
-  px(ctx,-2*S,-16*S,7,5,'rgba(230,220,200,0.6)');
-  // Page lines
-  px(ctx,-1*S,-15*S,5,1,'rgba(100,100,100,0.3)');
-  px(ctx,-1*S,-13*S,4,1,'rgba(100,100,100,0.3)');
-  // Flipping page
-  if(pageTurn>1){px(ctx,4*S,-16*S+pageTurn,2,4,'rgba(230,220,200,0.4)');}
-  // Legs
-  px(ctx,-5*S,-9*S,2,9,'rgba(40,40,60,0.7)');
-  px(ctx,-3*S,-9*S,2,9,'rgba(40,40,60,0.7)');
-  ctx.restore();
-}
-
-function drawCrewFrame(){
-  var onCrew=(cw===0||cw===5);
-  // Clear both canvases
-  if(crc)crc.clearRect(0,0,crewCanvas.width,crewCanvas.height);
-  if(crc5)crc5.clearRect(0,0,crewCanvas5.width,crewCanvas5.height);
-  if(!onCrew){requestAnimationFrame(drawCrewFrame);return;}
-  var ctx=cw===0?crc:crc5;
-  if(!ctx){requestAnimationFrame(drawCrewFrame);return;}
-  crewT+=0.016;
-  crew.forEach(function(c){
-    var t=crewT*c.speed*60+c.phase;
-    switch(c.type){
-      case 'camera': drawCamera(ctx,c.x,c.y,t,c.facing);break;
-      case 'clapper': drawClapper(ctx,c.x,c.y,t,c.facing);break;
-      case 'boom': drawBoom(ctx,c.x,c.y,t,c.facing);break;
-      case 'director': drawDirector(ctx,c.x,c.y,t,c.facing);break;
-      case 'actor': drawActor(ctx,c.x,c.y,t,c.facing);break;
-      case 'light': drawLight(ctx,c.x,c.y,t,c.facing);break;
-      case 'script': drawScript(ctx,c.x,c.y,t,c.facing);break;
-    }
-  });
-  requestAnimationFrame(drawCrewFrame);
-}
-drawCrewFrame();
-// ── END FILM CREW SYSTEM ─────────────────────────────────
-
-// Init
-dY=window.innerHeight-48-29;
-// Start mute buttons shaking since sound is off by default
-document.querySelectorAll('.mute-btn').forEach(function(btn){btn.classList.add('shaking');});
-var _initV=document.getElementById('w1vid');
-_initV.src=w1videos[0].src;
-_initV.muted=true;
-document.getElementById('w1vid2').muted=true;
-_initV.load();
-
-// Loading indicators
-function hideLoading(worldNum){
-  var el=document.getElementById('w'+worldNum+'loading');
-  if(el)el.classList.add('hidden');
-}
-document.getElementById('w1vid').addEventListener('playing',function(){hideLoading(1);});
-document.getElementById('w1vid2').addEventListener('playing',function(){hideLoading(1);});
-document.getElementById('w2vid').addEventListener('timeupdate',function(){if(this.currentTime>0)hideLoading(2);});
-document.getElementById('w3vid').addEventListener('timeupdate',function(){if(this.currentTime>0)hideLoading(3);});
-document.getElementById('w4vid').addEventListener('timeupdate',function(){if(this.currentTime>0)hideLoading(4);});
-document.getElementById('w4vid2').addEventListener('playing',function(){hideLoading(4);});
-
-// Sync mute buttons
-function syncMuteButtons(){
-  var ico=globalMuted?'🔇':'🔊';
-  var txt=globalMuted?'UNMUTE':'MUTE';
-  ['w1muteico','w2muteico','w3muteico','w4muteico'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=ico;});
-  ['w1mutetxt','w2mutetxt','w3mutetxt','w4mutetxt'].forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=txt;});
-  // Shake when muted to grab attention
-  document.querySelectorAll('.mute-btn').forEach(function(btn){
-    if(globalMuted)btn.classList.add('shaking');
-    else btn.classList.remove('shaking');
-  });
-  setDaveNotes(!globalMuted);
-}
-
-// Snap Dave to left on video loop/switch
-function snapDaveToStart(){dX=8;dave.style.left='8px';}
-
-// ── RIGHT WALL SOCKET — Dave reaches right edge, auto-advances ──
-function checkRightSocket(){
-  if(cw<1||cw>4||rightSocketTriggered)return;
-  var vid=null;
-  if(cw===1)vid=w1active===1?document.getElementById('w1vid'):document.getElementById('w1vid2');
-  else if(cw===2)vid=document.getElementById('w2vid');
-  else if(cw===3)vid=document.getElementById('w3vid');
-  else if(cw===4)vid=w4active===1?document.getElementById('w4vid'):document.getElementById('w4vid2');
-  if(!vid||!vid.duration)return;
-  var pct=vid.currentTime/vid.duration;
-  if(pct>=0.98){
-    rightSocketTriggered=true;
-    flash.style.opacity='0.06';setTimeout(function(){flash.style.opacity='0';},100);
-    if(cw===1&&w1cur<w1videos.length-1){
-      setTimeout(function(){w1Next();rightSocketTriggered=false;},300);
-    } else if(cw===4&&w4cur<w4videos.length-1){
-      setTimeout(function(){w4Next();rightSocketTriggered=false;},300);
-    } else {
-      var next=cw<WORLDS-1?cw+1:0;
-      setTimeout(function(){goW(next);rightSocketTriggered=false;},400);
-    }
-  }
-}
-
-// Detect video loops for Dave reset
-var w1v1Last=0,w1v2Last=0,w4v1Last=0,w4v2Last=0;
-['w1vid','w1vid2','w2vid','w3vid','w4vid','w4vid2'].forEach(function(id){
-  var v=document.getElementById(id);
-  if(!v)return;
-  var last=0;
-  v.addEventListener('timeupdate',function(){
-    var isW1=(id==='w1vid'||id==='w1vid2')&&cw===1;
-    var isW4=(id==='w4vid'||id==='w4vid2')&&cw===4;
-    if(last>this.duration-0.8&&this.currentTime<0.5&&(isW1||cw===2||cw===3||isW4))snapDaveToStart();
-    last=this.currentTime;
-    checkRightSocket();
-  });
-});
-
-// Event listeners
-document.getElementById('w1next').addEventListener('click',function(e){e.stopPropagation();w1Next();});
-document.getElementById('w1prev').addEventListener('click',function(e){e.stopPropagation();w1Prev();});
-document.getElementById('w1mute').addEventListener('click',function(e){e.stopPropagation();toggleW1Mute();});
-document.getElementById('w2mute').addEventListener('click',function(e){e.stopPropagation();toggleWMute('w2vid');});
-document.getElementById('w3mute').addEventListener('click',function(e){e.stopPropagation();toggleWMute('w3vid');});
-document.getElementById('w4next').addEventListener('click',function(e){e.stopPropagation();w4Next();});
-document.getElementById('w4prev').addEventListener('click',function(e){e.stopPropagation();w4Prev();});
-document.getElementById('w4mute').addEventListener('click',function(e){e.stopPropagation();toggleW4Mute();});
-
-document.addEventListener('keydown',function(e){
-  if(e.key==='m'||e.key==='M'){
-    if(cw===1)toggleW1Mute();
-    else if(cw===2)toggleWMute('w2vid');
-    else if(cw===3)toggleWMute('w3vid');
-    else if(cw===4)toggleW4Mute();
-  }
-  if(e.key==='Escape'&&cw!==0)goW(0);
-});
-
-// ── BACKGROUND MUSIC ─────────────────────────────────────
-// Background music — desktop only
-if(window.innerWidth>768){
-  var bgMusic=new Audio('https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/bgmusic.mp3');
-  bgMusic.loop=true;
-  bgMusic.volume=0.35;
-  var bgMusicStarted=false;
-  function updateBgMusic(){
-    if(!bgMusicStarted)return;
-    if(cw===0||cw===5){bgMusic.play().catch(function(){});}
-    else{bgMusic.pause();}
-  }
-  function startBgMusic(){
-    if(bgMusicStarted)return;
-    bgMusicStarted=true;
-    if(cw===0||cw===5)bgMusic.play().catch(function(){});
-    document.removeEventListener('click',startBgMusic);
-    document.removeEventListener('mousedown',startBgMusic);
-  }
-  document.addEventListener('click',startBgMusic);
-  document.addEventListener('mousedown',startBgMusic);
-} else {
-  function updateBgMusic(){}
-}
-if('IntersectionObserver' in window){
-  var mobVids=document.querySelectorAll('#mob video[data-src]');
-  var vidObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        var v=entry.target;
-        if(!v.src){v.src=v.dataset.src;v.muted=true;v.play();}
-        vidObs.unobserve(v);
+    // Listen for auth state (e.g. magic link)
+    db.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        window.location.href = '/app';
       }
     });
-  },{threshold:0.2});
-  mobVids.forEach(function(v){vidObs.observe(v);});
-}
-
-document.querySelectorAll('.wnav-btn').forEach(function(b){
-  b.addEventListener('click',function(e){e.stopPropagation();goW(parseInt(this.dataset.w));});
-});
-
-// ── MOBILE MONITOR SYSTEM ────────────────────────────────
-if(window.innerWidth<=768){
-  // Hide desktop elements
-  ['stage','dave','wireCanvas','cur','cur2','nav','sbar','hint','vibeNote','flash','rightJack','leftJack','wallJack'].forEach(function(id){
-    var el=document.getElementById(id);if(el)el.style.display='none';
-  });
-
-  var mSrcs=[
-    'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Kareena%20Rosta%20Bts.mp4',
-    'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Shreeleela%20Rosta%20Bts.mp4',
-    'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Puneshow%20Final.mp4',
-    'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Blinkit%20Final%20Ad.mp4',
-    'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Framesfinal.mp4',
-    'https://pub-568fb605618c4287a7f4c3ce70a8240c.r2.dev/Life%20By%20The%20Ganga%20V1.mp4',
-    null // contact
-  ];
-  var mLabels=[
-    {sub:'WORLD 01 — BTS',title:'BEHIND THE SCENES'},
-    {sub:'WORLD 01 — BTS',title:'BEHIND THE SCENES II'},
-    {sub:'WORLD 02 — DOCUMENTARY',title:'REAL STORIES'},
-    {sub:'WORLD 03 — WRITTEN & DIRECTED',title:'WRITTEN & DIRECTED'},
-    {sub:'WORLD 04 — TRAVEL',title:'WANDERING ON PURPOSE'},
-    {sub:'WORLD 04 — TRAVEL',title:'LIFE BY THE GANGA'},
-    {sub:'WORLD 05',title:'CONTACT'}
-  ];
-  var mColRgb=['255,140,0','255,140,0','220,220,220','180,100,255','0,210,200','0,210,200','0,255,100'];
-
-  var mCurIdx=-1; // -1 = identity card
-  var mMuted=true;
-  var mWalking=false;
-
-  var mDave=document.getElementById('mDave');
-  var mDB=document.getElementById('mDB');
-  var mRail=document.getElementById('mRail');
-  var mVid=document.getElementById('mDisplayVid');
-  var mIdent=document.getElementById('mIdent');
-  var mContactCard=document.getElementById('mContactCard');
-  var mWorldLabel=document.getElementById('mWorldLabel');
-  var mHudWorld=document.getElementById('mHudWorld');
-  var mMuteBtn=document.getElementById('mMuteBtn');
-  var mWire=document.getElementById('mRailWire');
-  var mWctx=mWire?mWire.getContext('2d'):null;
-  var mDaveX=8;
-
-  // Size wire canvas
-  function sizeMWire(){
-    if(!mWire)return;
-    mWire.width=mRail.offsetWidth;
-    mWire.height=mRail.offsetHeight;
+  } catch(e) {
+    console.error('Supabase init failed', e);
   }
-  sizeMWire();
-  window.addEventListener('resize',sizeMWire);
-
-  // Get button center X
-  function getBtnX(idx){
-    var btn=document.getElementById('mb'+idx);
-    if(!btn)return 0;
-    var r=btn.getBoundingClientRect();
-    var rr=mRail.getBoundingClientRect();
-    return r.left-rr.left+r.width/2;
-  }
-
-  // Draw wire on rail
-  function drawMRailWire(){
-    if(!mWctx)return;
-    mWctx.clearRect(0,0,mWire.width,mWire.height);
-    var col=mCurIdx>=0?mColRgb[mCurIdx]:'255,229,0';
-    var lx=0,ly=mWire.height/2;
-    var dr=mDave.getBoundingClientRect();
-    var rr=mRail.getBoundingClientRect();
-    var dhx=dr.left-rr.left+dr.width*0.75;
-    var dhy=mWire.height*0.5;
-    // Solid wire: left edge → Dave
-    mWctx.beginPath();mWctx.moveTo(lx,ly);mWctx.quadraticCurveTo((lx+dhx)/2,ly+8,dhx,dhy);
-    mWctx.strokeStyle='rgba('+col+',0.08)';mWctx.lineWidth=6;mWctx.lineCap='round';mWctx.setLineDash([]);mWctx.stroke();
-    mWctx.beginPath();mWctx.moveTo(lx,ly);mWctx.quadraticCurveTo((lx+dhx)/2,ly+8,dhx,dhy);
-    mWctx.strokeStyle='rgba('+col+',0.75)';mWctx.lineWidth=1.5;mWctx.stroke();
-    // Left anchor dot
-    mWctx.beginPath();mWctx.arc(lx,ly,4,0,Math.PI*2);mWctx.fillStyle='rgba('+col+',0.8)';mWctx.fill();
-    requestAnimationFrame(drawMRailWire);
-  }
-  drawMRailWire();
-
-  // Walk Dave to button idx
-  function mWalkTo(idx,cb){
-    var targetX=getBtnX(idx)-22;
-    var dist=Math.abs(targetX-mDaveX);
-    var shouldJump=dist>mRail.offsetWidth*0.35;
-    if(shouldJump){
-      // Jump animation
-      mDB.className='dw jump';
-      var t=0;
-      function jumpStep(){
-        t+=0.08;
-        var arc=Math.sin(t*Math.PI)*-28;
-        mDaveX+=(targetX-mDaveX)*0.15;
-        mDave.style.left=Math.round(mDaveX)+'px';
-        mDave.style.top=(mDave.offsetParent?parseInt(mDave.style.top||'8')+(arc>-28?arc*0.1:0):8)+'px';
-        if(Math.abs(mDaveX-targetX)>3){requestAnimationFrame(jumpStep);}
-        else{mDaveX=targetX;mDave.style.left=Math.round(mDaveX)+'px';mDave.style.top='8px';mDB.className='dw idle';mWalking=false;if(cb)cb();}
-      }
-      requestAnimationFrame(jumpStep);
-    } else {
-      var dir=targetX>mDaveX?1:-1;
-      mDB.className='dw '+(dir>0?'wr':'wl');
-      function walkStep(){
-        mDaveX+=(targetX-mDaveX)*0.12;
-        mDave.style.left=Math.round(mDaveX)+'px';
-        if(Math.abs(mDaveX-targetX)>2){requestAnimationFrame(walkStep);}
-        else{mDaveX=targetX;mDave.style.left=Math.round(mDaveX)+'px';mDB.className='dw idle';mWalking=false;if(cb)cb();}
-      }
-      requestAnimationFrame(walkStep);
-    }
-  }
-
-  // Select channel
-  function mSelect(idx){
-    if(mWalking)return;
-    mWalking=true;
-    // Update active button
-    document.querySelectorAll('.mBtn').forEach(function(b,i){
-      b.classList.toggle('active',i===idx);
-      b.style.color=i===idx?'rgba('+mColRgb[idx]+',0.9)':'';
-      if(i===idx)b.style.setProperty('--ac','rgba('+mColRgb[idx]+',1)');
-    });
-    mWalkTo(idx,function(){
-      mCurIdx=idx;
-      // Hide ident
-      mIdent.style.opacity='0';
-      mIdent.style.pointerEvents='none';
-      if(idx===6){
-        // Contact
-        mVid.pause();mVid.src='';
-        mContactCard.style.display='flex';
-        mWorldLabel.classList.remove('show');
-        mMuteBtn.style.display='none';
-        mHudWorld.textContent='CONTACT';
-      } else {
-        mContactCard.style.display='none';
-        // Load video
-        if(mVid.src!==mSrcs[idx]){mVid.src=mSrcs[idx];mVid.load();}
-        mVid.muted=mMuted;
-        mVid.play().catch(function(){});
-        // World label
-        var lbl=mLabels[idx];
-        document.getElementById('mwlSub').textContent=lbl.sub;
-        document.getElementById('mwlTitle').textContent=lbl.title;
-        document.getElementById('mwlTitle').style.color='rgba('+mColRgb[idx]+',1)';
-        mWorldLabel.classList.remove('show');
-        void mWorldLabel.offsetWidth;
-        mWorldLabel.classList.add('show');
-        mWorldLabel.style.opacity='1';
-        // Mute button color
-        mMuteBtn.style.display='block';
-        mMuteBtn.style.color='rgba('+mColRgb[idx]+',0.8)';
-        mMuteBtn.style.borderColor='rgba('+mColRgb[idx]+',0.4)';
-        mMuteBtn.classList.toggle('shaking',mMuted);
-        mHudWorld.textContent='CAMERA A · '+lbl.sub.split(' — ')[1];
-      }
-    });
-  }
-
-  // Button tap
-  document.querySelectorAll('.mBtn').forEach(function(btn,i){
-    btn.addEventListener('click',function(){mSelect(i);});
-  });
-
-  // Tap display → fullscreen
-  document.getElementById('mDisplay').addEventListener('click',function(){
-    if(mCurIdx<0||mCurIdx===6)return;
-    var mFull=document.getElementById('mFull');
-    var mFullVid=document.getElementById('mFullVid');
-    mFull.style.display='flex';
-    mFullVid.src=mSrcs[mCurIdx];
-    mFullVid.muted=mMuted;
-    mFullVid.currentTime=mVid.currentTime;
-    mFullVid.play().catch(function(){});
-    // Sync play with display vid
-    mVid.pause();
-  });
-
-  // Exit fullscreen
-  window.mExitFull=function(){
-    var mFull=document.getElementById('mFull');
-    var mFullVid=document.getElementById('mFullVid');
-    mFull.style.display='none';
-    mVid.currentTime=mFullVid.currentTime;
-    mVid.play().catch(function(){});
-    mFullVid.pause();mFullVid.src='';
-  };
-
-  // Swipe down to exit fullscreen
-  var mFSwipeY=0;
-  document.getElementById('mFull').addEventListener('touchstart',function(e){mFSwipeY=e.touches[0].clientY;},{passive:true});
-  document.getElementById('mFull').addEventListener('touchend',function(e){
-    if(e.changedTouches[0].clientY-mFSwipeY>60)window.mExitFull();
-  },{passive:true});
-
-  // Mute button
-  mMuteBtn.addEventListener('click',function(e){
-    e.stopPropagation();
-    mMuted=!mMuted;
-    mVid.muted=mMuted;
-    mMuteBtn.textContent=mMuted?'🔇 UNMUTE':'🔊 MUTE';
-    mMuteBtn.classList.toggle('shaking',mMuted);
-  });
-
-  // Timecode
-  var mTcEl=document.getElementById('mHudTc');
-  setInterval(function(){
-    if(mCurIdx>=0&&mCurIdx<6&&mVid.duration){
-      var t=Math.floor(mVid.currentTime);
-      mTcEl.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')+':'+String(Math.floor((mVid.currentTime%1)*25)).padStart(2,'0');
-    }
-  },40);
-
-  // Initial Dave position
-  mDave.style.top='8px';
-  mDave.style.left='8px';
-}
-// ── END MOBILE MONITOR ───────────────────────────────────
 })();
+
+// ── TOAST ────────────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.querySelector('#toast-msg').textContent = msg;
+  el.querySelector('#toast-icon').textContent = type === 'success' ? '✅' : '❌';
+  el.className = `show ${type}`;
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+// ── AUTH TABS ────────────────────────────────────────────────────
+function showAuthTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('login-form').classList.toggle('hidden', !isLogin);
+  document.getElementById('forgot-form').classList.add('hidden');
+  document.getElementById('signup-form').classList.toggle('hidden', isLogin);
+  document.getElementById('tab-login').classList.toggle('active', isLogin);
+  document.getElementById('tab-signup').classList.toggle('active', !isLogin);
+  document.getElementById('nav-signin').classList.toggle('active', isLogin);
+  document.getElementById('nav-signup').classList.toggle('active', !isLogin);
+}
+// Default: show signup
+showAuthTab('signup');
+
+function showForgot(show) {
+  document.getElementById('forgot-form').classList.toggle('hidden', !show);
+  document.getElementById('login-form').classList.toggle('hidden', show);
+}
+
+function selectRole(role) {
+  document.getElementById('s-role').value = role;
+  document.getElementById('role-client').classList.toggle('active', role === 'client');
+  document.getElementById('role-trainer').classList.toggle('active', role === 'trainer');
+  const wrap = document.getElementById('trainer-code-wrap');
+  if (wrap) wrap.classList.toggle('hidden', role !== 'client');
+}
+// Default: trainer selected
+selectRole('trainer');
+
+// ── LOGIN ────────────────────────────────────────────────────────
+async function doLogin() {
+  if (!db) return toast('Connection error', 'error');
+  const email = document.getElementById('l-email').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  if (!email || !pass) return toast('Fill in all fields', 'error');
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Signing in...';
+  const { error } = await db.auth.signInWithPassword({ email, password: pass });
+  if (error) {
+    toast(error.message, 'error');
+    btn.disabled = false;
+    btn.textContent = 'Continue →';
+  }
+  // success → onAuthStateChange redirects to /app
+}
+
+// ── RESET ────────────────────────────────────────────────────────
+async function sendReset() {
+  const email = document.getElementById('fp-email').value.trim();
+  if (!email) return toast('Enter your email', 'error');
+  const { error } = await db.auth.resetPasswordForEmail(email);
+  if (error) return toast(error.message, 'error');
+  toast('Reset link sent! Check your email.');
+  showForgot(false);
+}
+
+// ── SIGNUP ────────────────────────────────────────────────────────
+async function doSignup() {
+  if (!db) return toast('Connection error', 'error');
+  const name  = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  const pass  = document.getElementById('s-pass').value;
+  const role  = document.getElementById('s-role').value;
+  const code  = document.getElementById('s-code')?.value.trim().toUpperCase() || '';
+  if (!name || !email || !pass) return toast('Fill in all fields', 'error');
+  if (pass.length < 6) return toast('Password must be at least 6 characters', 'error');
+  const btn = document.getElementById('signup-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Creating account...';
+  const { data, error } = await db.auth.signUp({
+    email, password: pass,
+    options: { data: { full_name: name, role } }
+  });
+  if (error) {
+    toast(error.message, 'error');
+    btn.disabled = false;
+    btn.textContent = 'Create Account →';
+    return;
+  }
+  // If client with trainer code — submit join request after profile creates
+  if (role === 'client' && code && data.user) {
+    setTimeout(async () => {
+      const { data: trRpc } = await db.rpc('find_trainer_by_code', { p_code: code });
+      if (trRpc?.length) {
+        await db.from('client_requests').insert({ client_id: data.user.id, trainer_id: trRpc[0].id, status: 'pending' });
+      }
+    }, 3000);
+  }
+  toast('Account created! Signing you in...');
+  // onAuthStateChange will redirect to /app on SIGNED_IN
+}
+
+// ── SCROLL REVEAL ────────────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

@@ -1593,6 +1593,7 @@ function renderUsersList(users){
       <div style="display:flex;gap:5px;flex-wrap:wrap">
         <button class="btn btn-ghost btn-sm" onclick="changeRole('${u.id}','trainer')">→ Trainer</button>
         <button class="btn btn-ghost btn-sm" onclick="changeRole('${u.id}','client')">→ Client</button>
+        <button class="btn btn-sm" style="background:var(--orange);color:#000;font-weight:600" onclick="adminResetData('${u.id}','${(u.full_name||u.email).replace(/'/g,'')}')">Reset Data</button>
         <button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${u.id}','${(u.full_name||u.email).replace(/'/g,'')}')">Delete</button>
       </div>
     </div>`).join(''):'<div class="empty"><div class="empty-icon">👥</div><h3>No users yet</h3></div>';
@@ -1604,6 +1605,18 @@ async function changeRole(uid,role){
   if(role==='trainer'){const {data:p}=await db.from('profiles').select('full_name').eq('id',uid).single();updates.trainer_code=(p?.full_name||'TRN').substring(0,3).toUpperCase()+'-'+Math.floor(Math.random()*9000+1000);}
   const {error}=await db.from('profiles').update(updates).eq('id',uid);
   if(error)toast(error.message,'error');else{toast('Role updated!');loadAllUsers();}
+}
+async function adminResetData(uid,name){
+  if(!confirm(`Reset ALL workout data for ${name}?\n\nThis will delete their exercise logs, body measurements, and saved workouts. This cannot be undone.`))return;
+  const errors=[];
+  const t1=await db.from('exercise_logs').delete().eq('user_id',uid);
+  if(t1.error)errors.push('exercise_logs: '+t1.error.message);
+  const t2=await db.from('body_measurements').delete().eq('user_id',uid);
+  if(t2.error)errors.push('body_measurements: '+t2.error.message);
+  const t3=await db.from('workouts').delete().eq('user_id',uid);
+  if(t3.error)errors.push('workouts: '+t3.error.message);
+  if(errors.length)return toast('Some errors: '+errors.join(', '),'error');
+  toast(`Data reset for ${name} ✓`);
 }
 async function adminDeleteUser(uid,name){
   if(!confirm(`Delete ${name}? This cannot be undone.`))return;

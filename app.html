@@ -1609,9 +1609,9 @@ async function changeRole(uid,role){
 async function adminResetData(uid,name){
   if(!confirm(`Reset ALL workout data for ${name}?\n\nThis will delete their exercise logs, body measurements, and saved workouts. This cannot be undone.`))return;
   const errors=[];
-  const t1=await db.from('exercise_logs').delete().eq('user_id',uid);
+  const t1=await db.from('exercise_logs').delete().eq('client_id',uid);
   if(t1.error)errors.push('exercise_logs: '+t1.error.message);
-  const t2=await db.from('body_measurements').delete().eq('user_id',uid);
+  const t2=await db.from('body_measurements').delete().eq('client_id',uid);
   if(t2.error)errors.push('body_measurements: '+t2.error.message);
   const t3=await db.from('workouts').delete().eq('user_id',uid);
   if(t3.error)errors.push('workouts: '+t3.error.message);

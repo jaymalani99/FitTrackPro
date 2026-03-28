@@ -180,6 +180,19 @@ select.inp{cursor:pointer}
 .bday-inline-count{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--text3);line-height:1}
 .bday-inline.has-ex .bday-inline-count{color:var(--blue)}
 .bday-inline.active .bday-inline-count,.bday-inline.active.has-ex .bday-inline-count{color:var(--lime)}
+/* Exercise sets/reps quick popup */
+.ex-popup-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .18s}
+.ex-popup-overlay.open{opacity:1;pointer-events:all}
+.ex-popup{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:18px;width:100%;max-width:320px;transform:translateY(12px) scale(.97);transition:transform .18s ease,opacity .18s ease;opacity:0}
+.ex-popup-overlay.open .ex-popup{transform:translateY(0) scale(1);opacity:1}
+.ex-popup-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:4px}
+.ex-popup-sub{font-size:.78rem;color:var(--text3);margin-bottom:14px}
+.ex-popup-row{display:flex;gap:10px;margin-bottom:14px}
+.ex-popup-field{flex:1;display:flex;flex-direction:column;gap:5px}
+.ex-popup-field label{font-size:.72rem;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.ex-popup-field input{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:1rem;font-family:'Syne',sans-serif;font-weight:700;text-align:center;width:100%}
+.ex-popup-field input:focus{outline:none;border-color:var(--lime)}
+.ex-popup-btns{display:flex;gap:8px}
 /* selected chip in preview */
 .sel-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:100px;font-size:.76rem;font-weight:600;cursor:pointer;-webkit-user-select:none;user-select:none;transition:all .15s}
 
@@ -594,7 +607,29 @@ select.inp{cursor:pointer}
   <!-- MOBILE BUILDER BAR (fixed, shows on mobile when on build page) -->
   <div class="builder-mobile-bar" id="builder-mobile-bar">
     <div class="builder-mobile-info" id="builder-mobile-info">Pick a day, then tap exercises</div>
-    <button class="btn btn-lime btn-sm" onclick="openReviewModal()">Review →</button>
+    <button class="btn btn-lime btn-sm" onclick="openReviewModal()" id="builder-mobile-send-btn" style="display:none">Review & Send →</button>
+  </div>
+
+  <!-- EXERCISE SETS/REPS QUICK POPUP -->
+  <div class="ex-popup-overlay" id="ex-popup-overlay" onclick="closeExPopup(event)">
+    <div class="ex-popup">
+      <div class="ex-popup-title" id="ex-popup-name">Exercise</div>
+      <div class="ex-popup-sub">Adjust sets & reps or keep defaults</div>
+      <div class="ex-popup-row">
+        <div class="ex-popup-field">
+          <label>Sets</label>
+          <input type="number" inputmode="numeric" id="ex-popup-sets" min="1" max="20" value="3">
+        </div>
+        <div class="ex-popup-field">
+          <label>Reps</label>
+          <input type="text" inputmode="numeric" id="ex-popup-reps" placeholder="10-15">
+        </div>
+      </div>
+      <div class="ex-popup-btns">
+        <button class="btn btn-ghost w100" onclick="closeExPopup()">Cancel</button>
+        <button class="btn btn-lime w100" onclick="confirmExPopup()">Add Exercise</button>
+      </div>
+    </div>
   </div>
 
 
@@ -2024,14 +2059,19 @@ function renderBuilderStepper(){
   if(layout)layout.classList.toggle('has-selection',total>0);
   const infoEl=document.getElementById('builder-info');
   const mobileInfo=document.getElementById('builder-mobile-info');
+  const mobileSendBtn=document.getElementById('builder-mobile-send-btn');
   if(total){
     const d=Object.keys(builderPlan).filter(k=>builderPlan[k].length).length;
-    const txt=`<strong style="color:var(--lime)">${total}</strong> exercises, <strong style="color:var(--lime)">${d}</strong> day${d>1?'s':''}`;
+    const dayTxt=builderActiveDay;
+    const dayCount=(builderPlan[builderActiveDay]||[]).length;
+    const txt=`<strong style="color:var(--lime)">${total}</strong> exercises across <strong style="color:var(--lime)">${d}</strong> day${d>1?'s':''}`;
     if(infoEl)infoEl.innerHTML=txt;
-    if(mobileInfo)mobileInfo.innerHTML=txt;
+    if(mobileInfo)mobileInfo.innerHTML=`${dayTxt}: <strong>${dayCount}</strong> ex &nbsp;·&nbsp; Total: <strong style="color:var(--lime)">${total}</strong>`;
+    if(mobileSendBtn)mobileSendBtn.style.display='';
   }else{
     if(infoEl)infoEl.innerHTML='';
     if(mobileInfo)mobileInfo.innerHTML='Pick a day, then tap exercises';
+    if(mobileSendBtn)mobileSendBtn.style.display='none';
   }
 }
 function removeFromDay(day,exId){
@@ -2073,20 +2113,44 @@ function filterTrainerEx(filter,el){
   document.querySelectorAll('#trainer-cat-filters .cat-chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');renderTrainerExercises();
 }
+let _popupExId=null;
 function toggleBuilderItem(exId){
   const ex=exercises.find(e=>e.id===exId);if(!ex)return;
   if(!builderPlan[builderActiveDay])builderPlan[builderActiveDay]=[];
   const idx=builderPlan[builderActiveDay].findIndex(e=>e.exercise_id===exId);
-  if(idx>-1)builderPlan[builderActiveDay].splice(idx,1);
-  else builderPlan[builderActiveDay].push({exercise_id:exId,name:ex.name,category:ex.category,sets:ex.default_sets||3,reps:ex.default_reps||'10-15'});
-  if(builderPlan[builderActiveDay]&&!builderPlan[builderActiveDay].length)delete builderPlan[builderActiveDay];
-  // Instant card update — no full re-render needed
-  const card=document.getElementById('excard-'+exId);
-  if(card){
-    const nowSelected=(builderPlan[builderActiveDay]||[]).some(e=>e.exercise_id===exId);
-    card.classList.toggle('selected',nowSelected);
+  if(idx>-1){
+    // Already selected — remove it
+    builderPlan[builderActiveDay].splice(idx,1);
+    if(!builderPlan[builderActiveDay].length)delete builderPlan[builderActiveDay];
+    const card=document.getElementById('excard-'+exId);
+    if(card)card.classList.remove('selected');
+    renderBuilderStepper();
+  } else {
+    // Not selected — open popup to confirm sets/reps
+    _popupExId=exId;
+    document.getElementById('ex-popup-name').textContent=ex.name;
+    document.getElementById('ex-popup-sets').value=ex.default_sets||3;
+    document.getElementById('ex-popup-reps').value=ex.default_reps||'10-15';
+    document.getElementById('ex-popup-overlay').classList.add('open');
+    setTimeout(()=>document.getElementById('ex-popup-sets').select(),200);
   }
+}
+function confirmExPopup(){
+  if(!_popupExId)return;
+  const ex=exercises.find(e=>e.id===_popupExId);if(!ex)return;
+  const sets=parseInt(document.getElementById('ex-popup-sets').value)||3;
+  const reps=document.getElementById('ex-popup-reps').value.trim()||'10-15';
+  if(!builderPlan[builderActiveDay])builderPlan[builderActiveDay]=[];
+  builderPlan[builderActiveDay].push({exercise_id:ex.id,name:ex.name,category:ex.category,sets,reps});
+  const card=document.getElementById('excard-'+ex.id);
+  if(card)card.classList.add('selected');
+  closeExPopup();
   renderBuilderStepper();
+}
+function closeExPopup(e){
+  if(e&&e.target!==document.getElementById('ex-popup-overlay'))return;
+  document.getElementById('ex-popup-overlay').classList.remove('open');
+  _popupExId=null;
 }
 function clearBuilder(){
   if(!Object.keys(builderPlan).length)return;

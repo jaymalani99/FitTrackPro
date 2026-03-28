@@ -1125,9 +1125,12 @@ select.inp{cursor:pointer}
 </div>
 
 <!-- PLAN REVIEW MODAL -->
-<div class="modal-overlay hidden" id="review-modal">
-  <div class="modal">
-    <div class="modal-title">Review & Send Plan</div>
+<div class="modal-overlay hidden" id="review-modal" style="z-index:99999">
+  <div class="modal" style="padding-bottom:calc(32px + var(--safe-bottom))">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div class="modal-title" style="margin:0">Review & Send Plan</div>
+      <button onclick="closeReviewModal()" style="background:var(--bg3);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--text);flex-shrink:0">✕</button>
+    </div>
     <div id="review-days-summary" style="margin-bottom:16px"></div>
     <div class="inp-group" style="margin-bottom:10px">
       <label class="label">Plan Name</label>
@@ -1138,7 +1141,6 @@ select.inp{cursor:pointer}
       <select class="inp" id="review-client-sel"><option value="">— Select Client —</option></select>
     </div>
     <button class="btn btn-lime w100" onclick="sendPlan()">🚀 Send Plan</button>
-    <button class="btn btn-ghost w100" style="margin-top:8px" onclick="closeReviewModal()">Back to Editing</button>
   </div>
 </div>
 
@@ -2181,8 +2183,14 @@ function openReviewModal(){
     </div>`).join('');
   document.getElementById('review-days-summary').innerHTML=summary;
   document.getElementById('review-modal').classList.remove('hidden');
+  const mbar=document.getElementById('builder-mobile-bar');
+  if(mbar)mbar.style.display='none';
 }
-function closeReviewModal(){document.getElementById('review-modal').classList.add('hidden');}
+function closeReviewModal(){
+  document.getElementById('review-modal').classList.add('hidden');
+  const mbar=document.getElementById('builder-mobile-bar');
+  if(mbar)mbar.style.display='flex';
+}
 function updateBuilderSets(day,exId,field,val){
   const item=builderPlan[day]?.find(e=>e.exercise_id===exId);
   if(item)item[field]=field==='sets'?(parseInt(val)||3):val;

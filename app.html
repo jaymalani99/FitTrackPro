@@ -329,7 +329,6 @@ select.inp{cursor:pointer}
   /* Builder: hide right panel, use full width */
   .builder-layout{display:block}
   .builder-right{display:none}
-  #page-trainer-build .builder-mobile-bar{display:flex!important}
   #page-trainer-build{padding-bottom:calc(120px + var(--safe-bottom))!important}
 }
 @media(max-width:420px){
@@ -606,9 +605,9 @@ select.inp{cursor:pointer}
   <div class="mobile-nav" id="mobile-nav"></div>
 
   <!-- MOBILE BUILDER BAR (fixed, shows on mobile when on build page) -->
-  <div class="builder-mobile-bar" id="builder-mobile-bar">
+  <div class="builder-mobile-bar" id="builder-mobile-bar" style="display:none">
     <div class="builder-mobile-info" id="builder-mobile-info">Pick a day, then tap exercises</div>
-    <button class="btn btn-lime btn-sm" onclick="openReviewModal()" id="builder-mobile-send-btn" style="display:none">Review & Send →</button>
+    <button class="btn btn-lime btn-sm" onclick="openReviewModal()" id="builder-mobile-send-btn">Review & Send →</button>
   </div>
 
   <!-- EXERCISE SETS/REPS QUICK POPUP -->
@@ -1556,7 +1555,7 @@ function showPage(pageId,clickedEl,isMobile){
   }
   // Show mobile builder bar only on build page
   const mbar=document.getElementById('builder-mobile-bar');
-  if(mbar)mbar.style.display=pageId==='trainer-build'?'':'none';
+  if(mbar)mbar.style.display=pageId==='trainer-build'?'flex':'none';
   document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').style.display='none';
 }
 function toggleSidebar(){
